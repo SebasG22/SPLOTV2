@@ -1,9 +1,25 @@
 import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
+import { AuthRoutingModule } from './auth.router';
+import { COMPONENTS } from './components';
+import { PAGES } from './pages';
+import { SERVICES } from './services';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { EFFECTS } from './effects';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './reducers/auth.reducer';
 
 @NgModule({
-  imports: [],
+  imports: [
+    SharedModule,
+    AuthRoutingModule,
+    ReactiveFormsModule,
+    StoreModule.forFeature('AuthFeatureModel', reducers),
+    EffectsModule.forFeature(EFFECTS)
+  ],
   exports: [],
-  declarations: [],
-  providers: []
+  declarations: [ COMPONENTS, PAGES],
+  providers: [SERVICES]
 })
 export class AuthModule {}

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginMainPage } from './pages/login-main/login-main.page';
 
-import { AuthComponent } from './name.component';
-
-const routes: Routes = [{ path: 'path', component: AuthComponent }];
+const routes: Routes = [{ path: '', component: LoginMainPage }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -11,4 +10,4 @@ const routes: Routes = [{ path: 'path', component: AuthComponent }];
 })
 export class AuthRoutingModule {}
 
-export const routedComponents = [AuthComponent];
+export const routedComponents = [LoginMainPage];

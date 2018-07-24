@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
 import { UserEmail } from '../models';
+import { Action } from '@ngrx/store';
 
 export const LOGIN_WITH_EMAIL = '[ Auth ] - Login with email';
 export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
