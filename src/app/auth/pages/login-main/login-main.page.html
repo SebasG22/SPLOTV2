@@ -1,5 +1,30 @@
 <mat-card>
-    <app-login-email></app-login-email>
-<app-login-google></app-login-google>
-<app-login-github></app-login-github>
-  </mat-card>
+        <div class="container">
+                <div class="padding-top-10">
+                        <img src="assets/circuit.svg" class="display-b  margin-auto logo-image" />
+                        <h2 class="text-center padding-0"> SPLOT V2 </h2>
+                        <h4 class="text-center padding-0"> Bienvenidos a la nueva versión</h4>
+                </div>
+                <div class="login-container">
+                        <ng-container *ngIf="!showEmail">
+                                <div class="google-container">
+                                        <app-login-google></app-login-google>
+                                </div>
+                                <div class="github-container">
+                                        <app-login-github></app-login-github>
+                                </div>
+                        </ng-container>
+                        <div class="email-container">
+                                <app-login-email (showEmailChange)="showEmail=$event"></app-login-email>
+                        </div>
+                </div>
+        </div>
+        <div class="text-center font-size-10px">
+                <p>
+                        © 2018 Todos los derechos registrados.
+                </p>
+                <p>
+                        Desarrollado por Sebastián Guevara.
+                </p>
+        </div>
+</mat-card>

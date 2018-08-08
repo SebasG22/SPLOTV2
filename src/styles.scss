@@ -1,1 +1,151 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+
+html { overflow-y: scroll; }
+body {  }
+
+body {
+  position: absolute;
+  margin: 0px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: scroll;
+}
+
+
+.text-center {
+  text-align: center;
+}
+
+.margin-auto {
+  margin: 0 auto;
+}
+
+.padding-0{
+  padding: 0px !important;
+}
+
+.padding-top-10{
+  padding-top: 10% !important;
+}
+
+.padding-10px{
+  padding: 10px;
+}
+
+.font-size-10px{
+  font-size: 10px !important;
+}
+
+.font-size-20px{
+  font-size: 20px !important;
+}
+
+.display-b{
+  display: block;
+}
+
+.width-50{
+  width: 50%;
+}
+
+.width-100{
+  width: 100% important;
+}
+
+.contrast-white{
+  color: $light-primary-text;
+}
+
+$custom-indigo: (
+  50: #e8eaf6,
+  100: #b287f8,
+  200: #9fa8da,
+  300: #7986cb,
+  400: #5c6bc0,
+  500: #6610f2,
+  600: #3949ab,
+  700: #303f9f,
+  800: #283593,
+  900: #292961,
+  A100: #8c9eff,
+  A200: #536dfe,
+  A400: #3d5afe,
+  A700: #304ffe,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black
+  )
+);
+
+$custom-orange: (
+  50: #fff3e0,
+  100: #fdb172,
+  200: #ffcc80,
+  300: #ffb74d,
+  400: #ffa726,
+  500: #fd7e14,
+  600: #fb8c00,
+  700: #f57c00,
+  800: #ef6c00,
+  900: #ca6410,
+  A100: #ffd180,
+  A200: #ffab40,
+  A400: #fc642d,
+  A700: #ff6d00,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black
+  )
+);
+
+// $custom-red: (
+//     100: #e57563,
+//     200: #db3b21,
+//     300: #af2f1a,
+//     contrast: (
+//         100: $dark-primary-text,
+//         200: $light-primary-text,
+//         300: $light-primary-text
+//     )
+// );
+
+$splot-app-primary: mat-palette($custom-indigo, 400, 100, 300);
+
+$splot-app-accent: mat-palette($custom-orange, 400, 100, 900);
+
+// The warn palette is optional (defaults to red).
+// $splot-app-warn: mat-palette($mat-red);
+
+//createthetheme object (a Sass map containin all of the palettes).
+$splot-app-theme: mat-light-theme($splot-app-primary, $splot-app-accent);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($splot-app-theme);

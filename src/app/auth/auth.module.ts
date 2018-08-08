@@ -9,9 +9,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './reducers/auth.reducer';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
+    CommonModule,
     SharedModule,
     AuthRoutingModule,
     ReactiveFormsModule,

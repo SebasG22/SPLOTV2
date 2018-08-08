@@ -1,5 +1,23 @@
-<button mat-button>
-  <i class="material-icons" (click)="onSignIn()">
-    email
-    </i> Ingresar con Email
-</button>
+
+  <ng-container *ngIf="!showEmail else showEmailForm">
+      <button mat-button (click)="showOrHideEmail()" class="padding-10px">
+            <i class="fas fa-envelope"></i>
+             Ingresar con Email
+        </button>
+     
+  </ng-container>
+
+  <ng-template #showEmailForm>
+      <form [formGroup]="form">
+          <mat-form-field>
+              <input matInput type="text" placeholder="Correo Electrónico" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Contraseña" formControlName="password">
+              </mat-form-field>
+              <button mat-button type="button" (click)="showOrHideEmail()"> Atrás</button>
+              <button mat-button type="submit"> Ingresar</button>
+      </form>
+  </ng-template>
+  
+  
