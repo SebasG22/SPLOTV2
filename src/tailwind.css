@@ -607,8 +607,6 @@ table {
 
 .container {
   width: 100%;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 @media (min-width: 576px) {
