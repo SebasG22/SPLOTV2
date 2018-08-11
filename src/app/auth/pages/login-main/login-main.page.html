@@ -15,37 +15,19 @@
               </ng-container> 
             </div>
       </div>
-      <div class="container bg-white my-20 min-w-full" >
+      <div class="container bg-white mt-20 min-w-full" >
           <div class="px-6">
               <div class="my-12 text-center uppercase">
                 <span class="inline-block bg-soft px-4 text-grey-darker tracking-wide font-bold">A project by</span>
               </div>
               <div class="flex justify-center">
                 <div class="pb-4 flex justify-center flex-wrap max-w-md xl:max-w-full border-b-2 border-grey-light">
-                  <div class="mb-8 w-64 md:flex-x-center">
+                  <div class="mb-8 w-64 md:flex-x-center" *ngFor="let contributor of contributors">
                     <div class="flex items-center">
-                      <img class="h-16 w-16 rounded-full" src="https://avatars3.githubusercontent.com/u/17608169?s=460&v=4" alt="">
+                      <img class="h-16 w-16 rounded-full" [src]="contributor.photo_url" [alt]="contributor.name + ' Imagen'">
                       <div class="pl-4">
-                        <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline text-lg text-medium">Sebastián Guevara</a>
-                        <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline hover:underline  text-sm">SebasG22</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-8 w-64 md:flex-x-center">
-                    <div class="flex items-center">
-                      <img class="h-16 w-16 rounded-full" src="https://avatars0.githubusercontent.com/u/1813308?s=460&v=4" alt="">
-                      <div class="pl-4">
-                          <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline text-lg text-medium">Jaime Chavarriaga</a>
-                          <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline hover:underline  text-sm">JaimeChavarriaga</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-8 w-64 md:flex-x-center">
-                    <div class="flex items-center">
-                      <img class="h-16 w-16 rounded-full" src="https://avatars0.githubusercontent.com/u/1813308?s=460&v=4">
-                      <div class="pl-4">
-                          <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline text-lg text-medium">Gilberto Pedraza</a>
-                          <a href="https://github.com/SebasG22" class="block text-blue-darker no-underline hover:underline  text-sm">___</a>
+                        <a [href]="'https://github.com/'+contributor.github" class="block text-blue-darker no-underline text-lg text-medium"> {{ contributor.name }} </a>
+                        <a [href]="'https://github.com/'+contributor.github" class="block text-blue-darker no-underline hover:underline  text-sm">{{ contributor.github }}</a>
                       </div>
                     </div>
                   </div>
