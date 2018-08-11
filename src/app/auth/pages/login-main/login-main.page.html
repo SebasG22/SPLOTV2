@@ -1,5 +1,35 @@
-<mat-card>
-    <app-login-email></app-login-email>
-<app-login-google></app-login-google>
-<app-login-github></app-login-github>
-  </mat-card>
+<div class="container">
+
+  <i class="fas fa-users-cog block text-6xl text-center pt-32"></i>
+  <h1 class="font-normal text-4xl text-center m-0 py-1"> MultiSplot</h1>
+
+  <h2 class="font-normal text-3xl sm:text-2xl text-center">A Configuration System
+    <br class="hidden sm:inline-block"> for Multiple Users</h2>
+
+  <div class="flex flex-col items-center px-6 pt-10">
+    <app-login-email (showEmailChange)="showEmail=$event"></app-login-email>
+
+    <ng-container *ngIf="!showEmail">
+      <app-login-google></app-login-google>
+      <app-login-github></app-login-github>
+    </ng-container>
+
+
+  </div>
+  <!-- <div class="sm:flex sm:items-center px-6 py-4">
+                  <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src="https://avatars2.githubusercontent.com/u/4323180?s=400&u=4962a4441fae9fba5f0f86456c6c506a21ffca4f&v=4" alt="">
+                  <div class="text-center sm:text-left sm:flex-grow">
+                    <div class="mb-4">
+                      <p class="text-xl leading-tight">Adam Wathan</p>
+                      <p class="text-sm leading-tight text-grey-dark">Developer at NothingWorks Inc.</p>
+                    </div>
+                    <div>
+                      <button class="text-xs font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-purple text-purple hover:bg-purple hover:text-white">Message</button>
+                    </div>
+                  </div>
+                </div>
+              </div>  -->
+
+
+
+</div>

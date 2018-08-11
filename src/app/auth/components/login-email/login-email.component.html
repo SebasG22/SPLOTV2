@@ -1,5 +1,50 @@
-<button mat-button>
-  <i class="material-icons" (click)="onSignIn()">
-    email
-    </i> Ingresar con Email
-</button>
+
+  <ng-container *ngIf="!showEmail else showEmailForm">
+
+
+        <button class="text-xs font-semibold rounded-full px-4 py-1 my-2 leading-normal bg-orange border border-orange text-white hover:bg-orange-light hover:border-orange-light hover:text-white" 
+        (click)="showOrHideEmail()">
+            <i class="fas fa-envelope"></i>
+            <span> &nbsp; Ingresar con Email</span>
+          </button>
+          
+  </ng-container>
+
+  <ng-template #showEmailForm>
+
+        <div class="w-full max-w-xs">
+                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form">
+                  <div class="mb-4">
+                    <label class="block text-blue-darker text-sm font-bold mb-2" for="username">
+                      Username
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" type="text" formControlName="email" placeholder="youremail@email.com">
+                  </div>
+                  <div class="mb-6">
+                    <label class="block text-grey-darker text-sm font-bold mb-2" for="password">
+                      Password
+                    </label>
+                    <input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="password" type="password">
+                  </div>
+                  <div class="flex items-center justify-between">
+                   
+                    <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" 
+                    (click)="showOrHideEmail()">
+                            Atrás
+                        </button>
+                        <button class="bg-blue-darker hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                Iniciar sesión
+                            </button>
+                   
+                  </div>
+                  <div class="flex flex-col items-center pt-5">
+                        <a class="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker"  href="#">
+                                Olvide la contraseña
+                              </a>
+                      </div>
+                      
+                </form>
+              </div>
+  </ng-template>
+  
+  

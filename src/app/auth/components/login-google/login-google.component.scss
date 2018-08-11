@@ -1,0 +1,17 @@
+.google-subcontainer{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(1,(minmax(18px, 38px)))
+}
+
+.logo-google{
+    max-width: 18px;
+}
+
+.logo-google-container{
+    grid-column: 3/4;
+}
+
+.logo-google-text{
+    grid-column: 5/6;
+}

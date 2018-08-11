@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as authActions from '../../actions/auth.actions';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,9 +12,14 @@ export class LoginEmailComponent implements OnInit {
 
   public form: FormGroup;
 
+  public showEmail = false;
+
+  @Output() showEmailChange: EventEmitter<boolean>  = new EventEmitter<boolean>();
+
   constructor(private fb: FormBuilder, private store: Store<{}>) { }
 
   ngOnInit() {
+    this.buildForm();
   }
 
   private buildForm() {
@@ -26,6 +31,11 @@ export class LoginEmailComponent implements OnInit {
 
   public onSignIn({ valid, value}: { valid: boolean, value: UserEmail}) {
     this.store.dispatch(new authActions.LoginWithEmail(value));
+  }
+
+  public showOrHideEmail() {
+    this.showEmail = !this.showEmail;
+    this.showEmailChange.emit(this.showEmail);
   }
 
 }

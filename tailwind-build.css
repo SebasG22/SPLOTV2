@@ -3,3 +3,9 @@
 @tailwind components;
 
 @tailwind utilities;
+
+
+.text-6xl{
+    font-size: 6rem;
+
+}
