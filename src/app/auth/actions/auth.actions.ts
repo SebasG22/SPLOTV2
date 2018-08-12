@@ -1,12 +1,17 @@
-import { UserEmail } from '../models';
+import { UserEmail, UserInformation } from '../models';
 import { Action } from '@ngrx/store';
 
+export const VERIFY_AUTH = '[ Auth ] - Verify Auth';
 export const LOGIN_WITH_EMAIL = '[ Auth ] - Login with email';
 export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
 export const LOGIN_WITH_GOOGLE = '[ Auth ] - Login with google';
 export const LOGIN_SUCCESS = '[ Auth ] - Login success';
 export const LOGIN_FAILED = '[ Auth ] - Login Failed';
 
+export class VerifyAuth implements Action {
+  readonly type = VERIFY_AUTH;
+  public constructor () {}
+}
 export class LoginWithEmail implements Action {
   readonly type = LOGIN_WITH_EMAIL;
   public constructor(public payload: UserEmail) {}
@@ -24,7 +29,7 @@ export class LoginWithGoogle implements Action {
 
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  public constructor(public payload) {}
+  public constructor(public payload: UserInformation) {}
 }
 
 export class LoginFailed implements Action {

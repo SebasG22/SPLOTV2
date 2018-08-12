@@ -8,19 +8,27 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app.router';
 import { MODULES } from './modules';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppService } from './app.service';
+import { storeLogger } from 'ngrx-store-logger';
+
+export function logger(reducer: ActionReducer<any>): any {
+  // default, no options
+  return storeLogger()(reducer);
+}
+
+export const metaReducers = environment.production ? [] : [logger];
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    // AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, {metaReducers}),
     EffectsModule.forRoot([]),
     MODULES
   ],

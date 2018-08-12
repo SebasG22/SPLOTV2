@@ -7,9 +7,10 @@ import { SERVICES } from './services';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, ActionReducer } from '@ngrx/store';
 import { reducers } from './reducers/auth.reducer';
 import { CommonModule } from '@angular/common';
+import { storeLogger } from 'ngrx-store-logger';
 
 @NgModule({
   imports: [

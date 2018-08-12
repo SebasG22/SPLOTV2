@@ -3,11 +3,21 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { UserEmail } from '../models';
 import { auth } from 'firebase';
 import { from, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { map, take } from 'rxjs/operators';
 
 
 @Injectable()
 export class AuthService {
-    public constructor(private afAuth: AngularFireAuth) {}
+    public constructor(private afAuth: AngularFireAuth, private store: Store<{}>) {}
+
+    public listenAuth() {
+        return this.afAuth.authState.pipe(
+            take(1),
+            map((user) => {
+                return user;
+            }));
+    }
 
     public loginWithEmail(credentials: UserEmail): Observable<any> {
         return from(this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password));

@@ -1,5 +1,6 @@
 import * as authActions from '../actions/auth.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserInformation } from '../models';
 export type Actions = authActions.All;
 
 export interface AuthFeatureModel  {
@@ -9,7 +10,7 @@ export interface AuthFeatureModel  {
 
 export interface State {
    loggedIn: boolean;
-   currentUser: any;
+   currentUser: UserInformation;
   }
 
   const initialState: State = {
@@ -20,6 +21,9 @@ export interface State {
   export function reducer(state: State = initialState, action: Actions): State {
 
     switch (action.type) {
+      case authActions.LOGIN_SUCCESS: {
+        return { ...state, loggedIn: true, currentUser: action.payload};
+      }
         default:
         return state;
     }
