@@ -9,15 +9,17 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
-  @Effect({ dispatch: false })
+  @Effect({ dispatch: true })
   verifyAuth$ = this.actions$.ofType(authActions.VERIFY_AUTH).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.listenAuth().pipe(
         map(user => {
+          console.log('verify auth' , user);
           if (user) {
             return new authActions.LoginSuccess({name: user.displayName, email: user.email});
           }
+          return new authActions.VerifyAuthSuccess();
         })
       )
     )
@@ -66,7 +68,7 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
-    map(() => this.router.navigate(['home']))
+    map(() => this.router.navigate(['/home']))
   );
 
   constructor(

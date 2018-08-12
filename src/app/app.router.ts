@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: 'home', loadChildren: './home/home.module#HomeModule' },
-    // { path: 'path', component: FeatureComponent },
-    // { path: '**', component: PageNotFoundComponent },
+    { path: 'home', loadChildren: './home/home.module#HomeModule' }
 ];
 
 @NgModule({
