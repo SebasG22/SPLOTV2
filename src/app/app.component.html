@@ -1,7 +1,24 @@
- <mat-sidenav-container id="sidenav-container"class="bg-blue-darker text-white">
+<mat-sidenav-container id="sidenav-container" class="bg-white" [hasBackdrop]="true">
         <!-- <mat-toolbar color="primary">
                 <span class="margin-auto"> SPLOT V2 </span>
             </mat-toolbar> -->
-            <router-outlet></router-outlet>
+        <mat-sidenav mode="side" [opened]="menuIsOpen | async" (closed)="onClose()">
+                <i class="fas fa-users-cog block text-6xl text-center pt-10 text-blue-darker"></i>
+                <h2 class="highlight-font text-center font-semibold text-xl">MULTISPLOT</h2>
+                <h3 class="highlight-font text-center font-normal text-sm">Configuration System</h3>
+                <hr class="bg-grey-light text-blue-darker">
+                <a class="block no-underline" routerLink="/home" routerLinkActive="bg-blue-darker text-white">Home</a>
+                <a class="block no-underline">Projects</a>
+                <a class="block no-underline">Users</a>
+                <a class="block no-underline">About</a>
+                <a class="block no-underline">FAQ</a>
 
-        </mat-sidenav-container>
+                <a class="fixed no-underline text-blue-darker text-xs pin-b"> Beta 1.0.0</a>
+
+        </mat-sidenav>
+        <mat-sidenav-content class="text-white">
+                <router-outlet></router-outlet>
+
+        </mat-sidenav-content>
+
+</mat-sidenav-container>

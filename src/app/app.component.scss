@@ -4,4 +4,18 @@
     min-height: 100%;
     width: 100%;
     min-width: 100%;
+
+    .mat-sidenav{
+      min-width: 256px;
+      max-width: 256px;
+
+      a{
+        font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        padding: 8px 24px;
+      }
+      hr{
+        height: 1px;
+      }
+    }
   }
+

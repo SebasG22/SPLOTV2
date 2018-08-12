@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app.router';
 import { MODULES } from './modules';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,9 @@ import { EffectsModule } from '@ngrx/effects';
     EffectsModule.forRoot([]),
     MODULES
   ],
-  providers: [],
+  providers: [
+    AppService
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

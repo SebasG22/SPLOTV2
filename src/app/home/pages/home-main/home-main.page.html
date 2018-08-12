@@ -1,75 +1,70 @@
-<mat-toolbar color="primary">
-  <span class="margin-auto">
-      SPLOT V2
-  </span>
+<mat-toolbar class="bg-white">
+    <mat-toolbar-row>
+            <button mat-icon-button (click)="onOpenMenu()">
+                    <mat-icon aria-label="Menu icon">menu</mat-icon>
+                  </button>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon aria-label="Account icon">account_circle</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon aria-label="Profile icon">face</mat-icon>
+                        Profile</button>
+                    <button mat-menu-item>
+                            <mat-icon aria-label="Sign out icon">input</mat-icon>
+                        Sign out</button>
+                  </mat-menu>
+    </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="container">
-    <div class="title-container">
-            <h1> Bienvenido a MULTISPLOT </h1>
-            <h3>
-                Hemos desarrollado una nueva versión de el configurador de productos en línea, desde ya empieza a disfrutar las nuevas características.
-            </h3>
+<div class="container mx-auto bg-white">
+    <div class="px-10">
+        <h1 class="text-blue-darker"> Welcome</h1>
+        <h3 class="text-lg text-blue-darker p-0 m-0"> Sebastián Guevara</h3>
     </div>
-   
-    <mat-card>
-      <mat-card-content>
-          <div>
-              <div>
-                  <div>
-                      <img class="display-b "style="width: 100%; display: block;" src="https://1.bp.blogspot.com/-YIfQT6q8ZM4/Vzyq5z1B8HI/AAAAAAAAAAc/UmWSSMLKtKgtH7CACElUp12zXkrPK5UoACLcB/s1600/image00.png" alt="image">
-                  </div>
-                  <div>
-                        <h3>Almacenamiento</h3>
-                        <p>Tiempo Real</p>
-                        <p>Hacemos uso de Firebase Firestore para hacer tu trabajo colaborativo más eficiente</p>
-                  </div>
-              </div>
-          </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-content>                       
-                        <div>
-                            <div>
-                                <img style="width: 100%; display: block;" src="/assets/angular.jpg" alt="image">
-                            </div>
-                            <div>
-                                    <h3>Agradable</h3>
-                                    <p>Experiencia de Usuario</p>
-                                    <p>Ahora somos una PWA, mejorando la interacción en general de la aplicación.</p>        
-                            </div>
-                        </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-            <mat-card-content>
-                    <div>
-                            <div>
-                                <div>
-                                    <img style="width: 100%; display: block;" src="assets/multiuser.jpg" alt="image">
-                                </div>
-                                <div>
-                                        <h3>Múltiples</h3>
-                                        <p>Usuarios</p>       
-                                        <p>Las opiniones que tienen todas las personas involucradas en un proyecto cuentan, por eso ahora cada una de ellas será escuchada.</p>
-                                </div> 
-                            </div>
-                        </div>
-            </mat-card-content>
-        </mat-card>
-        <mat-card>
-                <div>
-                    <div>
-                            <div>
-                                <img style="width: 100%; display: block;" src="assets/configuration.jpg" alt="image">
-                            </div>
-                            <div>
-                                    <h3>Proceso</h3>
-                                    <p>Automatizado</p>
-                                    <p>Nuestro sistema es capaz de ofrecer una solución según las configuraciones proporcionadas por cada usuario.</p>                    
-                            </div>
-                        </div>
+
+    <div class="w-5/6 lg:w- mx-auto pt-5">
+        <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+            <div class=" px-6 py-4">
+                <p class="text-blue text-5xl text-center">0</p>
+                <div class="text-center sm:text-left sm:flex-grow">
+                    <div class="mb-4">
+                        <p class="text-blue text-center text-xl">Total</p>
+                        <p class="text-sm  text-center leading-tight text-grey-dark"> Configurations</p>
                     </div>
-        </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-5/6 mx-auto pt-5">
+        <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+            <div class=" px-6 py-4">
+                <p class="text-blue text-5xl text-center">0</p>
+                <div class="text-center sm:text-left sm:flex-grow">
+                    <div class="mb-4">
+                        <p class="text-blue text-center text-xl">Total</p>
+                        <p class="text-sm text-center leading-tight text-grey-dark"> Projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-5/6 mx-auto pt-5">
+        <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+            <div class=" px-6 py-4">
+                <p class="text-blue text-5xl text-center">0</p>
+                <div class="text-center sm:text-left sm:flex-grow">
+                    <div class="mb-4">
+                        <p class="text-blue text-center text-xl">Total</p>
+                        <p class="text-sm text-center leading-tight text-grey-dark"> Users </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>

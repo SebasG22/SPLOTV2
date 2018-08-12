@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'page-home-main',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeMainPage implements OnInit {
 
-  constructor() { }
+  @Output() public openMenu = new EventEmitter<any>();
+
+  constructor(
+    public appService: AppService
+  ) { }
 
   ngOnInit() {
+  }
+
+  public onOpenMenu() {
+    this.appService.open();
   }
 
 }
