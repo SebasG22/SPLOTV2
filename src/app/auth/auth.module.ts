@@ -12,6 +12,8 @@ import { reducers } from './reducers/auth.reducer';
 import { CommonModule } from '@angular/common';
 import { storeLogger } from 'ngrx-store-logger';
 import { UsersModule } from '../users/users.module';
+import { VerifyAuthComponent } from './components/verify-auth/verify-auth.component';
+import { GUARDS } from './guards';
 
 @NgModule({
   imports: [
@@ -24,7 +26,8 @@ import { UsersModule } from '../users/users.module';
     UsersModule
   ],
   exports: [],
-  declarations: [ COMPONENTS, PAGES],
-  providers: [SERVICES]
+  declarations: [COMPONENTS, PAGES],
+  entryComponents: [VerifyAuthComponent],
+  providers: [SERVICES, GUARDS]
 })
 export class AuthModule {}

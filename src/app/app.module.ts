@@ -25,7 +25,7 @@ export const metaReducers = environment.production ? [] : [logger];
   imports: [BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     NoopAnimationsModule,
-    // AngularFirestoreModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {metaReducers}),

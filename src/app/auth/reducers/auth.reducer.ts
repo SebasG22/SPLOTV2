@@ -8,7 +8,7 @@ export interface AuthFeatureModel  {
 
 
 export interface State {
-   verifyAuth: boolean;
+   verifyAuth: true | false | 'Logged';
    loggedIn: boolean;
   }
 
@@ -24,7 +24,7 @@ export interface State {
         return { ...state, verifyAuth: true};
       }
       case authActions.LOGIN_SUCCESS: {
-        return { ...state, loggedIn: true};
+        return { ...state, loggedIn: true, verifyAuth: 'Logged'};
       }
         default:
         return state;
@@ -41,4 +41,5 @@ export const reducers = {
     selectAuthState,
     (state: AuthFeatureModel) => state.auth
   );
+  export const getAuthVerifyState = createSelector(selectAuthStatusState, (state: State) => state.verifyAuth);
 
