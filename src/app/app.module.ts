@@ -5,7 +5,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app.router';
 import { MODULES } from './modules';
 import { StoreModule, ActionReducer } from '@ngrx/store';
@@ -23,8 +23,8 @@ export const metaReducers = environment.production ? [] : [logger];
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,
-    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
+    NoopAnimationsModule,
     // AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,

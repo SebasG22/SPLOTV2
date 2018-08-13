@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, defer } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as authActions from '../actions/auth.actions';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { NgZone } from '@angular/core';
 
 @Injectable()
 export class AuthEffects {
@@ -15,7 +16,6 @@ export class AuthEffects {
     switchMap(payload =>
       this.authService.listenAuth().pipe(
         map(user => {
-          console.log('verify auth' , user);
           if (user) {
             return new authActions.LoginSuccess({name: user.displayName, email: user.email});
           }
@@ -42,6 +42,7 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithGoogle().pipe(
+        tap(console.log),
         map(data => data.additionalUserInfo.profile),
         map(data => {
           console.log('Logged with google', data);
@@ -68,13 +69,20 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
-    map(() => this.router.navigate(['/home']))
+    map(() => {
+      /* Doing this avoid instead of components on change view -> [ Angular Error]
+      * https://github.com/angular/angular/issues/20290
+      */
+      this.zone.run(() => { this.router.navigate(['/home']); });
+      // this.router.navigate(['/home']);
+    } )
   );
 
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) {}
 
   @Effect()
