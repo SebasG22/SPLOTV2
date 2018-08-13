@@ -11,6 +11,7 @@ import { StoreModule, ActionReducer } from '@ngrx/store';
 import { reducers } from './reducers/auth.reducer';
 import { CommonModule } from '@angular/common';
 import { storeLogger } from 'ngrx-store-logger';
+import { UsersModule } from '../users/users.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { storeLogger } from 'ngrx-store-logger';
     AuthRoutingModule,
     ReactiveFormsModule,
     StoreModule.forFeature('AuthFeatureModel', reducers),
-    EffectsModule.forFeature(EFFECTS)
+    EffectsModule.forFeature(EFFECTS),
+    UsersModule
   ],
   exports: [],
   declarations: [ COMPONENTS, PAGES],

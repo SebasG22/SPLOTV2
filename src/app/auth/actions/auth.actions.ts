@@ -1,5 +1,6 @@
-import { UserEmail, UserInformation } from '../models';
+import { AuthEmail } from '../models';
 import { Action } from '@ngrx/store';
+import { UserInformation } from '../../users/models';
 
 export const VERIFY_AUTH = '[ Auth ] - Verify Auth';
 export const VERIFY_AUTH_SUCCESS = '[ Auth ] - Verify Auth Success';
@@ -20,7 +21,7 @@ export class VerifyAuthSuccess implements Action {
 }
 export class LoginWithEmail implements Action {
   readonly type = LOGIN_WITH_EMAIL;
-  public constructor(public payload: UserEmail) {}
+  public constructor(public payload: AuthEmail) {}
 }
 
 export class LoginWithGithub implements Action {

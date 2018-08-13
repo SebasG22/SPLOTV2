@@ -7,6 +7,7 @@ import * as authActions from '../actions/auth.actions';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
+import * as userActions from '../../users/actions/users.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -15,6 +16,7 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.listenAuth().pipe(
+        tap(console.log),
         map(user => {
           if (user) {
             return new authActions.LoginSuccess({name: user.displayName, email: user.email});
@@ -67,13 +69,16 @@ export class AuthEffects {
     )
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
-    map(() => {
+    map((action: any) => action.payload),
+    map((payload) => {
       /* Doing this avoid instead of components on change view -> [ Angular Error]
       * https://github.com/angular/angular/issues/20290
       */
+
       this.zone.run(() => { this.router.navigate(['/home']); });
+      return new userActions.GetUserInformation(payload);
       // this.router.navigate(['/home']);
     } )
   );

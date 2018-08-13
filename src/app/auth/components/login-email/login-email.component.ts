@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as authActions from '../../actions/auth.actions';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserEmail } from '../../models';
+import { AuthEmail } from '../../models';
 @Component({
   selector: 'app-login-email',
   templateUrl: './login-email.component.html',
@@ -29,7 +29,7 @@ export class LoginEmailComponent implements OnInit {
     });
   }
 
-  public onSignIn({ valid, value}: { valid: boolean, value: UserEmail}) {
+  public onSignIn({ valid, value}: { valid: boolean, value: AuthEmail}) {
     this.store.dispatch(new authActions.LoginWithEmail(value));
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { UserEmail } from '../models';
+import { AuthEmail } from '../models';
 import { auth } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -19,7 +19,7 @@ export class AuthService {
             }));
     }
 
-    public loginWithEmail(credentials: UserEmail): Observable<any> {
+    public loginWithEmail(credentials: AuthEmail): Observable<any> {
         return from(this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password));
     }
 
