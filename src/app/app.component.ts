@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenMenuOpen();
-      this.appService.registerServiceWorker();
   }
 
   public listenMenuOpen() {
