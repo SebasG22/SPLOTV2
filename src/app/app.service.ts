@@ -4,15 +4,11 @@ import { environment } from '../environments/environment';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable()
-export class AppService implements OnInit {
+export class AppService {
 
   public openMenu = new Subject();
 
   constructor(private snackBar: MatSnackBar, private appService: AppService) {}
-
-  ngOnInit(): void {
-    this.appService.registerServiceWorker();
-  }
 
   public get menu$(): Observable<any> {
     return this.openMenu.asObservable();
