@@ -26,6 +26,9 @@ export interface State {
       case authActions.LOGIN_SUCCESS: {
         return { ...state, loggedIn: true, verifyAuth: 'Logged'};
       }
+      case authActions.LOGOUT_SUCCESS: {
+        return { ...state, loggedIn: false, verifyAuth: true};
+      }
         default:
         return state;
     }

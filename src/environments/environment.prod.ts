@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  swPath: '/sw.js',
   firebase: {
     apiKey: 'AIzaSyCeoHRNGdE7NleF1X1JiMXyk7Q9zRIU31A',
     authDomain: 'beta-splotv2.firebaseapp.com',

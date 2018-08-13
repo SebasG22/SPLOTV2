@@ -38,8 +38,9 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
                 // this.router.navigate(['/home']);
                 return true;
               }
+              this.dialogRef.close();
                // TO FIX: AL PARECER SI SE RETORNA SOLO FALSE, LA PÁGINA QUEDA EN BLANCO
-               // this.router.navigate(['/']);
+               this.router.navigate(['/']);
                return false;
             })
           );

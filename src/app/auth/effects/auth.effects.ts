@@ -63,8 +63,8 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithGithub().pipe(
-        map(() => {
-          console.log('Logged with github');
+        map((data) => {
+          console.log('Logged with github', data );
         })
       )
     )
@@ -81,6 +81,17 @@ export class AuthEffects {
        this.zone.run(() => { this.router.navigate(['/home']); });
       // this.router.navigate(['/home']);
       return new userActions.GetUserInformation(payload);
+    } )
+  );
+
+  @Effect()
+  logout$ = this.actions$.ofType(authActions.LOGOUT).pipe(
+    switchMap(() => {
+      this.zone.run(() => { this.router.navigate(['/']); });
+      return this.authService.logout();
+    }),
+    map(() => {
+      return new authActions.LogoutSuccess();
     } )
   );
 

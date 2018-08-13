@@ -9,6 +9,9 @@ export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
 export const LOGIN_WITH_GOOGLE = '[ Auth ] - Login with google';
 export const LOGIN_SUCCESS = '[ Auth ] - Login success';
 export const LOGIN_FAILED = '[ Auth ] - Login Failed';
+export const LOGOUT = '[ Auth ] - Logout';
+export const LOGOUT_SUCCESS = '[ Auth ] - Logout Success';
+export const LOGOUT_FAILED = '[ Auth ] - Logout Failed';
 
 export class VerifyAuth implements Action {
   readonly type = VERIFY_AUTH;
@@ -44,6 +47,21 @@ export class LoginFailed implements Action {
   public constructor() {}
 }
 
+export class Logout implements Action {
+  readonly type = LOGOUT;
+  public constructor() {}
+}
+
+export class LogoutSuccess implements Action {
+  readonly type = LOGOUT_SUCCESS;
+  public constructor() {}
+}
+
+export class LogoutFailed implements Action {
+  readonly type = LOGOUT_FAILED;
+  public constructor() {}
+}
+
 export type All =
   | VerifyAuth
   | VerifyAuthSuccess
@@ -51,4 +69,7 @@ export type All =
   | LoginWithGithub
   | LoginWithGoogle
   | LoginSuccess
-  | LoginFailed;
+  | LoginFailed
+  | Logout
+  | LogoutSuccess
+  | LogoutFailed;
