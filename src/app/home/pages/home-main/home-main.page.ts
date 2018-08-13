@@ -1,5 +1,9 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AppService } from '../../../app.service';
+import { Observable } from 'rxjs';
+import { UserInformation } from '../../../users/models';
+import { Store } from '@ngrx/store';
+import { getCurrentUser } from '../../../users/reducers/users.reducer';
 
 @Component({
   selector: 'page-home-main',
@@ -8,17 +12,19 @@ import { AppService } from '../../../app.service';
 })
 export class HomeMainPage implements OnInit {
 
-  @Output() public openMenu = new EventEmitter<any>();
-
   constructor(
-    public appService: AppService
+    public appService: AppService,
+    private store: Store<{}>
   ) { }
 
+  public userInformation$: Observable<UserInformation>;
+
   ngOnInit() {
+      this.getUserInformation();
   }
 
-  public onOpenMenu() {
-    this.appService.open();
-  }
+  getUserInformation() {
+    this.userInformation$ = this.store.select(getCurrentUser);
+ }
 
 }

@@ -1,27 +1,8 @@
-<mat-toolbar class="bg-white">
-    <mat-toolbar-row>
-            <button mat-icon-button (click)="onOpenMenu()">
-                    <mat-icon aria-label="Menu icon">menu</mat-icon>
-                  </button>
-        <span class="example-spacer"></span>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon aria-label="Account icon">account_circle</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon aria-label="Profile icon">face</mat-icon>
-                        Profile</button>
-                    <button mat-menu-item>
-                            <mat-icon aria-label="Sign out icon">input</mat-icon>
-                        Sign out</button>
-                  </mat-menu>
-    </mat-toolbar-row>
-</mat-toolbar>
-
-<div class="container mx-auto bg-white">
+<app-menu></app-menu>
+<div class="container mx-auto bg-white" *ngIf="(userInformation$ | async ) as userInformation">
     <div class="px-10">
         <h1 class="text-blue-darker"> Welcome</h1>
-        <h3 class="text-lg text-blue-darker p-0 m-0"> Sebastián Guevara</h3>
+        <h3 class="text-lg text-blue-darker p-0 m-0"> {{ userInformation.name }} </h3>
     </div>
 
     <div class="w-5/6 lg:w- mx-auto pt-5">

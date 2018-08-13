@@ -17,7 +17,7 @@ import { reducers } from './reducers/users.reducer';
     imports: [ CommonModule,
                 SharedModule,
                 UserRoutingModule,
-                StoreModule.forFeature('UsersFeatureModel', reducers),
+                StoreModule.forFeature('UserFeatureModel', reducers),
                 EffectsModule.forFeature(EFFECTS)
             ],
     exports: [],

@@ -19,7 +19,7 @@ export class AuthEffects {
         tap(console.log),
         map(user => {
           if (user) {
-            return new authActions.LoginSuccess({name: user.displayName, email: user.email});
+            return new authActions.LoginSuccess({name: user.displayName, email: user.email, picture_url: user.photoURL });
           }
           return new authActions.VerifyAuthSuccess();
         })
@@ -50,7 +50,8 @@ export class AuthEffects {
           console.log('Logged with google', data);
           return new authActions.LoginSuccess({
             name: data.name,
-            email: data.email
+            email: data.email,
+            picture_url: data.picture
           });
         })
       )
@@ -77,9 +78,9 @@ export class AuthEffects {
       * https://github.com/angular/angular/issues/20290
       */
 
-      this.zone.run(() => { this.router.navigate(['/home']); });
-      return new userActions.GetUserInformation(payload);
+       this.zone.run(() => { this.router.navigate(['/home']); });
       // this.router.navigate(['/home']);
+      return new userActions.GetUserInformation(payload);
     } )
   );
 

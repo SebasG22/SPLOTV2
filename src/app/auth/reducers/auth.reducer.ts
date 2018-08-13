@@ -36,7 +36,7 @@ export const reducers = {
     auth: reducer,
   };
 
-  export const selectAuthState = createFeatureSelector<AuthFeatureModel>('auth');
+  export const selectAuthState = createFeatureSelector<AuthFeatureModel>('AuthFeatureModel');
   export const selectAuthStatusState = createSelector(
     selectAuthState,
     (state: AuthFeatureModel) => state.auth

@@ -7,7 +7,6 @@ export interface UserFeatureModel  {
     user: State;
   }
 
-
 export interface State {
    currentUser: UserInformation;
   }
@@ -32,9 +31,10 @@ export const reducers = {
     user: reducer,
   };
 
-  export const selectUserState = createFeatureSelector<UserFeatureModel>('user');
+  export const selectUserState = createFeatureSelector<UserFeatureModel>('UserFeatureModel');
   export const selectUserStatusState = createSelector(
     selectUserState,
-    (state: UserFeatureModel) => state.user
+    (state: any) => { console.log('state', state); return state.user; }
   );
+  export const getCurrentUser =  createSelector(selectUserStatusState, (state: State) => state.currentUser);
 

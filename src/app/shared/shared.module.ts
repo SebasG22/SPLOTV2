@@ -9,6 +9,8 @@ import {
   MatSidenavModule,
   MatMenuModule
 } from '@angular/material';
+import { COMPONENTS } from './components';
+import { RouterModule } from '@angular/router';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -21,9 +23,9 @@ const MATERIAL_MODULES = [
   MatMenuModule
 ];
 @NgModule({
-  declarations: [],
-  imports: [MATERIAL_MODULES],
-  exports: [MATERIAL_MODULES],
+  declarations: [ COMPONENTS ],
+  imports: [MATERIAL_MODULES, RouterModule],
+  exports: [MATERIAL_MODULES, COMPONENTS],
   providers: []
 })
 export class SharedModule {}

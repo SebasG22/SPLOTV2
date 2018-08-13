@@ -1,0 +1,22 @@
+<mat-toolbar class="bg-white">
+    <mat-toolbar-row>
+            <button mat-icon-button (click)="onOpenMenu()">
+                    <mat-icon aria-label="Menu icon">menu</mat-icon>
+                  </button>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="outline-none">
+                <mat-icon aria-label="Account icon">account_circle</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                    <button mat-menu-item class="outline-none" >
+                        <a class="text-black no-underline" routerLink="/user/detail">
+                            <mat-icon aria-label="Profile icon">face</mat-icon>
+                            Profile
+                        </a>
+                    </button>
+                    <button mat-menu-item class="outline-none">
+                            <mat-icon aria-label="Sign out icon">input</mat-icon>
+                        Sign out</button>
+                  </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
