@@ -7,9 +7,9 @@ branches:
     - develop
 
 before_script:
+  - npm install -g ng-tailwindcss
   - npm install -g firebase-tools
   - npm install -g @angular/cli
-  - npm instal -g ng-tailwindcss
   - npm install -g workbox-cli
 
 script:
