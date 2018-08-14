@@ -1,4 +1,10 @@
-# Splotv2
+# SPLOT V2 
+![travis](https://travis-ci.org/SebasG22/SPLOTV2.svg?branch=develop)
+
+A web-based Configuration
+System that supports simultaneous decisions from multiple users
+
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
