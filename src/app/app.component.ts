@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent implements OnInit {
 
   public menuIsOpen: Observable<boolean>;
 
-  constructor(private appService: AppService) {}
+  constructor(
+    private appService: AppService
+  ) {}
 
   ngOnInit(): void {
     this.listenMenuOpen();

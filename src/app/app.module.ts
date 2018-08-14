@@ -12,6 +12,8 @@ import { StoreModule, ActionReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppService } from './app.service';
 import { storeLogger } from 'ngrx-store-logger';
+import { ToastrModule } from 'ngx-toastr';
+
 
 export function logger(reducer: ActionReducer<any>): any {
   // default, no options
@@ -24,13 +26,13 @@ export const metaReducers = environment.production ? [] : [logger];
   declarations: [AppComponent],
   imports: [BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {metaReducers}),
     EffectsModule.forRoot([]),
-    MODULES
+    MODULES,
   ],
   providers: [
     AppService

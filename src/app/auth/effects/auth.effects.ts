@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import * as userActions from '../../users/actions/users.actions';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthEffects {
@@ -44,10 +45,8 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithGoogle().pipe(
-        tap(console.log),
         map(data => data.additionalUserInfo.profile),
         map(data => {
-          console.log('Logged with google', data);
           return new authActions.LoginSuccess({
             name: data.name,
             email: data.email,
@@ -63,9 +62,19 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithGithub().pipe(
-        map((data) => {
-          console.log('Logged with github', data );
-        })
+        map(data => data.user),
+        map((user) => {
+          return new authActions.LoginSuccess({
+            name: user.displayName,
+            email: user.email,
+            picture_url: user.photoURL
+          });
+        }),
+        catchError((error) => [
+          console.error(error),
+          this.zone.run(() => { this.toastr.error(error.message, '¡Error!'); })
+
+        ])
       )
     )
   );
@@ -98,8 +107,9 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private toastr: ToastrService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
   ) {}
 
   @Effect()

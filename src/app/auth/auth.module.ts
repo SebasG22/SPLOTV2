@@ -14,6 +14,9 @@ import { storeLogger } from 'ngrx-store-logger';
 import { UsersModule } from '../users/users.module';
 import { VerifyAuthComponent } from './components/verify-auth/verify-auth.component';
 import { GUARDS } from './guards';
+import { ToastrModule, ToastNoAnimationModule, ToastNoAnimation } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToasterModule } from 'angular2-toaster';
 
 @NgModule({
   imports: [
@@ -23,8 +26,12 @@ import { GUARDS } from './guards';
     ReactiveFormsModule,
     StoreModule.forFeature('AuthFeatureModel', reducers),
     EffectsModule.forFeature(EFFECTS),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      // toastComponent: ToastNoAnimation
+    }),
     UsersModule
-  ],
+    ],
   exports: [],
   declarations: [COMPONENTS, PAGES],
   entryComponents: [VerifyAuthComponent],

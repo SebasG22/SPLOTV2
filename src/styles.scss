@@ -1,6 +1,10 @@
 @import '~@angular/material/theming';
 
+@import '~ngx-toastr/toastr.css';
+
 @include mat-core();
+
+//@import 'node_modules/angular2-toaster/src/toaster';
 
 
 // html { overflow-y: scroll; }
