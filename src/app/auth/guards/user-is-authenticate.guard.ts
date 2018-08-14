@@ -21,7 +21,6 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
       public canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
           return this.store.select(getAuthVerifyState).pipe(
             tap((stateData) => {
-              console.log('stateData', stateData);
               if (this.dialogRef === undefined) {
                 this.dialogRef = this.dialog.open(VerifyAuthComponent, {
                   width: '90%',
@@ -32,7 +31,6 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
             ),
             skipWhile(verifyState => verifyState === null),
             map( verifyState => {
-              console.log('VerifyState Map', verifyState);
               if (verifyState === 'Logged') {
                 this.dialogRef.close();
                 // this.router.navigate(['/home']);

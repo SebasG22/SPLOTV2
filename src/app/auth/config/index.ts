@@ -11,7 +11,7 @@ export const ProjectContributors = [
 },
 {
     photo_url: 'https://media.licdn.com/dms/image/C5103AQFgu5sU19JhAA/profile-displayphoto-shrink_800_800/0?e=1539216000&v=beta&t=2saloAtRUNFH6m3EnMXE0ygrv8sXwrU7rhMFIA6w2oY',
-    name: 'GilbertoPedraza',
+    name: 'Gilberto Pedraza',
     github: 'GilbertoPedraza'
 }
 ];

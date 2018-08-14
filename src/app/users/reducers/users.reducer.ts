@@ -34,7 +34,6 @@ export const reducers = {
   export const selectUserState = createFeatureSelector<UserFeatureModel>('UserFeatureModel');
   export const selectUserStatusState = createSelector(
     selectUserState,
-    (state: any) => { console.log('state', state); return state.user; }
-  );
+    (state: any) => state.user);
   export const getCurrentUser =  createSelector(selectUserStatusState, (state: State) => state.currentUser);
 
