@@ -25,7 +25,6 @@ export class AppService {
   }
 
   public registerServiceWorker() {
-    console.log('SW', environment);
     if (environment.production) {
       if ('serviceWorker' in navigator) {
           navigator.serviceWorker

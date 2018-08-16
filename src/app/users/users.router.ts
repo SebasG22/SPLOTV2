@@ -1,9 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { UserInformationPage } from './pages/user-information/user-information.page';
+import { UserDetailPage } from './pages/user-detail/user-detail.page';
+import { UserIsAuthenticate } from '../auth/guards/user-is-authenticate.guard';
+import { UserEditPage } from './pages/user-edit/user-edit.page';
 
 const routes: Routes = [
-    { path: 'detail', component: UserInformationPage },
+    { path: '',  canActivateChild: [ ], children: [
+        { path: 'detail', component: UserDetailPage },
+        { path: 'edit', component: UserEditPage }
+    ]}
 ];
 
 @NgModule({

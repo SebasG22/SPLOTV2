@@ -8,6 +8,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
 import { UserRoutingModule } from './users.router';
 import { reducers } from './reducers/users.reducer';
+import { UserService } from './services/user.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -16,11 +18,14 @@ import { reducers } from './reducers/users.reducer';
     ],
     imports: [ CommonModule,
                 SharedModule,
+                ReactiveFormsModule,
                 UserRoutingModule,
                 StoreModule.forFeature('UserFeatureModel', reducers),
                 EffectsModule.forFeature(EFFECTS)
             ],
     exports: [],
-    providers: [],
+    providers: [
+        UserService
+    ],
 })
 export class UsersModule {}

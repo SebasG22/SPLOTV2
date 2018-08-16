@@ -1,6 +1,5 @@
-import { AuthEmail } from '../models';
+import { AuthEmail, UserProvider } from '../models';
 import { Action } from '@ngrx/store';
-import { UserInformation } from '../../users/models';
 
 export const VERIFY_AUTH = '[ Auth ] - Verify Auth';
 export const VERIFY_AUTH_SUCCESS = '[ Auth ] - Verify Auth Success';
@@ -39,12 +38,12 @@ export class LoginWithGoogle implements Action {
 
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  public constructor(public payload: UserInformation) {}
+  public constructor(public payload: UserProvider) {}
 }
 
 export class LoginFailed implements Action {
   readonly type = LOGIN_FAILED;
-  public constructor(public payload: string) {}
+  public constructor(public payload: any) {}
 }
 
 export class Logout implements Action {

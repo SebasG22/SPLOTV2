@@ -1,5 +1,6 @@
 import * as authActions from '../actions/auth.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserProvider } from '../models';
 export type Actions = authActions.All;
 
 export interface AuthFeatureModel  {
@@ -9,11 +10,13 @@ export interface AuthFeatureModel  {
 
 export interface State {
    verifyAuth: true | false | 'Logged';
+   userProvider: UserProvider;
    loggedIn: boolean;
   }
 
   const initialState: State = {
     verifyAuth: false,
+    userProvider: null,
     loggedIn: false,
   };
 
@@ -24,7 +27,7 @@ export interface State {
         return { ...state, verifyAuth: true};
       }
       case authActions.LOGIN_SUCCESS: {
-        return { ...state, loggedIn: true, verifyAuth: 'Logged'};
+        return { ...state, loggedIn: true, verifyAuth: 'Logged', userProvider: action.payload};
       }
       case authActions.LOGOUT_SUCCESS: {
         return { ...state, loggedIn: false, verifyAuth: true};

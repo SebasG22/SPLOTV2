@@ -11,9 +11,9 @@ import { map, take } from 'rxjs/operators';
 export class AuthService {
     public constructor(private afAuth: AngularFireAuth, private store: Store<{}>) {}
 
+    // TODO: Review if we only need to listen once.
     public listenAuth() {
         return this.afAuth.authState.pipe(
-            take(1),
             map((user) => {
                 return user;
             }));

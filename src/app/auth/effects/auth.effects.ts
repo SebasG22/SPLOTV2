@@ -12,15 +12,20 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthEffects {
+  // TODO: Review if when the auth changes send to login page
   @Effect({ dispatch: true })
   verifyAuth$ = this.actions$.ofType(authActions.VERIFY_AUTH).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.listenAuth().pipe(
-        tap(console.log),
         map(user => {
           if (user) {
-            return new authActions.LoginSuccess({name: user.displayName, email: user.email, picture_url: user.photoURL });
+            return new authActions.LoginSuccess({
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photo: user.photoURL
+            });
           }
           return new authActions.VerifyAuthSuccess();
         })
@@ -46,62 +51,86 @@ export class AuthEffects {
     switchMap(payload =>
       this.authService.loginWithGoogle().pipe(
         map(data => data.additionalUserInfo.profile),
-        map(data => {
-          return new authActions.LoginSuccess({
-            name: data.name,
-            email: data.email,
-            picture_url: data.picture
-          });
+        switchMap(data => {
+          return this.authService.listenAuth().pipe(
+            map(auth => {
+              console.log(auth);
+              return new authActions.LoginSuccess({
+                id: auth.uid,
+                name: data.name,
+                email: data.email,
+                photo: data.picture
+              });
+            })
+          );
         })
       )
-    )
+    ),
+    catchError(error => [new authActions.LoginFailed(error)])
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   loginWithGithub$ = this.actions$.ofType(authActions.LOGIN_WITH_GITHUB).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithGithub().pipe(
+        tap(console.log),
         map(data => data.user),
-        map((user) => {
-          return new authActions.LoginSuccess({
-            name: user.displayName,
-            email: user.email,
-            picture_url: user.photoURL
-          });
-        }),
-        catchError((error) => [
-          console.error(error),
-          this.zone.run(() => { this.toastr.error(error.message, '¡Error!'); })
-
-        ])
+        switchMap(user => {
+          return this.authService.listenAuth().pipe(
+            map(auth => {
+              console.log(auth);
+              return new authActions.LoginSuccess({
+                id: auth.uid,
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+              });
+            })
+          );
+        })
       )
-    )
+    ),
+    catchError(error => [new authActions.LoginFailed(error)])
   );
 
   @Effect()
   loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
     map((action: any) => action.payload),
-    map((payload) => {
+    map(payload => {
       /* Doing this avoid instead of components on change view -> [ Angular Error]
       * https://github.com/angular/angular/issues/20290
       */
 
-       this.zone.run(() => { this.router.navigate(['/home']); });
+      this.zone.run(() => {
+        // this.router.navigate(['/home']);
+      });
       // this.router.navigate(['/home']);
-      return new userActions.GetUserInformation(payload);
-    } )
+      return new userActions.CheckUserRegistration(payload);
+    })
+  );
+
+  @Effect({ dispatch: false })
+  loginFailed$ = this.actions$.ofType(authActions.LOGIN_FAILED).pipe(
+    map((action: any) => action.payload),
+    tap(payload => {
+      this.zone.run(() => {
+        this.toastr.error(payload.message, '¡Error!');
+      });
+    })
   );
 
   @Effect()
   logout$ = this.actions$.ofType(authActions.LOGOUT).pipe(
     switchMap(() => {
-      this.zone.run(() => { this.router.navigate(['/']); });
+      this.zone.run(() => {
+        this.router.navigate(['/']);
+      });
       return this.authService.logout();
     }),
     map(() => {
       return new authActions.LogoutSuccess();
-    } )
+    })
   );
 
   constructor(
@@ -109,7 +138,7 @@ export class AuthEffects {
     private authService: AuthService,
     private toastr: ToastrService,
     private router: Router,
-    private zone: NgZone,
+    private zone: NgZone
   ) {}
 
   @Effect()

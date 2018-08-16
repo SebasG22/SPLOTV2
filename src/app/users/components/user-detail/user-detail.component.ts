@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserInformation } from '../../models';
-import { getCurrentUser } from '../../reducers/users.reducer';
+import { getCurrentUserInformation } from '../../reducers/users.reducer';
 
 @Component({
   selector: 'app-user-detail',
@@ -20,7 +20,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   getUserInformation() {
-     this.userInformation$ = this.store.select(getCurrentUser);
+     this.userInformation$ = this.store.select(getCurrentUserInformation);
   }
 
 }

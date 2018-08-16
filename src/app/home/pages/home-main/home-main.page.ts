@@ -3,7 +3,7 @@ import { AppService } from '../../../app.service';
 import { Observable } from 'rxjs';
 import { UserInformation } from '../../../users/models';
 import { Store } from '@ngrx/store';
-import { getCurrentUser } from '../../../users/reducers/users.reducer';
+import { getCurrentUserInformation } from '../../../users/reducers/users.reducer';
 
 @Component({
   selector: 'page-home-main',
@@ -24,7 +24,7 @@ export class HomeMainPage implements OnInit {
   }
 
   getUserInformation() {
-    this.userInformation$ = this.store.select(getCurrentUser);
+    this.userInformation$ = this.store.select(getCurrentUserInformation);
  }
 
 }

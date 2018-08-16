@@ -1,14 +1,16 @@
 <h1 class="text-black px-10"> User Detail </h1>
 <div class="bg-white mx-auto max-w-sm shadow-lg rounded-lg overflow-hidden mt-5" *ngIf="(userInformation$ | async ) as userInformation">
   <div class="sm:flex sm:items-center px-6 py-4">
-    <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" [src]="userInformation.picture_url" [alt]="userInformation.name">
+    <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" [src]="userInformation.photo" [alt]="userInformation.name">
     <div class="text-center sm:text-left sm:flex-grow">
       <div class="mb-4">
         <p class="text-xl leading-tight text-black">{{ userInformation.name }}</p>
         <p class="text-sm leading-tight text-grey-dark">{{ userInformation.email }}</p>
       </div>
       <div>
-        <button class="text-xs font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-blue-darker text-blue-darker hover:bg-blue-darker hover:text-white">Edit</button>
+          <a class="text-black no-underline" routerLink="/user/edit">
+        <button class="text-xs font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-blue-darker text-blue-darker hover:bg-blue-darker hover:text-white" router->Edit</button>
+        </a>
       </div>
     </div>
   </div>

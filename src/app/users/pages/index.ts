@@ -1,5 +1,7 @@
-import { UserInformationPage } from './user-information/user-information.page';
+import { UserDetailPage } from './user-detail/user-detail.page';
+import { UserEditPage } from './user-edit/user-edit.page';
 
 export const PAGES = [
-    UserInformationPage
+    UserDetailPage,
+    UserEditPage
 ];

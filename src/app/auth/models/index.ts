@@ -3,3 +3,9 @@ export interface AuthEmail {
   password: string;
 }
 
+export interface UserProvider {
+  id: string;
+  name: string;
+  email: string;
+  photo: string;
+}

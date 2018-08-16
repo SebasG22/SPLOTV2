@@ -1,7 +1,11 @@
 export interface UserInformation {
+    id: string;
     name: string;
     identification?: string;
     email: string;
-    picture_url?: string;
-    picture_base64 ?: string;
+    photo: string;
+    role_id: 'USER_CONFIGURATOR' | 'PROJECT_LEADER' | 'ADMINISTRATOR' [];
+    company?: string;
+    position?: string;
+    telephone?: string;
   }
