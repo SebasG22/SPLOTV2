@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import * as userActions from '../../users/actions/users.actions';
+import * as appActions from '../../app.actions';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -97,16 +98,19 @@ export class AuthEffects {
   @Effect()
   loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
     map((action: any) => action.payload),
-    map(payload => {
+    switchMap(userAuth => {
       /* Doing this avoid instead of components on change view -> [ Angular Error]
       * https://github.com/angular/angular/issues/20290
       */
-
       this.zone.run(() => {
-        // this.router.navigate(['/home']);
+        if (this.router.url === '/') {
+                  this.router.navigate(['/home']);
+        }
       });
-      // this.router.navigate(['/home']);
-      return new userActions.CheckUserRegistration(payload);
+      return [
+        new appActions.GetAppPermissions(),
+        new userActions.CheckUserRegistration(userAuth)
+      ];
     })
   );
 

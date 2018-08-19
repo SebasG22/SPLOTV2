@@ -19,6 +19,7 @@ export const UPDATE_USER_INFORMATION_FAILED = '[ User ] - Update user informatio
 export const ADD_USER_HISTORY = '[ User ] - Add user history';
 export const ADD_USER_HISTORY_SUCCESS = '[ User ] - Add user history success';
 export const ADD_USER_HISTORY_FAILED = '[ User ] - Add user history failed';
+
   export class RegisterUser implements Action {
     readonly type = REGISTER_USER;
     public constructor(public payload: UserProvider) {}

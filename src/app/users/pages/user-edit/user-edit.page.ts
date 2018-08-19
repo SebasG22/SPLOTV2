@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { UserInformation } from '../../models';
+import { Observable } from 'rxjs';
+import { getCurrentUserInformation } from '../../reducers/users.reducer';
 
 @Component({
   selector: 'page-user-edit',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserEditPage implements OnInit {
 
-  constructor() { }
+  public userInformation$: Observable<UserInformation>;
+
+  constructor(
+    private store: Store <{}>
+  ) { }
 
   ngOnInit() {
+    this.getUserInformation();
+  }
+
+  public getUserInformation() {
+    this.userInformation$ = this.store.select(getCurrentUserInformation);
   }
 
 }

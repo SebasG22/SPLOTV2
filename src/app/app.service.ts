@@ -1,14 +1,19 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, from } from 'rxjs';
 import { environment } from '../environments/environment';
 import { MatSnackBar } from '@angular/material';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AppPermissions } from './users/models';
 
 @Injectable()
 export class AppService {
 
   public openMenu = new Subject();
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(
+    private snackBar: MatSnackBar,
+    private afs: AngularFirestore
+  ) {
     this.registerServiceWorker();
   }
 
@@ -82,4 +87,9 @@ export class AppService {
       worker.postMessage({ action: 'skipWaiting' });
     });
   }
+
+  public getAppPermissions(): Observable<AppPermissions[]> {
+    return from(this.afs.collection<AppPermissions>('permissions_keys').valueChanges());
+  }
+
 }

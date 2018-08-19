@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { UserInformation } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
-
+import { isEmpty } from 'lodash';
 @Injectable()
 export class UserEffects {
   @Effect()
@@ -18,7 +18,7 @@ export class UserEffects {
         return this.userService.getUserInformation(payload.id).pipe(
           map((data: UserInformation) => {
             // Check user exists on firestore node
-            if (data) {
+            if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
             }
             // Must register user

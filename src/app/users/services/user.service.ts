@@ -2,35 +2,114 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UserProvider } from '../../auth/models';
 import { from } from 'rxjs';
-import { UserInformation } from '../models';
-
-
+import {
+  UserInformation,
+  AppPermissions,
+  UserPermissionsConfig
+} from '../models';
+import * as firebase from 'firebase';
+import { switchMap, map, withLatestFrom } from 'rxjs/operators';
+import { isEmpty, forEach, findIndex, get } from 'lodash';
+import * as appSelectors from '../../app.reducer';
+import { Store } from '@ngrx/store';
 @Injectable()
 export class UserService {
+  constructor(private afs: AngularFirestore, private store: Store<{}>) {}
 
-    constructor(private afs: AngularFirestore ) { }
+  public getUserInformation(userId: string) {
+    return this.afs
+      .collection('users')
+      .doc(userId)
+      .valueChanges()
+      .pipe(
+        switchMap(userData => {
+          return this.afs
+            .collection('users')
+            .doc(userId)
+            .collection('permissions')
+            .valueChanges()
+            .pipe(
+              withLatestFrom(this.store.select(appSelectors.getAppPermissions)),
+              map(([userPermissions, appPermissions]: [UserPermissionsConfig, AppPermissions]) => {
+                if (!isEmpty(userPermissions)) {
+                  return { ...userData, permissions: this.mergeAppUserPermission(userPermissions, appPermissions)};
+                }
+                return {};
+              })
+            );
+        })
+      );
+  }
 
-    public getUserInformation(userId: string) {
-        return this.afs.collection('users').doc(userId)
-        .valueChanges();
-    }
-
-    public registerUserInformation(basicInfo: UserProvider) {
-        return from(this.afs.collection('users').doc(basicInfo.id)
-        .set({...basicInfo, role_id: 'USER_CONFIGURATOR'}));
-    }
-
-    public updateUserInformation(userInformation: UserInformation ) {
-        return from(this.afs.collection('users').doc(userInformation.id).update(
-            userInformation));
-    }
-
-    public addUserHistory(userId: string,  message: string) {
-        return this.afs.collection('users').doc(userId).collection('histories').doc('').set({
-            id: '',
-            action: message,
-            created_at: '',
-            created_by: userId
+  public mergeAppUserPermission(
+    userPermissions: UserPermissionsConfig[],
+    appPermissions: AppPermissions
+  ) {
+    const userPermissionsMapped = [];
+    forEach(appPermissions, appPermission => {
+      const permission = findIndex(
+        userPermissions,
+        userPermission => userPermission.id === appPermission.id
+      );
+      console.warn('Permission', permission);
+      if (permission > -1) {
+        const obj = userPermissions[permission];
+        return userPermissionsMapped.push({
+          name: appPermission.name,
+          ...obj,
         });
-    }
+      }
+      return userPermissionsMapped.push({
+        ...appPermission,
+        enabled: false
+      });
+    });
+    console.warn('userPermissionsMapped', userPermissionsMapped );
+    return userPermissionsMapped;
+  }
+
+  public registerUserInformation(basicInfo: UserProvider) {
+    return from(
+      this.afs
+        .collection('users')
+        .doc(basicInfo.id)
+        .set(basicInfo)
+    ).pipe(
+      switchMap(() => {
+        return this.afs
+          .collection('users')
+          .doc(basicInfo.id)
+          .collection('permissions')
+          .doc('USER_CONFIGURATOR')
+          .set({
+            id: 'USER_CONFIGURATOR',
+            enabled: true
+          });
+      })
+    );
+  }
+
+  public updateUserInformation(userInformation: UserInformation) {
+    return from(
+      this.afs
+        .collection('users')
+        .doc(userInformation.id)
+        .update(userInformation)
+    );
+  }
+
+  public addUserHistory(userId: string, message: string) {
+    const id = this.afs.createId();
+    return this.afs
+      .collection('users')
+      .doc(userId)
+      .collection('histories')
+      .doc(id)
+      .set({
+        id: id,
+        action: message,
+        created_at: firebase.firestore.FieldValue.serverTimestamp(),
+        created_by: userId
+      });
+  }
 }

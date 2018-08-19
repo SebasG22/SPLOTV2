@@ -8,12 +8,13 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app.router';
 import { MODULES } from './modules';
-import { StoreModule, ActionReducer } from '@ngrx/store';
+import { StoreModule, ActionReducer, combineReducers } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppService } from './app.service';
 import { storeLogger } from 'ngrx-store-logger';
 import { ToastrModule } from 'ngx-toastr';
-
+import { AppEffects } from './app.effects';
+import * as appReducer from './app.reducer';
 
 export function logger(reducer: ActionReducer<any>): any {
   // default, no options
@@ -30,8 +31,8 @@ export const metaReducers = environment.production ? [] : [logger];
     AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {metaReducers}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot({ 'AppFeatureModel': combineReducers({ app: appReducer.reducer })}, {metaReducers}),
+    EffectsModule.forRoot([AppEffects]),
     MODULES,
   ],
   providers: [

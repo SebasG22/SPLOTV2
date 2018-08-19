@@ -10,7 +10,8 @@ import {
   MatMenuModule,
   MatDialogModule,
   MatProgressBarModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule
 } from '@angular/material';
 import { COMPONENTS } from './components';
 import { RouterModule } from '@angular/router';
@@ -26,7 +27,8 @@ const MATERIAL_MODULES = [
   MatMenuModule,
   MatDialogModule,
   MatProgressBarModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule
 ];
 @NgModule({
   declarations: [ COMPONENTS ],
