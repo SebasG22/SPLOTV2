@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { UserInformation } from '../models';
+import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 
 export const CHECK_USER_REGISTRATION = '[ User ] - Check user registration';
@@ -16,6 +16,9 @@ export const GET_USER_INFORMATION_FAILED =
 export const UPDATE_USER_INFORMATION = '[ User ] - Update user information';
 export const UPDATE_USER_INFORMATION_SUCCESS = '[ User ] - Update user information success';
 export const UPDATE_USER_INFORMATION_FAILED = '[ User ] - Update user information failed';
+export const UPDATE_USER_PERMISSIONS = '[ User ] - Update user permissions';
+export const UPDATE_USER_PERMISSIONS_SUCCESS = '[ User ] - Update user permissions success';
+export const UPDATE_USER_PERMISSIONS_FAILED = '[ User ] - Update user permissions failed';
 export const ADD_USER_HISTORY = '[ User ] - Add user history';
 export const ADD_USER_HISTORY_SUCCESS = '[ User ] - Add user history success';
 export const ADD_USER_HISTORY_FAILED = '[ User ] - Add user history failed';
@@ -79,6 +82,21 @@ export class UpdateUserInformationFailed implements Action {
   public constructor() {}
 }
 
+export class UpdateUserPermissions implements Action {
+  readonly type = UPDATE_USER_PERMISSIONS;
+  public constructor(public payload: UserPermissionsConfig) {}
+}
+
+export class UpdateUserPermissionsSuccess implements Action {
+  readonly type = UPDATE_USER_PERMISSIONS_SUCCESS;
+  public constructor() {}
+}
+
+export class UpdateUserPermissionsFailed implements Action {
+  readonly type = UPDATE_USER_PERMISSIONS_FAILED;
+  public constructor(public payload: string) {}
+}
+
 export class AddUserHistory implements Action {
   readonly type = ADD_USER_HISTORY;
   public constructor(public payload: string) {}
@@ -107,4 +125,7 @@ export type All =
   | GetUserInformationFailed
   | UpdateUserInformation
   | UpdateUserInformationSuccess
-  | UpdateUserInformationFailed;
+  | UpdateUserInformationFailed
+  | UpdateUserPermissions
+  | UpdateUserPermissionsSuccess
+  | UpdateUserPermissionsFailed;

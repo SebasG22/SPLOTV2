@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UserProvider } from '../../auth/models';
-import { from } from 'rxjs';
+import { from, combineLatest } from 'rxjs';
 import {
   UserInformation,
   AppPermissions,
@@ -30,7 +30,7 @@ export class UserService {
             .valueChanges()
             .pipe(
               withLatestFrom(this.store.select(appSelectors.getAppPermissions)),
-              map(([userPermissions, appPermissions]: [UserPermissionsConfig, AppPermissions]) => {
+              map(([userPermissions, appPermissions]: [UserPermissionsConfig[], AppPermissions[]]) => {
                 if (!isEmpty(userPermissions)) {
                   return { ...userData, permissions: this.mergeAppUserPermission(userPermissions, appPermissions)};
                 }
@@ -43,7 +43,7 @@ export class UserService {
 
   public mergeAppUserPermission(
     userPermissions: UserPermissionsConfig[],
-    appPermissions: AppPermissions
+    appPermissions: AppPermissions[]
   ) {
     const userPermissionsMapped = [];
     forEach(appPermissions, appPermission => {
@@ -51,7 +51,6 @@ export class UserService {
         userPermissions,
         userPermission => userPermission.id === appPermission.id
       );
-      console.warn('Permission', permission);
       if (permission > -1) {
         const obj = userPermissions[permission];
         return userPermissionsMapped.push({
@@ -96,6 +95,23 @@ export class UserService {
         .doc(userInformation.id)
         .update(userInformation)
     );
+  }
+
+  public updateUserPermissions(userId: string, userPermissions: UserPermissionsConfig[]) {
+    const obs = [];
+    forEach((permision) => {
+      obs.push(this.updateUserPermissionById(userId, permision));
+    });
+    return combineLatest(obs);
+  }
+
+  public updateUserPermissionById(userId: string, userPermission: UserPermissionsConfig) {
+    return from(
+      this.afs.collection('users')
+      .doc(userId)
+      .collection('permissions')
+      .doc(userPermission.id)
+      .set(userPermission));
   }
 
   public addUserHistory(userId: string, message: string) {

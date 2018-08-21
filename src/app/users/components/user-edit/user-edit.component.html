@@ -1,7 +1,7 @@
 <h1 class="text-black px-10"> User Edit </h1>
 
 <div class="w-full">
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form">
+  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form" (ngSubmit)="onSubmitForm(form)">
 
       <div class="flex flex-col sm:items-center px-6 py-4">
           <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" [src]="form.get('photo').value" [alt]="form.get('name').value">
@@ -47,14 +47,20 @@
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="position" type="text"> 
       </div>
-      <!-- <mat-form-field class="mb-6 w-full">
+
+      <div class="mb-6">
           <label class="block text-grey-darker text-sm font-bold mb-2">
-              Permissions
-            </label>
-        <mat-select formControlName="permissions" multiple>
-          <mat-option *ngFor="let permission of userInformation.permissions" [value]="true">{{ permission.id }}</mat-option>
-        </mat-select>
-      </mat-form-field> -->
+            Permissions
+          </label>
+          <ng-container formArrayName="permissions"> 
+              <ng-container *ngFor="let permission of formPermissions.controls; let i = index">
+                  <ng-container [formGroupName]="i">
+                        <mat-checkbox class="text-blue-darker" formControlName="enabled"> {{ permission.value.name }} </mat-checkbox>
+                    </ng-container>
+                </ng-container>
+          </ng-container>
+                </div>
+
 
     <div class="flex items-center justify-between">
      
