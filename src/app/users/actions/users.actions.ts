@@ -54,12 +54,12 @@ export const ADD_USER_HISTORY_FAILED = '[ User ] - Add user history failed';
   }
   export class GetUserInformation implements Action {
   readonly type = GET_USER_INFORMATION;
-  public constructor(public payload: UserInformation) {}
+  public constructor(public payload: string) {}
 }
 
 export class GetUserInformationSuccess implements Action {
   readonly type = GET_USER_INFORMATION_SUCCESS;
-  public constructor() {}
+  public constructor(public payload: UserInformation) {}
 }
 
 export class GetUserInformationFailed implements Action {

@@ -44,6 +44,33 @@ export class UserEffects {
   );
 
   @Effect()
+  getUserInformation$ = this.actions$
+    .ofType(usersActions.GET_USER_INFORMATION)
+    .pipe(
+      map((action: any) => action.payload),
+      switchMap((payload: string) => {
+        return this.userService.getUserInformation(payload).pipe(
+          map((data: UserInformation) => {
+            if (data) {
+              return new usersActions.GetUserInformationSuccess(data);
+            }
+            return new usersActions.GetUserInformationFailed();
+          })
+        );
+      })
+    );
+
+    @Effect({ dispatch: false })
+  getUserInformationFailed$ = this.actions$
+    .ofType(usersActions.GET_USER_INFORMATION_FAILED)
+    .pipe(
+      map((action: any) => action.payload),
+      map((payload) => {
+        console.error(payload);
+      }),
+    );
+
+  @Effect()
   updateUserInformation$ = this.actions$
     .ofType(usersActions.UPDATE_USER_INFORMATION)
     .pipe(

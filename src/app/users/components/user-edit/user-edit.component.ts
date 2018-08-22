@@ -3,7 +3,8 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  OnDestroy
 } from '@angular/core';
 import {
   FormBuilder,
@@ -18,37 +19,44 @@ import { forEach } from 'lodash';
 import { Store } from '@ngrx/store';
 import { UpdateUserInformation } from '../../actions/users.actions';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, Subscription } from 'rxjs';
+import { getSelectedUserInformation } from '../../reducers/users.reducer';
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
-export class UserEditComponent implements OnInit, OnChanges {
+export class UserEditComponent implements OnInit, OnDestroy {
   public form: FormGroup;
 
-  @Input()
-  userInformation: UserInformation;
+  public userInformation$: Subscription;
+  public userInformation: UserInformation;
 
   constructor(
     private fb: FormBuilder,
     private location: Location,
-    private store: Store <{}>,
+    private store: Store<{}>,
     private toastr: ToastrService
   ) {}
 
   ngOnInit() {
-    this.buildForm();
-    this.patchForm();
-    this.generatePermissionForm();
+    this.getUserInformation();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.userInformation && this.form) {
-      this.patchForm();
-      this.cleanPermissionForm();
-      this.generatePermissionForm();
-    }
+  public getUserInformation() {
+    this.userInformation$ = this.store
+      .select(getSelectedUserInformation)
+      .subscribe((userInformation: UserInformation) => {
+        if (userInformation) {
+          this.userInformation = userInformation;
+          this.buildForm();
+          this.patchForm();
+          this.cleanPermissionForm();
+          this.generatePermissionForm();
+        }
+      });
   }
+
 
   private buildForm() {
     this.form = this.fb.group({
@@ -113,7 +121,12 @@ export class UserEditComponent implements OnInit, OnChanges {
 
   public goBack() {
     if (this.location) {
-    this.location.back();
+      this.location.back();
     }
   }
+
+    ngOnDestroy(): void {
+      if (this.userInformation$) { this.userInformation$.unsubscribe(); }
+    }
+
 }

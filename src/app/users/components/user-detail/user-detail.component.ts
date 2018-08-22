@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UserInformation } from '../../models';
-import { getCurrentUserInformation } from '../../reducers/users.reducer';
+import { getSelectedUserInformation } from '../../reducers/users.reducer';
 
 @Component({
   selector: 'app-user-detail',
@@ -19,8 +19,8 @@ export class UserDetailComponent implements OnInit {
     this.getUserInformation();
   }
 
-  getUserInformation() {
-     this.userInformation$ = this.store.select(getCurrentUserInformation);
+  public getUserInformation() {
+     this.userInformation$ = this.store.select(getSelectedUserInformation);
   }
 
 }

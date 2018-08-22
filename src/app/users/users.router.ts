@@ -6,8 +6,8 @@ import { UserEditPage } from './pages/user-edit/user-edit.page';
 
 const routes: Routes = [
     { path: '',  canActivateChild: [ ], children: [
-        { path: 'detail', component: UserDetailPage },
-        { path: 'edit', component: UserEditPage }
+        { path: ':id/detail', component: UserDetailPage },
+        { path: ':id/edit', component: UserEditPage }
     ]}
 ];
 

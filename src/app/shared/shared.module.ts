@@ -16,6 +16,7 @@ import {
 } from '@angular/material';
 import { COMPONENTS } from './components';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -33,9 +34,17 @@ const MATERIAL_MODULES = [
   MatCheckboxModule
 ];
 @NgModule({
-  declarations: [ COMPONENTS ],
-  imports: [MATERIAL_MODULES, RouterModule],
-  exports: [MATERIAL_MODULES, COMPONENTS],
+  declarations: [
+    COMPONENTS
+   ],
+  imports: [
+    CommonModule,
+    MATERIAL_MODULES,
+    RouterModule],
+  exports: [
+    MATERIAL_MODULES,
+    COMPONENTS
+  ],
   providers: []
 })
 export class SharedModule {}
