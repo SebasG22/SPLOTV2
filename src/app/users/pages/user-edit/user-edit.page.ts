@@ -12,14 +12,10 @@ import { GetUserInformation } from '../../actions/users.actions';
   styleUrls: ['./user-edit.page.scss']
 })
 export class UserEditPage implements OnInit {
-
   private paramsSubscription: Subscription;
   private userId: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store <{}>
-  ) { }
+  constructor(private route: ActivatedRoute, private store: Store<{}>) {}
 
   ngOnInit() {
     this.getUserId();
@@ -29,7 +25,6 @@ export class UserEditPage implements OnInit {
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.userId = params['id'];
       this.store.dispatch(new GetUserInformation(this.userId));
-   });
-
-
+    });
+  }
 }

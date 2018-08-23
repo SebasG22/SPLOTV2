@@ -31,7 +31,7 @@ export const metaReducers = environment.production ? [] : [logger];
     AngularFirestoreModule,
     AngularFireAuthModule,
     AppRoutingModule,
-    StoreModule.forRoot({ 'AppFeatureModel': combineReducers({ app: appReducer.reducer })}, {metaReducers}),
+    StoreModule.forRoot(appReducer.reducersToken, {metaReducers}),
     EffectsModule.forRoot([AppEffects]),
     MODULES,
   ],
