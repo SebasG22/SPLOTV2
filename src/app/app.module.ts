@@ -36,7 +36,8 @@ export const metaReducers = environment.production ? [] : [logger];
     MODULES,
   ],
   providers: [
-    AppService
+    AppService,
+    appReducer.reducerProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

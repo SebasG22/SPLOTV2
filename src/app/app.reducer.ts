@@ -10,7 +10,9 @@ import { InjectionToken } from '@angular/core';
 export type Actions = appActions.All;
 
 export interface AppFeatureModel {
-  app: State;
+  appFeatureModel: {
+    app: State;
+  };
 }
 
 export interface State {
@@ -37,17 +39,31 @@ export const reducersToken = new InjectionToken<
   ActionReducerMap<AppFeatureModel>
 >('Reducers');
 
-export const selectAuthState = createFeatureSelector<AppFeatureModel>(
-  'AppFeatureModel'
+export function getReducers() {
+  return {
+    appFeatureModel : reducers
+  };
+}
+
+export const reducerProvider = [
+  { provide: reducersToken, useFactory: getReducers }
+];
+
+export const selectAuthState = createFeatureSelector<State>(
+  'appFeatureModel'
 );
-export const selectAuthStatusState = createSelector(
-  selectAuthState,
-  (state: AppFeatureModel) => state.app
-);
+// export const selectAuthStatusState = createSelector(
+//   selectAuthState,
+//   (state: any) => {
+//     console.log('Hey', state);
+//     return state.appFeatureModel;
+//   }
+// );
+
 export const getAppPermissions = createSelector(
-  selectAuthStatusState,
-  (state: State) => {
+  selectAuthState,
+  (state: any) => {
     console.warn('state', state);
-    return state.permissions;
+    return state.app.permissions;
   }
 );
