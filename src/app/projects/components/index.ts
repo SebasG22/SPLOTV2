@@ -1,7 +1,7 @@
-import { ProjectEditComponent } from './project-edit/project-edit.component';
 import { ProjectListComponent } from './project-list/project-list.component';
+import { ProjectFormComponent } from './project-form/project-form.component';
 
 export const COMPONENTS = [
-    ProjectEditComponent,
+    ProjectFormComponent,
     ProjectListComponent
 ];

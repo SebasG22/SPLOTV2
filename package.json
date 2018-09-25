@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve & ng-tailwindcss watch",
-    "build": "ng-tailwindcss build && ng build",
+    "start": "ng serve & ngtw watch",
+    "build": "ngtw build && ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prestart": "ng-tailwindcss build"
+    "prestart": "ngtw build"
   },
   "private": true,
   "dependencies": {
