@@ -1,3 +1,77 @@
-<p>
-  project-form works!
-</p>
+<h1 class="text-black px-10"> Project Edit </h1>
+
+<div class="panel-project-form">
+  <div class="w-full">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form" (ngSubmit)="onSubmitForm(form)">
+
+      <div class="mb-4" *ngIf="mode==='edit'">
+        <label class="block text-grey-darker text-sm font-bold mb-2">
+          Identification
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="id" type="text">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-blue-darker text-sm font-bold mb-2">
+          Name
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="name" type="text">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-grey-darker text-sm font-bold mb-2">
+          Description
+        </label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="description"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-grey-darker text-sm font-bold mb-2">
+          Public
+        </label>
+        <div class="form-switch inline-block align-middle">
+          <input type="checkbox" name="1" id="1" class="form-switch-checkbox" formControlName="public" />
+          <label class="form-switch-label" for="1"></label>
+        </div>
+      </div>
+
+
+      <div class="mb-4">
+        <label class="block text-grey-darker text-sm font-bold mb-2">
+          Participants
+        </label>
+        <ul class="text-grey-darker">
+          <li> Sebastián Guevara</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-grey-darker text-sm font-bold mb-2">
+          Files
+        </label>
+        <ul class="text-grey-darker">
+          <li>
+            <a> FileProject.zip</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex items-center justify-between">
+
+        <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          (click)="goBack()">
+          Go Back
+        </button>
+        <button class="bg-blue-darker hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit">
+          Save
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>

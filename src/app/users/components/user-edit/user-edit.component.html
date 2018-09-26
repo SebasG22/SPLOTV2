@@ -3,75 +3,85 @@
 <div class="w-full" *ngIf="userInformation">
   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form" (ngSubmit)="onSubmitForm(form)">
 
-      <div class="flex flex-col sm:items-center px-6 py-4">
-          <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" [src]="form.get('photo').value" [alt]="form.get('name').value">
-        </div>
+    <div class="flex flex-col sm:items-center px-6 py-4">
+      <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" [src]="form.get('photo').value"
+        [alt]="form.get('name').value">
+    </div>
 
     <div class="mb-4">
       <label class="block text-blue-darker text-sm font-bold mb-2">
-        Nombre
+        Name
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"  formControlName="name" type="text">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="name" type="text">
     </div>
     <div class="mb-6">
       <label class="block text-grey-darker text-sm font-bold mb-2">
         Identification
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="identification" type="text">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="identification" type="text">
     </div>
 
     <div class="mb-6">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Telephone
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="telephone" type="tel">
-      </div>
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Telephone
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="telephone" type="tel">
+    </div>
 
-      <div class="mb-6">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Email
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="email" type="email">
-      </div>
+    <div class="mb-6">
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Email
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="email" type="email">
+    </div>
 
-      <div class="mb-6">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Company
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"  formControlName="company" type="text">
-      </div>
+    <div class="mb-6">
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Company
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="company" type="text">
+    </div>
 
-      <div class="mb-6">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Position
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline" formControlName="position" type="text"> 
-      </div>
+    <div class="mb-6">
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Position
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        formControlName="position" type="text">
+    </div>
 
-      <div class="mb-6">
-          <label class="block text-grey-darker text-sm font-bold mb-2">
-            Permissions
-          </label>
-          <ng-container formArrayName="permissions"> 
-              <ng-container *ngFor="let permission of formPermissions.controls; let i = index">
-                  <ng-container [formGroupName]="i">
-                        <mat-checkbox class="text-blue-darker" formControlName="enabled"> {{ permission.value.name }} </mat-checkbox>
-                    </ng-container>
-                </ng-container>
+    <div class="mb-6">
+      <label class="block text-grey-darker text-sm font-bold mb-2">
+        Permissions
+      </label>
+      <ng-container formArrayName="permissions">
+        <ng-container *ngFor="let permission of formPermissions.controls; let i = index">
+          <ng-container [formGroupName]="i">
+            <mat-checkbox class="text-blue-darker" formControlName="enabled"> {{ permission.value.name }}
+            </mat-checkbox>
           </ng-container>
-                </div>
+        </ng-container>
+      </ng-container>
+    </div>
 
 
     <div class="flex items-center justify-between">
-     
-      <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="goBack()" >
-              Go Back
-          </button>
-          <button class="bg-blue-darker hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                  Save
-              </button>
-     
+
+      <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        (click)="goBack()">
+        Go Back
+      </button>
+      <button class="bg-blue-darker hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        Save
+      </button>
+
     </div>
-        
+
   </form>
 </div>

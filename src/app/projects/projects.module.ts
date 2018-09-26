@@ -4,6 +4,9 @@ import { ProjectsRoutingModule } from './projects.router';
 import { COMPONENTS } from './components';
 import { PAGES } from './pages';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './components/reducers/projects.reducer';
 
 @NgModule({
     declarations: [
@@ -13,9 +16,11 @@ import { SharedModule } from '../shared/shared.module';
     imports: [
         CommonModule,
         SharedModule,
-        ProjectsRoutingModule
-     ],
+        ProjectsRoutingModule,
+        ReactiveFormsModule,
+        StoreModule.forFeature('ProjectFeatureModel', reducers)
+    ],
     exports: [],
     providers: [],
 })
-export class ProjectsModule {}
+export class ProjectsModule { }
