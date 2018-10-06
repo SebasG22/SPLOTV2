@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Project } from '../../models';
+import { IProject } from '../../models';
 import * as projectsAction from '../actions/projects.action';
 
 export type Actions = projectsAction.All;
@@ -10,8 +10,8 @@ export interface ProjectFeatureModel {
 
 
 export interface State {
-    projects: Project[];
-    projectSelected: Project;
+    projects: IProject[];
+    projectSelected: IProject;
 }
 
 const initialState: State = {

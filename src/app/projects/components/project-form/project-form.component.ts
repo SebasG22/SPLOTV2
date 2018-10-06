@@ -2,11 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UpdateProject, CreateProject } from '../actions/projects.action';
+import { MatDialog } from '@angular/material';
+import { SearchUsersComponent } from '../../../users/components/search-users/search-users.component';
+import { get, forEach } from 'lodash';
 
 @Component({
   selector: 'app-project-form',
   templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.css']
+  styleUrls: ['./project-form.component.scss']
 })
 export class ProjectFormComponent implements OnInit {
 
@@ -14,7 +17,8 @@ export class ProjectFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<{}>
+    private store: Store<{}>,
+    private dialog: MatDialog
   ) { }
 
   @Input() mode: 'create' | 'edit';
@@ -30,10 +34,34 @@ export class ProjectFormComponent implements OnInit {
       'description': ['', Validators.required],
       'state': ['', Validators.required],
       'public': ['', Validators.required],
-      'participants': ['', Validators.required],
+      'participantsIds': ['', Validators.required],
       'files': ['', Validators.required]
     });
     this.form.get('id').disable({ onlySelf: true });
+  }
+
+  public openUsersSearchModal() {
+    const modal = this.dialog.open(SearchUsersComponent, {
+      width: '95%',
+      data: {
+        placeholder: 'Search Users'
+      }
+    });
+
+    modal.afterClosed().subscribe((data) => {
+      if (data) {
+        const usersIds = [];
+        forEach(get(data, 'selected', []), item => {
+          usersIds.push(get(item, 'id', ''));
+        });
+        this.form.patchValue({
+          participantsIds: usersIds.join()
+        });
+      }
+    }
+    );
+
+
   }
 
   public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {

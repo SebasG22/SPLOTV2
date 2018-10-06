@@ -130,6 +130,6 @@ export class UserService {
   }
 
   public filterUsers(query: { search: string, searchBy: string, page: number }) {
-    return this.afs.collection('users', ref => ref.where(`${query.searchBy}`, '<=', `${query.search}`)).valueChanges();
+    return this.afs.collection('users', ref => ref.orderBy(`${query.searchBy}`).startAt(`${query.search}`)).valueChanges();
   }
 }

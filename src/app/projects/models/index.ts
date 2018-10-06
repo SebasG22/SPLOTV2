@@ -1,7 +1,7 @@
 import { UserInformation } from '../../users/models';
 import { FileInformation } from '../../shared/models';
 
-export interface Project {
+export interface IProject {
     id?: string;
     name: string;
     description: string;

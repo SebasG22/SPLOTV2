@@ -123,7 +123,7 @@ export class AddUserHistoryFailed implements Action {
 
 export class FilterUsers implements Action {
   readonly type = FILTER_USERS;
-  public constructor() { }
+  public constructor(public payload: { search: string, searchBy: string, page: number }) { }
 }
 
 export class FilterUsersSuccess implements Action {

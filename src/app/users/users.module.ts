@@ -10,22 +10,26 @@ import { UserRoutingModule } from './users.router';
 import { reducers } from './reducers/users.reducer';
 import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchUsersComponent } from './components/search-users/search-users.component';
 
 @NgModule({
     declarations: [
         COMPONENTS,
         PAGES
     ],
-    imports: [ CommonModule,
-                SharedModule,
-                ReactiveFormsModule,
-                UserRoutingModule,
-                StoreModule.forFeature('UserFeatureModel', reducers),
-                EffectsModule.forFeature(EFFECTS)
-            ],
-    exports: [],
+    imports: [CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        UserRoutingModule,
+        StoreModule.forFeature('UserFeatureModel', reducers),
+        EffectsModule.forFeature(EFFECTS)
+    ],
+    entryComponents: [
+        SearchUsersComponent
+    ],
+    exports: [COMPONENTS],
     providers: [
         UserService
     ],
 })
-export class UsersModule {}
+export class UsersModule { }

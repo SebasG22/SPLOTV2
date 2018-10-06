@@ -31,7 +31,7 @@ export function reducer(state: State = initialState, action: Actions): State {
       return { ...state, currentUser: action.payload };
     case userActions.FILTER_USERS:
     case userActions.FILTER_USERS_FAILED: {
-      return { ...state, loading_data: true };
+      return { ...state, usersList: null, loading_data: true, };
     }
     case userActions.FILTER_USERS_SUCCESS:
       return { ...state, usersList: action.payload, loading_data: false };

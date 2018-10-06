@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Project } from '../../models';
+import { IProject } from '../../models';
 
 export const CREATE_PROJECT = '[ Projects ] - Create Project';
 export const CREATE_PROJECT_SUCCESS = '[ Projects ] - Create Project Success';
@@ -20,7 +20,7 @@ export const GET_PROJECTS_FAILED = '[ Projects ] - Get Projects Failed';
 
 export class CreateProject implements Action {
     readonly type = CREATE_PROJECT;
-    constructor(public payload: Project) { }
+    constructor(public payload: IProject) { }
 }
 
 export class CreateProjectSuccess implements Action {
@@ -40,7 +40,7 @@ export class GetProject implements Action {
 
 export class GetProjectSuccess implements Action {
     readonly type = GET_PROJECT_SUCCESS;
-    constructor(public payload: Project) { }
+    constructor(public payload: IProject) { }
 }
 
 export class GetProjectFailed implements Action {
@@ -50,7 +50,7 @@ export class GetProjectFailed implements Action {
 
 export class UpdateProject implements Action {
     readonly type = UPDATE_PROJECT;
-    constructor(public payload: Project) { }
+    constructor(public payload: IProject) { }
 }
 
 export class UpdateProjectSuccess implements Action {
@@ -70,7 +70,7 @@ export class GetProjects implements Action {
 
 export class GetProjectsSuccess implements Action {
     readonly type = GET_PROJECTS_SUCCESS;
-    constructor(public payload: Project[]) { }
+    constructor(public payload: IProject[]) { }
 }
 
 export class GetProjectsFailed implements Action {

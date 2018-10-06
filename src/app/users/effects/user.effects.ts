@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import * as usersActions from '../actions/users.actions';
-import { map, tap, switchMap, catchError } from 'rxjs/operators';
+import { map, tap, switchMap, catchError, delay } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
@@ -131,9 +131,11 @@ export class UserEffects {
     .pipe(
       map((action: any) => action.payload),
       switchMap((query) => {
+        console.log('Payload', query);
         return this.userService.filterUsers(query);
       }),
-      map((response: any) => [new usersActions.FilterUsersSuccess(response)]),
+      delay(2000),
+      map((response: any) => new usersActions.FilterUsersSuccess(response)),
       catchError((error) => {
         return [new usersActions.FilterUsersFailed(error)];
       })
