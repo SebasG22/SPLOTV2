@@ -43,6 +43,18 @@
         <label class="block text-grey-darker text-sm font-bold mb-2">
           Participants
         </label>
+
+        <mat-form-field>
+          <input matInput placeholder="Usuario" aria-label="Usuario" [matAutocomplete]="auto" [formControl]="participants">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+              <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
+              <span>{{state.name}}</span> |
+              <small>Population: {{state.population}}</small>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
         <ul class="text-grey-darker">
           <li> Sebastián Guevara</li>
         </ul>

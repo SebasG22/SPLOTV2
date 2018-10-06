@@ -14,7 +14,7 @@ import * as appSelectors from '../../app.reducer';
 import { Store } from '@ngrx/store';
 @Injectable()
 export class UserService {
-  constructor(private afs: AngularFirestore, private store: Store<{}>) {}
+  constructor(private afs: AngularFirestore, private store: Store<{}>) { }
 
   public getUserInformation(userId: string) {
     return this.afs
@@ -32,7 +32,7 @@ export class UserService {
               withLatestFrom(this.store.select(appSelectors.getAppPermissions)),
               map(([userPermissions, appPermissions]: [UserPermissionsConfig[], AppPermissions[]]) => {
                 if (!isEmpty(userPermissions)) {
-                  return { ...userData, permissions: this.mergeAppUserPermission(userPermissions, appPermissions)};
+                  return { ...userData, permissions: this.mergeAppUserPermission(userPermissions, appPermissions) };
                 }
                 return {};
               })
@@ -63,7 +63,7 @@ export class UserService {
         enabled: false
       });
     });
-    console.warn('userPermissionsMapped', userPermissionsMapped );
+    console.warn('userPermissionsMapped', userPermissionsMapped);
     return userPermissionsMapped;
   }
 
@@ -108,10 +108,10 @@ export class UserService {
   public updateUserPermissionById(userId: string, userPermission: UserPermissionsConfig) {
     return from(
       this.afs.collection('users')
-      .doc(userId)
-      .collection('permissions')
-      .doc(userPermission.id)
-      .set(userPermission));
+        .doc(userId)
+        .collection('permissions')
+        .doc(userPermission.id)
+        .set(userPermission));
   }
 
   public addUserHistory(userId: string, message: string) {
@@ -127,5 +127,9 @@ export class UserService {
         created_at: firebase.firestore.FieldValue.serverTimestamp(),
         created_by: userId
       });
+  }
+
+  public getUsers() {
+    return this.afs.collection('users').valueChanges();
   }
 }

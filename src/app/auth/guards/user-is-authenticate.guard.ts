@@ -19,7 +19,7 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
     private store: Store<{}>,
     private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
 
   private dialogRef;
 
@@ -36,6 +36,7 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
   ): Observable<boolean> {
     return this.store.select(getAuthVerifyState).pipe(
       tap(stateData => {
+        console.log('hey');
         if (this.dialogRef === undefined) {
           this.dialogRef = this.dialog.open(VerifyAuthComponent, {
             width: '90%'
@@ -50,10 +51,10 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
           // this.router.navigate(['/home']);
           return true;
         }
-        this.dialogRef.close();
         // TO FIX: AL PARECER SI SE RETORNA SOLO FALSE, LA PÁGINA QUEDA EN BLANCO
         this.router.navigate(['/']);
-        return false;
+        this.dialogRef.close();
+        // return false;
       })
     );
   }

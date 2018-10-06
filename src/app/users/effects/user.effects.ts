@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import * as usersActions from '../actions/users.actions';
-import { map, tap, switchMap } from 'rxjs/operators';
+import { map, tap, switchMap, catchError } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
@@ -60,7 +60,7 @@ export class UserEffects {
       })
     );
 
-    @Effect({ dispatch: false })
+  @Effect({ dispatch: false })
   getUserInformationFailed$ = this.actions$
     .ofType(usersActions.GET_USER_INFORMATION_FAILED)
     .pipe(
@@ -87,7 +87,7 @@ export class UserEffects {
       })
     );
 
-  @Effect({ dispatch: false})
+  @Effect({ dispatch: false })
   updateUserInformationSuccess$ = this.actions$
     .ofType(usersActions.UPDATE_USER_INFORMATION_SUCCESS)
     .pipe(
@@ -99,7 +99,7 @@ export class UserEffects {
       })
     );
 
-    @Effect()
+  @Effect()
   updateUserPermissions$ = this.actions$
     .ofType(usersActions.UPDATE_USER_PERMISSIONS)
     .pipe(
@@ -113,7 +113,7 @@ export class UserEffects {
       })
     );
 
-    @Effect({ dispatch: false})
+  @Effect({ dispatch: false })
   updateUserPermissionSuccess$ = this.actions$
     .ofType(usersActions.UPDATE_USER_PERMISSIONS_SUCCESS)
     .pipe(
@@ -125,10 +125,38 @@ export class UserEffects {
       })
     );
 
+  @Effect()
+  getUsersSuccess$ = this.actions$
+    .ofType(usersActions.GET_USERS_SUCCESS)
+    .pipe(
+      map((action: any) => action.payload),
+      switchMap(() => {
+        return this.userService.getUsers();
+      }),
+      map((response: any) => [new usersActions.GetUsersSuccess(response)]),
+      catchError((error) => {
+        return [new usersActions.GetUsersFailed(error)];
+      })
+    );
+
+  @Effect({ dispatch: false })
+  getUsersFailed$ = this.actions$
+    .ofType(usersActions.GET_USERS_FAILED)
+    .pipe(
+      switchMap(() => {
+        return this.userService.getUsers();
+      }),
+      tap((response: any) => {
+        this.zone.run(() => {
+          this.toastr.error('An error occurred trying to get users', '¡Error!');
+        });
+      })
+    );
+
   constructor(
     private actions$: Actions,
     private userService: UserService,
     private zone: NgZone,
     private toastr: ToastrService
-  ) {}
+  ) { }
 }

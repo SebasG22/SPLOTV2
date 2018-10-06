@@ -12,7 +12,7 @@ import {
   MatProgressBarModule,
   MatSnackBarModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
 } from '@angular/material';
 import { COMPONENTS } from './components';
 import { RouterModule } from '@angular/router';
@@ -36,7 +36,7 @@ const MATERIAL_MODULES = [
 @NgModule({
   declarations: [
     COMPONENTS
-   ],
+  ],
   imports: [
     CommonModule,
     MATERIAL_MODULES,
@@ -47,4 +47,4 @@ const MATERIAL_MODULES = [
   ],
   providers: []
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -10,7 +10,7 @@ export interface Project {
     participants: UserInformation[];
     files: FileInformation[];
     created_by?: string;
-    created_at?: string;
+    created_at?: any;
     update_by?: string;
-    updated_at?: string;
+    updated_at?: any;
 }

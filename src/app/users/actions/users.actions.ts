@@ -5,113 +5,136 @@ import { UserProvider } from '../../auth/models';
 export const CHECK_USER_REGISTRATION = '[ User ] - Check user registration';
 export const CHECK_USER_REGISTRATION_SUCCESS = '[ User ] - Check user registration success';
 export const CHECK_USER_REGISTRATION_FAILED = '[ User ] - Check user registration failed';
+
 export const REGISTER_USER = '[ User ] - Register user';
 export const REGISTER_USER_SUCCESS = '[ User ]- Register user success';
-export const REGISTER_USER_FAILED = '[ User ]- Register user failed';
-export const GET_USER_INFORMATION = '[ User ] - Get user information';
+export const REGISTER_USER_FAILED = '[ USER ]- REGISTER USER FAILED';
+
+export const GET_USER_INFORMATION = '[ USER ] - GET USER INFORMATION';
 export const GET_USER_INFORMATION_SUCCESS =
-  '[ User ] - Get User Information Success';
+  '[ USER ] - GET USER INFORMATION SUCCESS';
 export const GET_USER_INFORMATION_FAILED =
-  '[ User ] - Get User Information Failed';
-export const UPDATE_USER_INFORMATION = '[ User ] - Update user information';
-export const UPDATE_USER_INFORMATION_SUCCESS = '[ User ] - Update user information success';
-export const UPDATE_USER_INFORMATION_FAILED = '[ User ] - Update user information failed';
-export const UPDATE_USER_PERMISSIONS = '[ User ] - Update user permissions';
-export const UPDATE_USER_PERMISSIONS_SUCCESS = '[ User ] - Update user permissions success';
-export const UPDATE_USER_PERMISSIONS_FAILED = '[ User ] - Update user permissions failed';
-export const ADD_USER_HISTORY = '[ User ] - Add user history';
-export const ADD_USER_HISTORY_SUCCESS = '[ User ] - Add user history success';
-export const ADD_USER_HISTORY_FAILED = '[ User ] - Add user history failed';
+  '[ USER ] - GET USER INFORMATION FAILED';
 
-  export class RegisterUser implements Action {
-    readonly type = REGISTER_USER;
-    public constructor(public payload: UserProvider) {}
-  }
+export const UPDATE_USER_INFORMATION = '[ USER ] - UPDATE USER INFORMATION';
+export const UPDATE_USER_INFORMATION_SUCCESS = '[ USER ] - UPDATE USER INFORMATION SUCCESS';
+export const UPDATE_USER_INFORMATION_FAILED = '[ USER ] - UPDATE USER INFORMATION FAILED';
 
-  export class RegisterUserSuccess implements Action {
-    readonly type = REGISTER_USER_SUCCESS;
-    public constructor(public payload: UserInformation) {}
-  }
+export const UPDATE_USER_PERMISSIONS = '[ USER ] - UPDATE USER PERMISSIONS';
+export const UPDATE_USER_PERMISSIONS_SUCCESS = '[ USER ] - UPDATE USER PERMISSIONS SUCCESS';
+export const UPDATE_USER_PERMISSIONS_FAILED = '[ USER ] - UPDATE USER PERMISSIONS FAILED';
 
-  export class RegisterUserFailed implements Action {
-    readonly type = REGISTER_USER_FAILED;
-    public constructor() {}
-  }
+export const ADD_USER_HISTORY = '[ USER ] - ADD USER HISTORY';
+export const ADD_USER_HISTORY_SUCCESS = '[ USER ] - ADD USER HISTORY SUCCESS';
+export const ADD_USER_HISTORY_FAILED = '[ USER ] - ADD USER HISTORY failed';
 
-  export class CheckUserRegistration implements Action {
-    readonly type = CHECK_USER_REGISTRATION;
-    public constructor(public payload: UserInformation) {}
-  }
+export const GET_USERS = '[ USER ] - GET USERS';
+export const GET_USERS_SUCCESS = '[ USER ] - GET USERS SUCCESS';
+export const GET_USERS_FAILED = '[ USER ] - GET USERS FAILED';
 
-  export class CheckUserRegistrationSuccess implements Action {
-    readonly type = CHECK_USER_REGISTRATION_SUCCESS;
-    public constructor(public payload: UserInformation) {}
-  }
+export class RegisterUser implements Action {
+  readonly type = REGISTER_USER;
+  public constructor(public payload: UserProvider) { }
+}
 
-  export class CheckUserRegistrationFailed implements Action {
-    readonly type = CHECK_USER_REGISTRATION_FAILED;
-    public constructor() {}
-  }
-  export class GetUserInformation implements Action {
+export class RegisterUserSuccess implements Action {
+  readonly type = REGISTER_USER_SUCCESS;
+  public constructor(public payload: UserInformation) { }
+}
+
+export class RegisterUserFailed implements Action {
+  readonly type = REGISTER_USER_FAILED;
+  public constructor() { }
+}
+
+export class CheckUserRegistration implements Action {
+  readonly type = CHECK_USER_REGISTRATION;
+  public constructor(public payload: UserInformation) { }
+}
+
+export class CheckUserRegistrationSuccess implements Action {
+  readonly type = CHECK_USER_REGISTRATION_SUCCESS;
+  public constructor(public payload: UserInformation) { }
+}
+
+export class CheckUserRegistrationFailed implements Action {
+  readonly type = CHECK_USER_REGISTRATION_FAILED;
+  public constructor() { }
+}
+export class GetUserInformation implements Action {
   readonly type = GET_USER_INFORMATION;
-  public constructor(public payload: string) {}
+  public constructor(public payload: string) { }
 }
 
 export class GetUserInformationSuccess implements Action {
   readonly type = GET_USER_INFORMATION_SUCCESS;
-  public constructor(public payload: UserInformation) {}
+  public constructor(public payload: UserInformation) { }
 }
 
 export class GetUserInformationFailed implements Action {
   readonly type = GET_USER_INFORMATION_FAILED;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class UpdateUserInformation implements Action {
   readonly type = UPDATE_USER_INFORMATION;
-  public constructor(public payload: UserInformation) {}
+  public constructor(public payload: UserInformation) { }
 }
 
 export class UpdateUserInformationSuccess implements Action {
   readonly type = UPDATE_USER_INFORMATION_SUCCESS;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class UpdateUserInformationFailed implements Action {
   readonly type = UPDATE_USER_INFORMATION_FAILED;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class UpdateUserPermissions implements Action {
   readonly type = UPDATE_USER_PERMISSIONS;
-  public constructor(public payload: UserPermissionsConfig) {}
+  public constructor(public payload: UserPermissionsConfig) { }
 }
 
 export class UpdateUserPermissionsSuccess implements Action {
   readonly type = UPDATE_USER_PERMISSIONS_SUCCESS;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class UpdateUserPermissionsFailed implements Action {
   readonly type = UPDATE_USER_PERMISSIONS_FAILED;
-  public constructor(public payload: string) {}
+  public constructor(public payload: string) { }
 }
 
 export class AddUserHistory implements Action {
   readonly type = ADD_USER_HISTORY;
-  public constructor(public payload: string) {}
+  public constructor(public payload: string) { }
 }
 
 export class AddUserHistorySuccess implements Action {
   readonly type = ADD_USER_HISTORY_SUCCESS;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class AddUserHistoryFailed implements Action {
   readonly type = ADD_USER_HISTORY_FAILED;
-  public constructor() {}
+  public constructor() { }
 }
 
+export class GetUsers implements Action {
+  readonly type = GET_USERS;
+  public constructor() { }
+}
+
+export class GetUsersSuccess implements Action {
+  readonly type = GET_USERS_SUCCESS;
+  public constructor(public payload: any) { }
+}
+
+export class GetUsersFailed implements Action {
+  readonly type = GET_USERS_FAILED;
+  public constructor(public payload: any) { }
+}
 
 export type All =
   | CheckUserRegistration
@@ -128,4 +151,7 @@ export type All =
   | UpdateUserInformationFailed
   | UpdateUserPermissions
   | UpdateUserPermissionsSuccess
-  | UpdateUserPermissionsFailed;
+  | UpdateUserPermissionsFailed
+  | GetUsers
+  | GetUsersSuccess
+  | GetUsersFailed;
