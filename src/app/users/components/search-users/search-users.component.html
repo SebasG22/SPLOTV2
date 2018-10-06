@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="">
+  <mat-form-field class="w-full">
+    <input matInput [placeholder]="placeholder" formControlName="search">
+  </mat-form-field>
+
+  <mat-radio-group formControlName="searchBy">
+    <mat-radio-button value="Name">Name</mat-radio-button>
+    <mat-radio-button value="Email">Email</mat-radio-button>
+  </mat-radio-group>
+</form>

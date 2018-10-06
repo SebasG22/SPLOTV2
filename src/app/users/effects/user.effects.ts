@@ -127,25 +127,23 @@ export class UserEffects {
 
   @Effect()
   getUsersSuccess$ = this.actions$
-    .ofType(usersActions.GET_USERS_SUCCESS)
+    .ofType(usersActions.FILTER_USERS)
     .pipe(
       map((action: any) => action.payload),
-      switchMap(() => {
-        return this.userService.getUsers();
+      switchMap((query) => {
+        return this.userService.filterUsers(query);
       }),
-      map((response: any) => [new usersActions.GetUsersSuccess(response)]),
+      map((response: any) => [new usersActions.FilterUsersSuccess(response)]),
       catchError((error) => {
-        return [new usersActions.GetUsersFailed(error)];
+        return [new usersActions.FilterUsersFailed(error)];
       })
     );
 
   @Effect({ dispatch: false })
   getUsersFailed$ = this.actions$
-    .ofType(usersActions.GET_USERS_FAILED)
+    .ofType(usersActions.FILTER_USERS_FAILED)
     .pipe(
-      switchMap(() => {
-        return this.userService.getUsers();
-      }),
+      map((action: any) => action.payload),
       tap((response: any) => {
         this.zone.run(() => {
           this.toastr.error('An error occurred trying to get users', '¡Error!');

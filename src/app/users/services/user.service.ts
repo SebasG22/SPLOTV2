@@ -129,7 +129,7 @@ export class UserService {
       });
   }
 
-  public getUsers() {
-    return this.afs.collection('users').valueChanges();
+  public filterUsers(query: { search: string, searchBy: string, page: number }) {
+    return this.afs.collection('users', ref => ref.where(`${query.searchBy}`, '<=', `${query.search}`)).valueChanges();
   }
 }

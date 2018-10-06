@@ -28,9 +28,9 @@ export const ADD_USER_HISTORY = '[ USER ] - ADD USER HISTORY';
 export const ADD_USER_HISTORY_SUCCESS = '[ USER ] - ADD USER HISTORY SUCCESS';
 export const ADD_USER_HISTORY_FAILED = '[ USER ] - ADD USER HISTORY failed';
 
-export const GET_USERS = '[ USER ] - GET USERS';
-export const GET_USERS_SUCCESS = '[ USER ] - GET USERS SUCCESS';
-export const GET_USERS_FAILED = '[ USER ] - GET USERS FAILED';
+export const FILTER_USERS = '[ USER ] - FILTER USERS';
+export const FILTER_USERS_SUCCESS = '[ USER ] - FILTER USERS SUCCESS';
+export const FILTER_USERS_FAILED = '[ USER ] - FILTER USERS FAILED';
 
 export class RegisterUser implements Action {
   readonly type = REGISTER_USER;
@@ -121,18 +121,18 @@ export class AddUserHistoryFailed implements Action {
   public constructor() { }
 }
 
-export class GetUsers implements Action {
-  readonly type = GET_USERS;
+export class FilterUsers implements Action {
+  readonly type = FILTER_USERS;
   public constructor() { }
 }
 
-export class GetUsersSuccess implements Action {
-  readonly type = GET_USERS_SUCCESS;
+export class FilterUsersSuccess implements Action {
+  readonly type = FILTER_USERS_SUCCESS;
   public constructor(public payload: any) { }
 }
 
-export class GetUsersFailed implements Action {
-  readonly type = GET_USERS_FAILED;
+export class FilterUsersFailed implements Action {
+  readonly type = FILTER_USERS_FAILED;
   public constructor(public payload: any) { }
 }
 
@@ -152,6 +152,6 @@ export type All =
   | UpdateUserPermissions
   | UpdateUserPermissionsSuccess
   | UpdateUserPermissionsFailed
-  | GetUsers
-  | GetUsersSuccess
-  | GetUsersFailed;
+  | FilterUsers
+  | FilterUsersSuccess
+  | FilterUsersFailed;
