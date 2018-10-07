@@ -19,7 +19,7 @@ import { forEach } from 'lodash';
 import { Store } from '@ngrx/store';
 import { UpdateUserInformation } from '../../actions/users.actions';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { getSelectedUserInformation } from '../../reducers/users.reducer';
 @Component({
   selector: 'app-user-edit',
@@ -37,7 +37,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     private location: Location,
     private store: Store<{}>,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getUserInformation();
@@ -125,8 +125,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
     }
   }
 
-    ngOnDestroy(): void {
-      if (this.userInformation$) { this.userInformation$.unsubscribe(); }
-    }
+  ngOnDestroy(): void {
+    if (this.userInformation$) { this.userInformation$.unsubscribe(); }
+  }
 
 }

@@ -4,6 +4,13 @@
   <div class="w-full">
     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form" (ngSubmit)="onSubmitForm(form)">
 
+      <div class="mb-4 float-right">
+        <div class="form-switch inline-block align-middle">
+          <input type="checkbox" name="1" id="1" class="form-switch-checkbox" formControlName="public" />
+          <label class="form-switch-label" for="1"></label>
+        </div>
+      </div>
+
       <div class="mb-4" *ngIf="mode==='edit'">
         <label class="block text-grey-darker text-sm font-bold mb-2">
           Identification
@@ -28,15 +35,6 @@
           formControlName="description"></textarea>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Public
-        </label>
-        <div class="form-switch inline-block align-middle">
-          <input type="checkbox" name="1" id="1" class="form-switch-checkbox" formControlName="public" />
-          <label class="form-switch-label" for="1"></label>
-        </div>
-      </div>
 
 
       <div class="mb-4">

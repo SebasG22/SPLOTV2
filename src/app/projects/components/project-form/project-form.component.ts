@@ -9,6 +9,7 @@ import { GetUsersInformationByIds } from '../../../users/actions/users.actions';
 import { UserInformation } from '../../../users/models';
 import { Observable } from 'rxjs';
 import { getUsersList, getUsersLoadingData } from '../../../users/reducers/users.reducer';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-project-form',
@@ -26,7 +27,8 @@ export class ProjectFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private store: Store<{}>,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private location: Location
     ) { }
 
     @Input() mode: 'create' | 'edit';
@@ -104,6 +106,12 @@ export class ProjectFormComponent implements OnInit {
                 case 'edit':
                     return this.store.dispatch(new UpdateProject(value));
             }
+        }
+    }
+
+    public goBack() {
+        if (this.location) {
+            this.location.back();
         }
     }
 
