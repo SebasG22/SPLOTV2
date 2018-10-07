@@ -32,6 +32,10 @@ export const FILTER_USERS = '[ USER ] - FILTER USERS';
 export const FILTER_USERS_SUCCESS = '[ USER ] - FILTER USERS SUCCESS';
 export const FILTER_USERS_FAILED = '[ USER ] - FILTER USERS FAILED';
 
+export const GET_USERS_INFORMATION_BY_IDS = '[ USER ] - GET USERS INFORMATION BY IDS';
+export const GET_USERS_INFORMATION_BY_IDS_SUCCESS = '[ USER ] - GET USERS INFORMATION BY IDS SUCCESS';
+export const GET_USERS_INFORMATION_BY_IDS_FAILED = '[ USER ] - GET USERS INFORMATION BY IDS FAILED';
+
 export class RegisterUser implements Action {
   readonly type = REGISTER_USER;
   public constructor(public payload: UserProvider) { }
@@ -136,6 +140,21 @@ export class FilterUsersFailed implements Action {
   public constructor(public payload: any) { }
 }
 
+export class GetUsersInformationByIds implements Action {
+  readonly type = GET_USERS_INFORMATION_BY_IDS;
+  public constructor(public payload: any) { }
+}
+
+export class GetUsersInformationByIdsSuccess implements Action {
+  readonly type = GET_USERS_INFORMATION_BY_IDS_SUCCESS;
+  public constructor(public payload: any) { }
+}
+
+export class GetUsersInformationByIdsFailed implements Action {
+  readonly type = GET_USERS_INFORMATION_BY_IDS_FAILED;
+  public constructor(public payload: any = null) { }
+}
+
 export type All =
   | CheckUserRegistration
   | CheckUserRegistrationSuccess
@@ -154,4 +173,7 @@ export type All =
   | UpdateUserPermissionsFailed
   | FilterUsers
   | FilterUsersSuccess
-  | FilterUsersFailed;
+  | FilterUsersFailed
+  | GetUsersInformationByIds
+  | GetUsersInformationByIdsSuccess
+  | GetUsersInformationByIdsFailed;

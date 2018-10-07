@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UserProvider } from '../../auth/models';
-import { from, combineLatest } from 'rxjs';
+import { from, combineLatest, of } from 'rxjs';
 import {
   UserInformation,
   AppPermissions,
@@ -127,6 +127,16 @@ export class UserService {
         created_at: firebase.firestore.FieldValue.serverTimestamp(),
         created_by: userId
       });
+  }
+
+  public getUsersInformationByIds(participantsIds: any[]) {
+    const obs = [];
+    console.log('hey');
+    forEach(participantsIds, item => {
+      obs.push(this.getUserInformation(item));
+    });
+    console.log('stop here');
+    return (obs.length === 0) ? of([]) : combineLatest(obs);
   }
 
   public filterUsers(query: { search: string, searchBy: string, page: number }) {

@@ -40,15 +40,30 @@
 
 
       <div class="mb-4">
-        <button matButton (click)="openUsersSearchModal()">
-          Search Participants
-        </button>
         <label class="block text-grey-darker text-sm font-bold mb-2">
           Participants
         </label>
-        <ul class="text-grey-darker">
+        <ng-container *ngIf="(loadingData$ | async ) as loadingData; else notLoadingData">
+          <mat-progress-bar *ngIf="loadingData" [mode]="'indeterminate'">
+          </mat-progress-bar>
+        </ng-container>
+
+
+        <ng-template #notLoadingData>
+          <ng-container *ngIf="(participantsInformation$ | async) as participantsInformation; else notParticipants">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+              [value]="getParticipantsName(participantsInformation)" type="text" [readonly]="true" (click)="openUsersSearchModal()">
+          </ng-container>
+          <ng-template #notParticipants>
+            Not participants
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+              type="text" [readOnly]="true" (click)="openUsersSearchModal()">
+          </ng-template>
+        </ng-template>
+
+        <!-- <ul class="text-grey-darker" *ngFor="let participant of participants">
           <li> Sebastián Guevara</li>
-        </ul>
+        </ul> -->
       </div>
 
       <div class="mb-4">

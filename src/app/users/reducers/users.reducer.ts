@@ -30,11 +30,15 @@ export function reducer(state: State = initialState, action: Actions): State {
     case userActions.REGISTER_USER_SUCCESS:
       return { ...state, currentUser: action.payload };
     case userActions.FILTER_USERS:
-    case userActions.FILTER_USERS_FAILED: {
+    case userActions.FILTER_USERS_FAILED:
+    case userActions.GET_USERS_INFORMATION_BY_IDS:
+    case userActions.GET_USERS_INFORMATION_BY_IDS_FAILED: {
       return { ...state, usersList: null, loading_data: true, };
     }
     case userActions.FILTER_USERS_SUCCESS:
+    case userActions.GET_USERS_INFORMATION_BY_IDS_SUCCESS: {
       return { ...state, usersList: action.payload, loading_data: false };
+    }
     default:
       return state;
   }
@@ -50,4 +54,4 @@ export const selectUserStatusState = createSelector(selectUserState, (state: any
 export const getCurrentUserInformation = createSelector(selectUserStatusState, (state: State) => state.currentUser);
 export const getSelectedUserInformation = createSelector(selectUserStatusState, (state: State) => state.selectedUser);
 export const getUsersList = createSelector(selectUserStatusState, (state: State) => state.usersList);
-export const getLoadingData = createSelector(selectUserStatusState, (state: State) => state.loading_data);
+export const getUsersLoadingData = createSelector(selectUserStatusState, (state: State) => state.loading_data);

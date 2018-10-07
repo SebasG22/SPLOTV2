@@ -5,74 +5,106 @@ import { UpdateProject, CreateProject } from '../actions/projects.action';
 import { MatDialog } from '@angular/material';
 import { SearchUsersComponent } from '../../../users/components/search-users/search-users.component';
 import { get, forEach } from 'lodash';
+import { GetUsersInformationByIds } from '../../../users/actions/users.actions';
+import { UserInformation } from '../../../users/models';
+import { Observable } from 'rxjs';
+import { getUsersList, getUsersLoadingData } from '../../../users/reducers/users.reducer';
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss']
+    selector: 'app-project-form',
+    templateUrl: './project-form.component.html',
+    styleUrls: ['./project-form.component.scss']
 })
 export class ProjectFormComponent implements OnInit {
 
-  public form: FormGroup;
+    public form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private store: Store<{}>,
-    private dialog: MatDialog
-  ) { }
+    public participantsInformation$: Observable<UserInformation[]>;
 
-  @Input() mode: 'create' | 'edit';
+    public loadingData$: Observable<boolean>;
 
-  ngOnInit() {
-    this.buildForm();
-  }
+    constructor(
+        private fb: FormBuilder,
+        private store: Store<{}>,
+        private dialog: MatDialog
+    ) { }
 
-  public buildForm() {
-    this.form = this.fb.group({
-      'id': [''],
-      'name': ['', Validators.required],
-      'description': ['', Validators.required],
-      'state': ['', Validators.required],
-      'public': ['', Validators.required],
-      'participantsIds': ['', Validators.required],
-      'files': ['', Validators.required]
-    });
-    this.form.get('id').disable({ onlySelf: true });
-  }
+    @Input() mode: 'create' | 'edit';
 
-  public openUsersSearchModal() {
-    const modal = this.dialog.open(SearchUsersComponent, {
-      width: '95%',
-      data: {
-        placeholder: 'Search Users'
-      }
-    });
+    ngOnInit() {
+        this.buildForm();
+        this.listenUserList();
+    }
 
-    modal.afterClosed().subscribe((data) => {
-      if (data) {
+    public buildForm() {
+        this.form = this.fb.group({
+            'id': [''],
+            'name': ['', Validators.required],
+            'description': ['', Validators.required],
+            'state': ['', Validators.required],
+            'public': ['', Validators.required],
+            'participantsIds': ['', Validators.required],
+            'files': ['', Validators.required]
+        });
+        this.form.get('id').disable({ onlySelf: true });
+    }
+
+    public openUsersSearchModal() {
+        const modal = this.dialog.open(SearchUsersComponent, {
+            width: '95%',
+            data: {
+                placeholder: 'Search Users'
+            }
+        });
+
+        modal.afterClosed().subscribe((data) => {
+            if (data) {
+                const usersIds = [];
+                forEach(get(data, 'selected', []), item => {
+                    usersIds.push(get(item, 'id', ''));
+                });
+                this.form.patchValue({
+                    participantsIds: usersIds.join()
+                });
+                this.getParticipantsInformation(usersIds);
+            }
+        }
+        );
+    }
+
+    public listenLoadingData() {
+        this.loadingData$ = this.store.select(getUsersLoadingData);
+    }
+
+    /**
+     * @description listen the pariticipants information changes
+     * @author Sebastián Guevara
+     */
+    public listenUserList() {
+        this.participantsInformation$ = this.store.select(getUsersList);
+    }
+
+    public getParticipantsInformation(usersIds: string[]) {
+        this.store.dispatch(new GetUsersInformationByIds(usersIds));
+    }
+
+    public getParticipantsName(usersInformation: UserInformation[]) {
         const usersIds = [];
-        forEach(get(data, 'selected', []), item => {
-          usersIds.push(get(item, 'id', ''));
+        forEach(usersInformation, item => {
+            usersIds.push(get(item, 'name', ''));
         });
-        this.form.patchValue({
-          participantsIds: usersIds.join()
-        });
-      }
+        return usersIds;
     }
-    );
 
-
-  }
-
-  public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
-    if (valid) {
-      switch (this.mode) {
-        case 'create':
-          return this.store.dispatch(new CreateProject(value));
-        case 'edit':
-          return this.store.dispatch(new UpdateProject(value));
-      }
+    public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
+        if (valid) {
+            switch (this.mode) {
+                case 'create':
+                    return this.store.dispatch(new CreateProject(value));
+                case 'edit':
+                    return this.store.dispatch(new UpdateProject(value));
+            }
+        }
     }
-  }
 
 }

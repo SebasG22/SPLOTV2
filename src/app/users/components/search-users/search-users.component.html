@@ -12,39 +12,58 @@
     <mat-radio-button value="email">Email</mat-radio-button>
   </mat-radio-group>
 
-  <ng-container *ngIf="usersSelected.length > 0">
-    <p class="text-xl leading-tight">Usuarios Seleccionados</p>
-    <section *ngFor="let user of usersSelected">
-      <div class="flex items-center">
-        <mat-checkbox (change)="toggleUser(user, $event)" [checked]="true"></mat-checkbox>
-        <img class="w-10 h-10 rounded-full mr-4" [src]="user.photo" [alt]="'Avatar of ' + user.name">
-        <div class="text-sm">
-          <p class="text-black leading-none">{{ user.name }}</p>
-          <p class="text-grey-dark"> {{ user.email }}</p>
-        </div>
-      </div>
-    </section>
-  </ng-container>
-
-  <ng-container *ngIf="(usersList$ | async) as usersList">
-    <p class="text-xl leading-tight">Resultados de Búsqueda</p>
-    <section *ngFor="let user of usersList">
-      <div class="flex items-center" *ngIf="!isUserSelected(user)">
-        <mat-checkbox (change)="toggleUser(user, $event)"> - </mat-checkbox>
-        <img class="w-10 h-10 rounded-full mr-4" [src]="user.photo" [alt]="'Avatar of ' + user.name">
-        <div class="text-sm">
-          <p class="text-black leading-none">{{ user.name }}</p>
-          <p class="text-grey-dark"> {{ user.email }}</p>
-        </div>
-      </div>
-    </section>
-  </ng-container>
-
-  <ng-container *ngIf="(loadingData$ | async ) as loadingData">
+  <ng-container *ngIf="(loadingData$ | async ) as loadingData; else notLoadingData">
     <mat-progress-bar *ngIf="loadingData" [mode]="'indeterminate'">
     </mat-progress-bar>
-  </ng-container>
+  </ng-container>h
+
+  <ng-template #notLoadingData>
+
+    <ng-container *ngIf="usersSelected.length > 0">
+      <p class="text-xl leading-tight">Usuarios Seleccionados</p>
+      <section *ngFor="let user of usersSelected">
+        <div class="flex items-center">
+          <mat-checkbox (change)="toggleUser(user, $event)" [checked]="true"></mat-checkbox>
+          <img class="w-10 h-10 rounded-full mr-4" [src]="user.photo" [alt]="'Avatar of ' + user.name">
+          <div class="text-sm">
+            <p class="text-black leading-none">{{ user.name }}</p>
+            <p class="text-grey-dark"> {{ user.email }}</p>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-container *ngIf="usersList.length > 0; else notResults">
+      <p class="text-xl leading-tight">Resultados de Búsqueda</p>
+      <section *ngFor="let user of usersList">
+        <div class="flex items-center" *ngIf="!isUserSelected(user)">
+          <mat-checkbox (change)="toggleUser(user, $event)"> - </mat-checkbox>
+          <img class="w-10 h-10 rounded-full mr-4" [src]="user.photo" [alt]="'Avatar of ' + user.name">
+          <div class="text-sm">
+            <p class="text-black leading-none">{{ user.name }}</p>
+            <p class="text-grey-dark"> {{ user.email }}</p>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-template #notResults>
+      <p> No se han encontrado resultados </p>
+    </ng-template>
+
+  </ng-template>
 
 
+  <button type="button" class="bg-green-base hover:bg-green text-green-darkest font-bold py-2 px-4 rounded inline-flex items-center"
+    (click)="closeModal()">
+    <i class="fas fa-check-circle"></i>
+    <span>&nbsp;Ok</span>
+  </button>
+
+  <button type="button" class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded inline-flex items-center"
+    mat-dialog-close>
+    <i class="fas fa-times-circle"></i>
+    <span>&nbsp;Cancel</span>
+  </button>
 
 </form>

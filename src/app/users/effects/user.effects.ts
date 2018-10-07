@@ -136,9 +136,7 @@ export class UserEffects {
       }),
       delay(2000),
       map((response: any) => new usersActions.FilterUsersSuccess(response)),
-      catchError((error) => {
-        return [new usersActions.FilterUsersFailed(error)];
-      })
+      catchError((error) => [new usersActions.FilterUsersFailed(error)])
     );
 
   @Effect({ dispatch: false })
@@ -150,6 +148,29 @@ export class UserEffects {
         this.zone.run(() => {
           this.toastr.error('An error occurred trying to get users', '¡Error!');
         });
+      })
+    );
+
+  @Effect()
+  getUsersInformationByIds$ = this.actions$
+    .ofType(usersActions.GET_USERS_INFORMATION_BY_IDS)
+    .pipe(
+      map((action: any) => action.payload),
+      tap(console.warn),
+      switchMap((payload) => this.userService.getUsersInformationByIds(payload)),
+      map((response) => new usersActions.GetUsersInformationByIdsSuccess(response)),
+      catchError((error) => [new usersActions.GetUsersInformationByIdsFailed(error)])
+    );
+
+  @Effect({ dispatch: false })
+  getUsersInformationByIdsFailed$ = this.actions$
+    .ofType(usersActions.GET_USERS_INFORMATION_BY_IDS_FAILED)
+    .pipe(
+      map((action: any) => {
+        this.zone.run(() => {
+          this.toastr.error('An error occurred trying to get users information by ids', '¡Error!');
+        });
+        console.error(action.payload);
       })
     );
 

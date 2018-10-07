@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, timer, Subscription } from 'rxjs';
-import { getLoadingData, getUsersList } from '../../reducers/users.reducer';
+import { getUsersLoadingData, getUsersList } from '../../reducers/users.reducer';
 import { MAT_DIALOG_DATA, MatCheckboxChange, MatDialogRef } from '@angular/material';
 import { FilterUsers } from '../../actions/users.actions';
 import { UserInformation } from '../../models';
@@ -23,7 +23,7 @@ export class SearchUsersComponent implements OnInit {
 
   public usersList$: Subscription;
 
-  public; userList: UserInformation[] = [];
+  public usersList: UserInformation[] = [];
 
   public usersSelected: UserInformation[] = [];
 
@@ -46,13 +46,13 @@ export class SearchUsersComponent implements OnInit {
   }
 
   public listenLoadData() {
-    this.loadingData$ = this.store.select(getLoadingData);
+    this.loadingData$ = this.store.select(getUsersLoadingData);
   }
 
   public listenUserList() {
     this.usersList$ = this.store.select(getUsersList).subscribe((users) => {
       if (users) {
-        this.userList = users;
+        this.usersList = users;
       }
     });
   }
