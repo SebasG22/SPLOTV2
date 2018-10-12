@@ -27,8 +27,7 @@ export class ProjectFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private store: Store<{}>,
-        private dialog: MatDialog,
-        private location: Location
+        private dialog: MatDialog
     ) { }
 
     @Input() mode: 'create' | 'edit';
@@ -43,10 +42,10 @@ export class ProjectFormComponent implements OnInit {
             'id': [''],
             'name': ['', Validators.required],
             'description': ['', Validators.required],
-            'state': ['', Validators.required],
-            'public': ['', Validators.required],
+            'state': [''],
+            'public': [true],
             'participantsIds': ['', Validators.required],
-            'files': ['', Validators.required]
+            'files': ['']
         });
         this.form.get('id').disable({ onlySelf: true });
     }
@@ -99,6 +98,7 @@ export class ProjectFormComponent implements OnInit {
     }
 
     public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
+        console.log({ valid, value });
         if (valid) {
             switch (this.mode) {
                 case 'create':
@@ -110,9 +110,7 @@ export class ProjectFormComponent implements OnInit {
     }
 
     public goBack() {
-        if (this.location) {
-            this.location.back();
-        }
+
     }
 
 }

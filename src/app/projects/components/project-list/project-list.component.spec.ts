@@ -11,9 +11,9 @@ describe('ProjectListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectListComponent ]
+      declarations: [ProjectListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -24,5 +24,9 @@ describe('ProjectListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display a list of projects', () => {
+
   });
 });

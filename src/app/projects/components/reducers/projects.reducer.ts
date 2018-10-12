@@ -22,21 +22,17 @@ const initialState: State = {
 export function reducer(state: State = initialState, action: Actions): State {
 
     switch (action.type) {
+        case projectsAction.LIST_PROJECTS_SUCCESS:
+            return { ...state, projects: action.payload };
         default:
             return state;
     }
 }
 
 
-export const reducers = {
-    auth: reducer,
-};
+export const reducers = reducer;
 
-export const selectProjectState = createFeatureSelector<ProjectFeatureModel>('ProjectFeatureModel');
-export const selectProjectStatusState = createSelector(
-    selectProjectState,
-    (state: ProjectFeatureModel) => state.project
-);
-export const getProjects = createSelector(selectProjectStatusState, (state: State) => state.projects);
-export const getProjectsSelected = createSelector(selectProjectStatusState, (state: State) => state.projectSelected);
+export const selectProjectState = createFeatureSelector<State>('ProjectFeatureModel');
+export const getProjects = createSelector(selectProjectState, (state: State) => state.projects);
+export const getProjectsSelected = createSelector(selectProjectState, (state: State) => state.projectSelected);
 

@@ -13,9 +13,9 @@ export const UPDATE_PROJECT = '[ Projects ] - Update Project';
 export const UPDATE_PROJECT_SUCCESS = '[ Projects ] - Update Project Success';
 export const UPDATE_PROJECT_FAILED = '[ Projects ] - Update Project Failed';
 
-export const GET_PROJECTS = '[ Projects ] - Get Projects';
-export const GET_PROJECTS_SUCCESS = '[ Projects ] - Get Projects Success';
-export const GET_PROJECTS_FAILED = '[ Projects ] - Get Projects Failed';
+export const LIST_PROJECTS = '[ Projects ] - List Projects';
+export const LIST_PROJECTS_SUCCESS = '[ Projects ] - List Projects Success';
+export const LIST_PROJECTS_FAILED = '[ Projects ] - List Projects Failed';
 
 
 export class CreateProject implements Action {
@@ -63,18 +63,18 @@ export class UpdateProjectFailed implements Action {
     constructor(public payload: any = null) { }
 }
 
-export class GetProjects implements Action {
-    readonly type = GET_PROJECTS;
+export class ListProjects implements Action {
+    readonly type = LIST_PROJECTS;
     constructor(public payload: any = null) { }
 }
 
-export class GetProjectsSuccess implements Action {
-    readonly type = GET_PROJECTS_SUCCESS;
+export class ListProjectsSuccess implements Action {
+    readonly type = LIST_PROJECTS_SUCCESS;
     constructor(public payload: IProject[]) { }
 }
 
-export class GetProjectsFailed implements Action {
-    readonly type = GET_PROJECTS_FAILED;
+export class ListProjectsFailed implements Action {
+    readonly type = LIST_PROJECTS_FAILED;
     constructor(public payload: any = null) { }
 }
 
@@ -87,6 +87,6 @@ export type All = CreateProject |
     UpdateProject |
     UpdateProjectSuccess |
     UpdateProjectFailed |
-    GetProjects |
-    GetProjectsSuccess |
-    GetProjectsFailed;
+    ListProjects |
+    ListProjectsSuccess |
+    ListProjectsFailed;

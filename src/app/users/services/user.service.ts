@@ -131,11 +131,9 @@ export class UserService {
 
   public getUsersInformationByIds(participantsIds: any[]) {
     const obs = [];
-    console.log('hey');
     forEach(participantsIds, item => {
       obs.push(this.getUserInformation(item));
     });
-    console.log('stop here');
     return (obs.length === 0) ? of([]) : combineLatest(obs);
   }
 

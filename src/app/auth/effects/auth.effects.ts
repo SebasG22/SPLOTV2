@@ -104,7 +104,7 @@ export class AuthEffects {
       */
       this.zone.run(() => {
         if (this.router.url === '/') {
-                  this.router.navigate(['/home']);
+          this.router.navigate(['/home']);
         }
       });
       return [
@@ -143,10 +143,11 @@ export class AuthEffects {
     private toastr: ToastrService,
     private router: Router,
     private zone: NgZone
-  ) {}
+  ) { }
 
   @Effect()
   public init$: Observable<Action> = defer(() =>
     of(new authActions.VerifyAuth())
   );
+
 }

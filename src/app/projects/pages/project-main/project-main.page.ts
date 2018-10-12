@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ListProjects } from '../../components/actions/projects.action';
+import { Observable } from 'rxjs';
+import { IProject } from '../../models';
+import { getProjects } from '../../components/reducers/projects.reducer';
 
 @Component({
   selector: 'page-project-main',
@@ -7,9 +12,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectMainPage implements OnInit {
 
-  constructor() { }
+  public projects$: Observable<IProject[]>;
+  constructor(
+    private store: Store<{}>
+  ) { }
 
   ngOnInit() {
+    this.listProjects();
   }
 
+  public listProjects() {
+    this.store.dispatch(new ListProjects());
+    this.projects$ = this.store.select(getProjects);
+  }
 }

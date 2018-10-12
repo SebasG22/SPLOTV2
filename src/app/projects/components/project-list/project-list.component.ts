@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IProject } from '../../models';
 import { Observable } from 'rxjs';
-import { GetProjects } from '../actions/projects.action';
+import { ListProjects } from '../actions/projects.action';
 import { getProjects } from '../reducers/projects.reducer';
 
 @Component({
@@ -12,19 +12,13 @@ import { getProjects } from '../reducers/projects.reducer';
 })
 export class ProjectListComponent implements OnInit {
 
+  @Input() public projects: IProject[];
 
-  public projects$: Observable<IProject[]>;
-  constructor(
-    private store: Store<{}>
-  ) { }
+  public displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
+
+  constructor() { }
 
   ngOnInit() {
-    this.getProjects();
-  }
-
-  public getProjects() {
-    this.store.dispatch(new GetProjects());
-    this.projects$ = this.store.select(getProjects);
   }
 
 }
