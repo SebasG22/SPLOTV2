@@ -1,40 +1,24 @@
-<table mat-table [dataSource]="projects">
-
-  <!-- Id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-
-  <!-- Description Column -->
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef> Description </th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
-
-  <!-- Actions Column -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-      </button>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
+<ng-container *ngFor="let project of projects">
+  <div class="w-5/6 lg:w- mx-auto pt-5">
+    <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+      <div class=" px-6 py-4">
+        <p class="text-blue text-lg text-center">{{ project.name }}</p>
+        <div class="text-center sm:text-left sm:flex-grow">
+          <div class="mb-4">
+            <p class="text-sm  text-center leading-tight text-grey-dark"> {{ project.description }} </p>
+          </div>
+          <div class="flex justify-center mb-4">
+            <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              [routerLink]="['/project', project.id ,'detail']">
+              Details
+            </button>
+            <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              (click)="goBack()">
+              Configure
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

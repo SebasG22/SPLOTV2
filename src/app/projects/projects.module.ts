@@ -10,6 +10,7 @@ import { reducers } from './components/reducers/projects.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
 import { SERVICES } from './services';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { SERVICES } from './services';
         ProjectsRoutingModule,
         ReactiveFormsModule,
         StoreModule.forFeature('ProjectFeatureModel', reducers),
-        EffectsModule.forFeature(EFFECTS)
+        EffectsModule.forFeature(EFFECTS),
+        RouterModule
     ],
     exports: [],
     providers: [
