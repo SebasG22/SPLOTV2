@@ -6,11 +6,11 @@ import { PAGES } from './pages';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './components/reducers/projects.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
 import { SERVICES } from './services';
 import { RouterModule } from '@angular/router';
+import { reducers } from './reducers/projects.reducer';
 
 @NgModule({
     declarations: [

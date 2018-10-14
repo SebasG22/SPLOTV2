@@ -8,10 +8,15 @@ import {
     LIST_PROJECTS,
     ListProjectsSuccess,
     ListProjectsFailed,
-    LIST_PROJECTS_FAILED
-} from '../components/actions/projects.action';
+    LIST_PROJECTS_FAILED,
+    GET_PROJECT,
+    GetProjectSuccess,
+    GetProjectFailed,
+    GET_PROJECT_FAILED
+} from '../actions/projects.action';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { ProjectService } from '../services/project.service';
+import { IProject } from '../models';
 
 @Injectable()
 export class ProjectEffects {
@@ -31,6 +36,25 @@ export class ProjectEffects {
     @Effect({ dispatch: false })
     createProjectFailed$ = this.actions$
         .ofType(CREATE_PROJECT_FAILED)
+        .pipe(
+            map((action: any) => console.error(action.payload))
+        );
+
+    @Effect()
+    getProject$ = this.actions$
+        .ofType(GET_PROJECT)
+        .pipe(
+            map((action: any) => action.payload),
+            switchMap((payload) => {
+                return this.projectService.getProject(payload);
+            }),
+            map((response: IProject) => new GetProjectSuccess(response)),
+            catchError((error) => [new GetProjectFailed(error)])
+        );
+
+    @Effect({ dispatch: false })
+    getProjectFailed$ = this.actions$
+        .ofType(GET_PROJECT_FAILED)
         .pipe(
             map((action: any) => console.error(action.payload))
         );

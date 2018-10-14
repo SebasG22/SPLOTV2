@@ -64,6 +64,42 @@ export abstract class FirebaseServiceAbstract {
             );
     }
 
+    /**
+     * Get a single document by id of the collection and theirs subcollections
+     * @param collectionId
+     * @param docId
+     */
+    protected getDocumentByCollectionIdWithSubcollections(
+        collectionId: string, docId: string, subCollectionsIds: string[], collectionIdName: string = collectionId) {
+        return this.afsStore.collection(collectionId).doc(docId).valueChanges()
+            .pipe(
+                map(data => {
+                    this.addDocIdOnItem(data);
+                    return data;
+                }),
+                switchMap((response: any) => {
+                    console.warn('response', response);
+                    const obs = [];
+                    forEach(subCollectionsIds, subCollectionId => {
+                        obs.push(this.getCollectionWithSubCollection(collectionId, response.id, subCollectionId));
+                    });
+                    return (obs.length === 0) ? of([]) : combineLatest(obs)
+                        .pipe(
+                            map((data: any) => {
+                                console.warn('data', data);
+                                forEach(subCollectionsIds, subCollectionIdItem => {
+                                    response[`${subCollectionIdItem}`] = get(data.filter((subCollectionDataItem) => {
+                                        return subCollectionDataItem.docId === response.docId;
+                                    }), `0.${subCollectionIdItem}`, []);
+
+                                });
+                                return response;
+                            })
+                        );
+                })
+            );
+    }
+
 
     protected getCollectionWithSubCollection(collectionId: string, docId: string, subCollectionId: string) {
         return this.afsStore.collection(collectionId).doc(docId).collection(subCollectionId).valueChanges().pipe(

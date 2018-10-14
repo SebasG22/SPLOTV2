@@ -8,6 +8,7 @@ export interface IProject {
     state: string;
     public: boolean;
     participantsIds: string;
+    participants: any;
     files: FileInformation[];
     created_by?: string;
     created_at?: any;

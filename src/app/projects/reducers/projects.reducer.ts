@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IProject } from '../../models';
+import { IProject } from '../models';
 import * as projectsAction from '../actions/projects.action';
 
 export type Actions = projectsAction.All;
@@ -22,6 +22,8 @@ const initialState: State = {
 export function reducer(state: State = initialState, action: Actions): State {
 
     switch (action.type) {
+        case projectsAction.GET_PROJECT_SUCCESS:
+            return { ...state, projectSelected: action.payload };
         case projectsAction.LIST_PROJECTS_SUCCESS:
             return { ...state, projects: action.payload };
         default:
@@ -34,5 +36,5 @@ export const reducers = reducer;
 
 export const selectProjectState = createFeatureSelector<State>('ProjectFeatureModel');
 export const getProjects = createSelector(selectProjectState, (state: State) => state.projects);
-export const getProjectsSelected = createSelector(selectProjectState, (state: State) => state.projectSelected);
+export const getProjectSelected = createSelector(selectProjectState, (state: State) => state.projectSelected);
 

@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IProject } from '../../models';
+import { IProject } from '../models';
 
 export const CREATE_PROJECT = '[ Projects ] - Create Project';
 export const CREATE_PROJECT_SUCCESS = '[ Projects ] - Create Project Success';

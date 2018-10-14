@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { from, Observable, of, combineLatest } from 'rxjs';
+import { from, Observable, of, combineLatest, observable } from 'rxjs';
 import { IProject } from '../models';
 import { switchMap, map, tap } from 'rxjs/operators';
 import * as firebase from 'firebase';
@@ -17,7 +17,7 @@ export class ProjectService extends FirebaseServiceAbstract {
     public createProject(project: IProject): Observable<any> {
         const id = this.afStore.createId();
         return from(this.afStore.collection('projects').doc(id).set(
-            { ...project, state: 'C' }))
+            { ...project, id: id, state: 'C', }))
             .pipe(
                 switchMap(() => {
                     const obs = [];
@@ -57,13 +57,31 @@ export class ProjectService extends FirebaseServiceAbstract {
             }));
     }
 
+    public getProject(projectId: string) {
+        return this.getDocumentByCollectionIdWithSubcollections('projects', projectId, ['participants'])
+            .pipe(switchMap((response: IProject) => {
+                const obs = [];
+                forEach(response.participants, (participant) => {
+                    obs.push(this.getDocumentByCollectionId('users', participant.id, 'user'));
+                });
+                return (obs.length === 0) ? of([]) : combineLatest(obs)
+                    .pipe(
+                        map((data) => {
+                            forEach(response.participants, (participant) => {
+                                participant.user = get(filter(data, (dataItem) => dataItem.id === participant.docId), '0.user', {});
+                            });
+                            return response;
+                        })
+                    );
+            }));
+    }
+
     public getProjects() {
         return this.getCollectionWithSubsCollections('projects', ['participants'])
             .pipe(
-                switchMap((response: any) => {
+                switchMap((response: IProject[]) => {
                     const obs = [];
                     forEach(response, (dataItem) => {
-                        console.log(dataItem);
                         forEach(dataItem.participants, (participant) => {
                             obs.push(this.getDocumentByCollectionId('users', participant.id, 'user'));
                         });
@@ -71,10 +89,8 @@ export class ProjectService extends FirebaseServiceAbstract {
                     return (obs.length === 0) ? of([]) : combineLatest(obs)
                         .pipe(
                             map((data) => {
-                                console.log('participant', response.participants);
                                 forEach(response, (responseItem) => {
                                     forEach(responseItem.participants, (participant) => {
-                                        console.log('participant', participant);
                                         participant.user = get(filter(data, (dataItem) => dataItem.id === participant.docId), '0.user', {});
                                         // responseItem.participant.
                                     });

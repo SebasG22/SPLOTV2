@@ -1,13 +1,38 @@
 <h1 class="text-black px-10"> Project Detail </h1>
-
-<div class="panel-project-form">
-  <div class="w-full">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-      <div class="mb-4">
-        <div class="mb-4">
-          <p class="text-xl leading-tight text-blue-dark">Adam Wathan</p>
-          <p class="text-sm leading-tight text-grey-dark">Developer at NothingWorks Inc.</p>
+<div class="w-5/6 lg:w- mx-auto pt-5">
+  <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+    <div class=" px-6 py-4">
+      <p class="text-blue text-lg text-center">{{ project.name }}</p>
+      <div class="text-center sm:text-left sm:flex-grow">
+        <div class="mt-4 mb-4">
+          <p class="text-sm leading-tight text-grey-dark"> <strong class="text-blue-darker text-sm db-"> Description:
+            </strong>
+            {{ project.description }} </p>
+        </div>
+        <div class="mt-4 mb-4">
+          <p class="text-sm leading-tight text-grey-dark"> <strong class="text-blue-darker text-sm db-"> Public:
+            </strong>
+            {{ project.public }} </p>
+        </div>
+        <div class="mt-4 mb-4">
+          <strong class="text-blue-darker text-sm db-"> Participants:</strong>
+          <section *ngFor="let participant of project.participants">
+            <div class="flex items-center">
+              <img class="w-10 h-10 rounded-full mr-4" [src]="participant.user.photo" [alt]="'Avatar of ' + participant.user.name">
+              <div class="text-sm">
+                <p class="text-black leading-none">{{ participant.user.name }}</p>
+                <p class="text-grey-dark"> {{ participant.user.email }}</p>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="flex justify-center mb-4">
+          <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            (click)="goBack()">
+            Configure
+          </button>
         </div>
       </div>
     </div>
   </div>
+</div>

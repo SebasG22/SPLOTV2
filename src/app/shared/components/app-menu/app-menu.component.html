@@ -3,20 +3,21 @@
                 <mat-toolbar-row>
                         <button mat-icon-button (click)="onOpenMenu()">
                                 <mat-icon aria-label="Menu icon">menu</mat-icon>
-                              </button>
-                    <span class="example-spacer"></span>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="outline-none">
-                            <mat-icon aria-label="Account icon">account_circle</mat-icon>
-                          </button>
-                          <mat-menu #menu="matMenu">
+                        </button>
+                        <span class="example-spacer"></span>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="outline-none">
+                                <mat-icon aria-label="Account icon">account_circle</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
                                 <button mat-menu-item class="outline-none" [routerLink]="['/user', currentUser.id ,'detail']">
                                         <mat-icon aria-label="Profile icon">face</mat-icon>
                                         Profile
                                 </button>
                                 <button mat-menu-item class="outline-none" (click)="logout()">
                                         <mat-icon aria-label="Sign out icon">input</mat-icon>
-                                    Sign out</button>
-                              </mat-menu>
+                                        Sign out
+                                </button>
+                        </mat-menu>
                 </mat-toolbar-row>
-            </mat-toolbar>
+        </mat-toolbar>
 </ng-container>
