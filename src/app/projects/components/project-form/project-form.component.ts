@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { UpdateProject, CreateProject } from '../actions/projects.action';
+import { UpdateProject, CreateProject } from '../../actions/projects.action';
 import { MatDialog } from '@angular/material';
 import { SearchUsersComponent } from '../../../users/components/search-users/search-users.component';
 import { get, forEach } from 'lodash';

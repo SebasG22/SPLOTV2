@@ -5,8 +5,8 @@ import { By } from '@angular/platform-browser';
 import { ProjectFormComponent } from './project-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule, combineReducers, Store } from '@ngrx/store';
-import * as projectReducer from '../reducers/projects.reducer';
-import { UpdateProject, CreateProject } from '../actions/projects.action';
+import * as projectReducer from '../../reducers/projects.reducer';
+import { UpdateProject, CreateProject } from '../../actions/projects.action';
 import { SharedModule } from '../../../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -91,7 +91,7 @@ describe('ProjectFormComponent', () => {
         expect(identificationControl.nativeElement).toBeTruthy();
     });
 
-    fit('When submit the form on create mode, must create the project', () => {
+    it('When submit the form on create mode, must create the project', () => {
         spyOn(component, 'onSubmitForm').and.callThrough();
         component.mode = 'edit';
         fixture.detectChanges();
