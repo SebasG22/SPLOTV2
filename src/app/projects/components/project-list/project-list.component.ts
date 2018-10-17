@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IProject } from '../../models';
 import { Observable } from 'rxjs';
-import { ListProjects } from '../actions/projects.action';
-import { getProjects } from '../reducers/projects.reducer';
+import { ListProjects } from '../../actions/projects.action';
+import { getProjects } from '../../reducers/projects.reducer';
 
 @Component({
   selector: 'app-project-list',

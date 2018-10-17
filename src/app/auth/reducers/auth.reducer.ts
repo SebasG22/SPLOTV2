@@ -3,49 +3,48 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserProvider } from '../models';
 export type Actions = authActions.All;
 
-export interface AuthFeatureModel  {
-    auth: State;
-  }
-
+export interface AuthFeatureModel {
+  auth: State;
+}
 
 export interface State {
-   verifyAuth: true | false | 'Logged';
-   userProvider: UserProvider;
-   loggedIn: boolean;
-  }
+  verifyAuth: true | false | 'Logged';
+  userProvider: UserProvider;
+  loggedIn: boolean;
+}
 
-  const initialState: State = {
-    verifyAuth: false,
-    userProvider: null,
-    loggedIn: false,
-  };
+export const initialState: State = {
+  verifyAuth: false,
+  userProvider: null,
+  loggedIn: false,
+};
 
-  export function reducer(state: State = initialState, action: Actions): State {
+export function reducer(state: State = initialState, action: Actions): State {
 
-    switch (action.type) {
-      case authActions.VERIFY_AUTH_SUCCESS: {
-        return { ...state, verifyAuth: true};
-      }
-      case authActions.LOGIN_SUCCESS: {
-        return { ...state, loggedIn: true, verifyAuth: 'Logged', userProvider: action.payload};
-      }
-      case authActions.LOGOUT_SUCCESS: {
-        return { ...state, loggedIn: false, verifyAuth: true};
-      }
-        default:
-        return state;
+  switch (action.type) {
+    case authActions.VERIFY_AUTH_SUCCESS: {
+      return { ...state, verifyAuth: true };
     }
+    case authActions.LOGIN_SUCCESS: {
+      return { ...state, loggedIn: true, verifyAuth: 'Logged', userProvider: action.payload };
+    }
+    case authActions.LOGOUT_SUCCESS: {
+      return { ...state, loggedIn: false, verifyAuth: true };
+    }
+    default:
+      return state;
+  }
 }
 
 
 export const reducers = {
-    auth: reducer,
-  };
+  auth: reducer,
+};
 
-  export const selectAuthState = createFeatureSelector<AuthFeatureModel>('AuthFeatureModel');
-  export const selectAuthStatusState = createSelector(
-    selectAuthState,
-    (state: AuthFeatureModel) => state.auth
-  );
-  export const getAuthVerifyState = createSelector(selectAuthStatusState, (state: State) => state.verifyAuth);
+export const selectAuthState = createFeatureSelector<AuthFeatureModel>('AuthFeatureModel');
+export const selectAuthStatusState = createSelector(
+  selectAuthState,
+  (state: AuthFeatureModel) => state.auth
+);
+export const getAuthVerifyState = createSelector(selectAuthStatusState, (state: State) => state.verifyAuth);
 
