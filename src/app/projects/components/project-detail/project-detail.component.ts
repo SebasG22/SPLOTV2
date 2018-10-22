@@ -16,4 +16,8 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  public goBack() {
+
+  }
+
 }
