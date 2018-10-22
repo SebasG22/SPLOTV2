@@ -9,8 +9,8 @@ import { Action } from '@ngrx/store';
 @Injectable()
 export class AppEffects {
 
-    @Effect({ dispatch: true })
-  verifyAuth$ = this.actions$.ofType(appActions.GET_APP_PERMISSIONS).pipe(
+  @Effect({ dispatch: true })
+  getAppPermissions$ = this.actions$.ofType(appActions.GET_APP_PERMISSIONS).pipe(
     switchMap(() =>
       this.appService.getAppPermissions().pipe(
         map(permissions => {
@@ -23,6 +23,6 @@ export class AppEffects {
   constructor(
     private actions$: Actions,
     private appService: AppService
-  ) {}
+  ) { }
 
 }

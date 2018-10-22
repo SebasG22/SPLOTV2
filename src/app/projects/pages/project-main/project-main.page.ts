@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ListProjects } from '../../components/actions/projects.action';
+import { ListProjects } from '../../actions/projects.action';
 import { Observable } from 'rxjs';
 import { IProject } from '../../models';
-import { getProjects } from '../../components/reducers/projects.reducer';
+import { getProjects } from '../../reducers/projects.reducer';
 
 @Component({
   selector: 'page-project-main',

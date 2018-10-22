@@ -47,6 +47,8 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
       skipWhile(verifyState => verifyState === false),
       map(verifyState => {
         if (verifyState === 'Logged') {
+          console.error('Cerrando Modal de verificación');
+
           this.dialogRef.close();
           // this.router.navigate(['/home']);
           return true;
