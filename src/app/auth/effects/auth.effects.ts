@@ -17,7 +17,13 @@ import {
   CheckAuthSession,
   LoginFailed,
   LOGIN_WITH_GITHUB,
-  CheckAuthSessionSuccess
+  CheckAuthSessionSuccess,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT,
+  LogoutSuccess,
+  LOGOUT_SUCCESS,
+  LoginSuccess
 } from '../actions/auth.actions';
 import { OnGo } from 'src/app/shared/actions/router.actions';
 import { GetAppPermissions } from '../../app.actions';
@@ -57,13 +63,14 @@ export class AuthEffects {
     );
 
 
-  @Effect({ dispatch: false })
+  @Effect()
   loginWithEmail$ = this.actions$.ofType(LOGIN_WITH_EMAIL).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithEmail(payload).pipe(
         map(() => {
           console.log('Logged with email');
+          return new LoginSuccess();
         })
       )
     )
@@ -77,6 +84,7 @@ export class AuthEffects {
     ),
     tap(() => {
       console.log('Logged using Google');
+      return new LoginSuccess();
     }),
     catchError(error => [new LoginFailed(error)])
   );
@@ -85,10 +93,9 @@ export class AuthEffects {
   loginWithGithub$ = this.actions$.ofType(LOGIN_WITH_GITHUB).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
-      this.authService.loginWithGithub(),
-      tap(() => {
-        console.log('Logged using Github');
-      })
+      this.authService.loginWithGithub()
+    ),
+    tap(() => console.log('Logged using Github')
     ),
     catchError(error => [new LoginFailed(error)])
   );
@@ -97,17 +104,14 @@ export class AuthEffects {
   loginSuccess$ = this.actions$.ofType(LOGIN_SUCCESS).pipe(
     map((action: any) => action.payload),
     switchMap(userAuth => {
-
       return [
         new appActions.GetAppPermissions(),
       ];
     })
   );
 
-
-
   @Effect({ dispatch: false })
-  loginFailed$ = this.actions$.ofType(authActions.LOGIN_FAILED).pipe(
+  loginFailed$ = this.actions$.ofType(LOGIN_FAILED).pipe(
     map((action: any) => action.payload),
     tap(payload => {
       this.zone.run(() => {
@@ -117,7 +121,7 @@ export class AuthEffects {
   );
 
   @Effect()
-  logout$ = this.actions$.ofType(authActions.LOGOUT).pipe(
+  logout$ = this.actions$.ofType(LOGOUT).pipe(
     switchMap(() => {
       this.zone.run(() => {
         this.router.navigate(['/']);
@@ -125,13 +129,13 @@ export class AuthEffects {
       return this.authService.logout();
     }),
     map(() => {
-      return new authActions.LogoutSuccess();
+      return new LogoutSuccess();
     })
   );
 
   @Effect({ dispatch: false })
   logoutSuccess$ = this.actions$.ofType(
-    authActions.LOGOUT_SUCCESS
+    LOGOUT_SUCCESS
   ).pipe(map(() => {
     window.location.reload();
   }));
