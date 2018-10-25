@@ -8,13 +8,13 @@ export interface AuthFeatureModel {
 }
 
 export interface State {
-  verifyAuth: true | false | 'Logged';
+  wasSessionChecked: boolean;
   userProvider: UserProvider;
   loggedIn: boolean;
 }
 
 export const initialState: State = {
-  verifyAuth: false,
+  wasSessionChecked: null,
   userProvider: null,
   loggedIn: false,
 };

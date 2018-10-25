@@ -10,43 +10,47 @@ import { isEmpty } from 'lodash';
 import { OnGo } from 'src/app/shared/actions/router.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { SetVerifyAuth } from 'src/app/auth/actions/auth.actions';
+import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
+import { User } from 'firebase';
 @Injectable()
 export class UserEffects {
   @Effect()
-  checkRegistrationUser$ = this.actions$
+  checkUserRegistration$ = this.actions$
     .ofType(usersActions.CHECK_USER_REGISTRATION)
     .pipe(
       map((action: any) => action.payload),
-      switchMap((payload: UserProvider) => {
-        return this.userService.getUserInformation(payload.id).pipe(
+      switchMap((payload: User) => {
+        return this.userService.getUserInformation(payload.uid).pipe(
           map((data: UserInformation) => {
             // Check user exists on firestore node
-            console.log('data', data);
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
             }
             // Must register user
-            return new usersActions.RegisterUser(payload);
+            return new usersActions.RegisterUser({
+              id: payload.uid,
+              name: payload.displayName,
+              email: payload.email,
+              photo: payload.photoURL
+            });
           })
         );
       })
     );
 
   @Effect()
-  checkRegistrationUserSuccess2$ = this.actions$.ofType(
-    usersActions.CHECK_USER_REGISTRATION_SUCCESS).pipe(
-      map((action: any) => action.payload),
-      switchMap(userAuth => {
+  checkUserRegistrationSuccess$ = this.actions$
+    .ofType(usersActions.CHECK_USER_REGISTRATION_SUCCESS)
+    .pipe(
+      map(() => {
         if (this.router.url === '/') {
           return [
             new OnGo({ path: ['/home'] }),
-            new SetVerifyAuth('Logged')
+            new SetAuthState('Logged')
           ];
+          // this.store.dispatch(new OnGo({ path: ['/home'] }));
         }
-        return [
-          new SetVerifyAuth('Logged')
-        ];
+        return new SetAuthState('Logged');
       })
     );
 
@@ -74,11 +78,11 @@ export class UserEffects {
         if (this.router.url === '/') {
           return [
             new OnGo({ path: ['/home'] }),
-            new SetVerifyAuth('Logged')
+            new LoginSuccess()
           ];
           // this.store.dispatch(new OnGo({ path: ['/home'] }));
         }
-        return new SetVerifyAuth('Logged');
+        return new SetAuthState('Logged');
       })
     );
 

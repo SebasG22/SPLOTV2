@@ -10,11 +10,13 @@ export const LOGIN_WITH_EMAIL = '[Auth] - Login with email';
 export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
 
 export const LOGIN_SUCCESS = '[ Auth ] - Login success';
-export const LOGIN_FAILED = '[ Auth ] - Login Failed';
+export const LOGIN_FAILED = '[ Auth ] - Login failed';
 
 export const LOGOUT = '[ Auth ] - Logout';
-export const LOGOUT_SUCCESS = '[ Auth ] - Logout Success';
-export const LOGOUT_FAILED = '[ Auth ] - Logout Failed';
+export const LOGOUT_SUCCESS = '[ Auth ] - Logout success';
+export const LOGOUT_FAILED = '[ Auth ] - Logout failed';
+
+export const SET_AUTH_STATE = '[ Auth ] - Set auth state';
 
 export class CheckAuthSession implements Action {
   readonly type = CHECK_AUTH_SESSION;
@@ -22,8 +24,7 @@ export class CheckAuthSession implements Action {
 
 export class CheckAuthSessionSuccess implements Action {
   readonly type = CHECK_AUTH_SESSION_SUCCESS;
-  // If has an activate auth session ( true or false)
-  constructor(public payload: boolean) { }
+  constructor() { }
 }
 
 export class LoginWithGoogle implements Action {
@@ -41,7 +42,7 @@ export class LoginWithGithub implements Action {
 }
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  public constructor(public payload: UserProvider) { }
+  public constructor() { }
 }
 
 export class LoginFailed implements Action {
@@ -63,7 +64,6 @@ export class LogoutFailed implements Action {
   readonly type = LOGOUT_FAILED;
   public constructor(public payload: any) { }
 }
-
 
 export type All =
   | LoginWithEmail

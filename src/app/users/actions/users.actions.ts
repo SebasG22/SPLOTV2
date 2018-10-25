@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
+import { User } from 'firebase';
 
 export const CHECK_USER_REGISTRATION = '[ User ] - Check user registration';
 export const CHECK_USER_REGISTRATION_SUCCESS = '[ User ] - Check user registration success';
@@ -53,7 +54,7 @@ export class RegisterUserFailed implements Action {
 
 export class CheckUserRegistration implements Action {
   readonly type = CHECK_USER_REGISTRATION;
-  public constructor(public payload: UserInformation) { }
+  public constructor(public payload: User) { }
 }
 
 export class CheckUserRegistrationSuccess implements Action {
