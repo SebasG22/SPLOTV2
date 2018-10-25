@@ -1,26 +1,33 @@
-import { AuthEmail, UserProvider } from '../models';
 import { Action } from '@ngrx/store';
 
-export const VERIFY_AUTH = '[ Auth ] - Verify Auth';
-export const VERIFY_AUTH_SUCCESS = '[ Auth ] - Verify Auth Success';
-export const LOGIN_WITH_EMAIL = '[ Auth ] - Login with email';
-export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
+import { AuthEmail, UserProvider } from '../models';
+
+export const CHECK_AUTH_SESSION = '[Auth] - Check Auth Session';
+export const CHECK_AUTH_SESSION_SUCCESS = '[Auth] - Check Auth Session';
+
 export const LOGIN_WITH_GOOGLE = '[ Auth ] - Login with google';
+export const LOGIN_WITH_EMAIL = '[Auth] - Login with email';
+export const LOGIN_WITH_GITHUB = '[ Auth ] - Login with github';
+
 export const LOGIN_SUCCESS = '[ Auth ] - Login success';
 export const LOGIN_FAILED = '[ Auth ] - Login Failed';
+
 export const LOGOUT = '[ Auth ] - Logout';
 export const LOGOUT_SUCCESS = '[ Auth ] - Logout Success';
 export const LOGOUT_FAILED = '[ Auth ] - Logout Failed';
 
-export const SET_VERIFY_AUTH = '[ Auth ] - Set Verify Auth';
-
-export class VerifyAuth implements Action {
-  readonly type = VERIFY_AUTH;
-  public constructor() { }
+export class CheckAuthSession implements Action {
+  readonly type = CHECK_AUTH_SESSION;
 }
 
-export class VerifyAuthSuccess implements Action {
-  readonly type = VERIFY_AUTH_SUCCESS;
+export class CheckAuthSessionSuccess implements Action {
+  readonly type = CHECK_AUTH_SESSION_SUCCESS;
+  // If has an activate auth session ( true or false)
+  constructor(public payload: boolean) { }
+}
+
+export class LoginWithGoogle implements Action {
+  readonly type = LOGIN_WITH_GOOGLE;
   public constructor() { }
 }
 export class LoginWithEmail implements Action {
@@ -32,12 +39,6 @@ export class LoginWithGithub implements Action {
   readonly type = LOGIN_WITH_GITHUB;
   public constructor() { }
 }
-
-export class LoginWithGoogle implements Action {
-  readonly type = LOGIN_WITH_GOOGLE;
-  public constructor() { }
-}
-
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
   public constructor(public payload: UserProvider) { }
@@ -60,17 +61,11 @@ export class LogoutSuccess implements Action {
 
 export class LogoutFailed implements Action {
   readonly type = LOGOUT_FAILED;
-  public constructor() { }
+  public constructor(public payload: any) { }
 }
 
-export class SetVerifyAuth {
-  readonly type = SET_VERIFY_AUTH;
-  public constructor(payload: true | false | 'Logged') { }
-}
 
 export type All =
-  | VerifyAuth
-  | VerifyAuthSuccess
   | LoginWithEmail
   | LoginWithGithub
   | LoginWithGoogle
@@ -78,5 +73,4 @@ export type All =
   | LoginFailed
   | Logout
   | LogoutSuccess
-  | LogoutFailed
-  | SetVerifyAuth;
+  | LogoutFailed;
