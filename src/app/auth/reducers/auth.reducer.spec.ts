@@ -1,7 +1,7 @@
 import * as authReducer from './auth.reducer';
 import * as authActions from '../actions/auth.actions';
 
-fdescribe('AuthReducer', () => {
+describe('AuthReducer', () => {
     describe('undefined action', () => {
         it('should return the default state', () => {
             const { initialState } = authReducer;
@@ -21,7 +21,7 @@ fdescribe('AuthReducer', () => {
     });
 });
 
-fdescribe('AuthReducer selectors', () => {
+describe('AuthReducer selectors', () => {
     describe('getAuthVerifyState', () => {
         it('should return the auth verify state', () => {
             const { initialState } = authReducer;
