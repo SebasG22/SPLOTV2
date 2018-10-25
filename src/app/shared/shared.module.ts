@@ -19,6 +19,9 @@ import {
 import { COMPONENTS } from './components';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { EffectsModule } from '@ngrx/effects';
+import { EFFECTS } from './effects';
+import { StoreModule } from '@ngrx/store';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -45,7 +48,10 @@ const MATERIAL_MODULES = [
   imports: [
     CommonModule,
     MATERIAL_MODULES,
-    RouterModule],
+    RouterModule,
+    StoreModule.forFeature('SharedFeatureModel', {}),
+    EffectsModule.forFeature(EFFECTS)
+  ],
   exports: [
     MATERIAL_MODULES,
     COMPONENTS

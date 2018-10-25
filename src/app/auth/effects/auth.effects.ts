@@ -102,17 +102,19 @@ export class AuthEffects {
       /* Doing this avoid instead of components on change view -> [ Angular Error]
       * https://github.com/angular/angular/issues/20290
       */
-      this.zone.run(() => {
-        if (this.router.url === '/') {
-          this.router.navigate(['/home']);
-        }
-      });
+      // this.zone.run(() => {
+      //   if (this.router.url === '/') {
+      //     this.router.navigate(['/home']);
+      //   }
+      // });
       return [
         new appActions.GetAppPermissions(),
         new userActions.CheckUserRegistration(userAuth)
       ];
     })
   );
+
+
 
   @Effect({ dispatch: false })
   loginFailed$ = this.actions$.ofType(authActions.LOGIN_FAILED).pipe(
@@ -136,6 +138,13 @@ export class AuthEffects {
       return new authActions.LogoutSuccess();
     })
   );
+
+  @Effect({ dispatch: false})
+  logoutSuccess$ = this.actions$.ofType(
+    authActions.LOGOUT_SUCCESS
+  ).pipe(map(() => {
+    window.location.reload();
+  }));
 
   constructor(
     private actions$: Actions,

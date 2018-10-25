@@ -1,4 +1,4 @@
 export interface RouterParams {
-    path: any[];
-    queryParams: any;
+    path: any;
+    queryParams?: any;
 }

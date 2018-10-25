@@ -26,7 +26,10 @@ export function reducer(state: State = initialState, action: Actions): State {
       return { ...state, verifyAuth: true };
     }
     case authActions.LOGIN_SUCCESS: {
-      return { ...state, loggedIn: true, verifyAuth: 'Logged', userProvider: action.payload };
+      return { ...state, userProvider: action.payload };
+    }
+    case authActions.SET_VERIFY_AUTH: {
+      return { ...state, loggedIn: true, verifyAuth: 'Logged' };
     }
     case authActions.LOGOUT_SUCCESS: {
       return { ...state, loggedIn: false, verifyAuth: true };

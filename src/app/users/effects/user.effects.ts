@@ -7,6 +7,10 @@ import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
+import { OnGo } from 'src/app/shared/actions/router.actions';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { SetVerifyAuth } from 'src/app/auth/actions/auth.actions';
 @Injectable()
 export class UserEffects {
   @Effect()
@@ -18,6 +22,7 @@ export class UserEffects {
         return this.userService.getUserInformation(payload.id).pipe(
           map((data: UserInformation) => {
             // Check user exists on firestore node
+            console.log('data', data);
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
             }
@@ -27,6 +32,24 @@ export class UserEffects {
         );
       })
     );
+
+  @Effect()
+  checkRegistrationUserSuccess2$ = this.actions$.ofType(
+    usersActions.CHECK_USER_REGISTRATION_SUCCESS).pipe(
+      map((action: any) => action.payload),
+      switchMap(userAuth => {
+        if (this.router.url === '/') {
+          return [
+            new OnGo({ path: ['/home'] }),
+            new SetVerifyAuth('Logged')
+          ];
+        }
+        return [
+          new SetVerifyAuth('Logged')
+        ];
+      })
+    );
+
 
   @Effect()
   registerUser$ = this.actions$.ofType(usersActions.REGISTER_USER).pipe(
@@ -42,6 +65,22 @@ export class UserEffects {
       );
     })
   );
+
+  @Effect()
+  registerUserSuccess$ = this.actions$
+    .ofType(usersActions.REGISTER_USER_SUCCESS)
+    .pipe(
+      map(() => {
+        if (this.router.url === '/') {
+          return [
+            new OnGo({ path: ['/home'] }),
+            new SetVerifyAuth('Logged')
+          ];
+          // this.store.dispatch(new OnGo({ path: ['/home'] }));
+        }
+        return new SetVerifyAuth('Logged');
+      })
+    );
 
   @Effect()
   getUserInformation$ = this.actions$
@@ -178,6 +217,8 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private zone: NgZone,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private store: Store<{}>
   ) { }
 }
