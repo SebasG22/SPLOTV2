@@ -12,53 +12,60 @@ export const LOGOUT = '[ Auth ] - Logout';
 export const LOGOUT_SUCCESS = '[ Auth ] - Logout Success';
 export const LOGOUT_FAILED = '[ Auth ] - Logout Failed';
 
+export const SET_VERIFY_AUTH = '[ Auth ] - Set Verify Auth';
+
 export class VerifyAuth implements Action {
   readonly type = VERIFY_AUTH;
-  public constructor () {}
+  public constructor() { }
 }
 
 export class VerifyAuthSuccess implements Action {
   readonly type = VERIFY_AUTH_SUCCESS;
-  public constructor () {}
+  public constructor() { }
 }
 export class LoginWithEmail implements Action {
   readonly type = LOGIN_WITH_EMAIL;
-  public constructor(public payload: AuthEmail) {}
+  public constructor(public payload: AuthEmail) { }
 }
 
 export class LoginWithGithub implements Action {
   readonly type = LOGIN_WITH_GITHUB;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class LoginWithGoogle implements Action {
   readonly type = LOGIN_WITH_GOOGLE;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  public constructor(public payload: UserProvider) {}
+  public constructor(public payload: UserProvider) { }
 }
 
 export class LoginFailed implements Action {
   readonly type = LOGIN_FAILED;
-  public constructor(public payload: any) {}
+  public constructor(public payload: any) { }
 }
 
 export class Logout implements Action {
   readonly type = LOGOUT;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class LogoutSuccess implements Action {
   readonly type = LOGOUT_SUCCESS;
-  public constructor() {}
+  public constructor() { }
 }
 
 export class LogoutFailed implements Action {
   readonly type = LOGOUT_FAILED;
-  public constructor() {}
+  public constructor() { }
+}
+
+export class SetVerifyAuth {
+  readonly type = SET_VERIFY_AUTH;
+  public constructor(payload: true | false | 'Logged') { }
 }
 
 export type All =
@@ -71,4 +78,5 @@ export type All =
   | LoginFailed
   | Logout
   | LogoutSuccess
-  | LogoutFailed;
+  | LogoutFailed
+  | SetVerifyAuth;

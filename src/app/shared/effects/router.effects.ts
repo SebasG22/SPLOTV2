@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { ON_GO, OnGo } from '../actions/router.actions';
@@ -15,13 +15,15 @@ export class RouterEffects {
         map((action: OnGo) => action.payload),
         map((payload) => {
             const { path, queryParams } = payload;
+            // this.zone.run(() => {
             this.router.navigate(path, { queryParams });
-        })
-    );
+            // });
+        }));
 
     constructor(
         private actions$: Actions,
-        private router: Router
+        private router: Router,
+        private zone: NgZone
     ) { }
 }
 

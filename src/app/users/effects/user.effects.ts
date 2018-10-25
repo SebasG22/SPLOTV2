@@ -1,13 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import * as usersActions from '../actions/users.actions';
-import { map, tap, switchMap, catchError, delay } from 'rxjs/operators';
+import { map, tap, switchMap, catchError, delay, mergeMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
 import { GET_USERS_INFORMATION, GetUsersInformationSuccess } from '../actions/users.actions';
+import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
 @Injectable()
 export class UserEffects {
   @Effect()
@@ -19,6 +20,7 @@ export class UserEffects {
         return this.userService.getUserInformation(payload.id).pipe(
           map((data: UserInformation) => {
             // Check user exists on firestore node
+            console.log('data', data);
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
             }
@@ -28,6 +30,18 @@ export class UserEffects {
         );
       })
     );
+
+  @Effect()
+  checkUserRegistrationSuccess$ = this.actions$
+    .ofType(usersActions.CHECK_USER_REGISTRATION_SUCCESS)
+    .pipe(
+      mergeMap(() => {
+        return [
+          new LoginSuccess(),
+        ];
+      })
+    );
+
 
   @Effect()
   registerUser$ = this.actions$.ofType(usersActions.REGISTER_USER).pipe(
@@ -43,6 +57,15 @@ export class UserEffects {
       );
     })
   );
+
+  @Effect()
+  registerUserSuccess$ = this.actions$
+    .ofType(usersActions.REGISTER_USER_SUCCESS)
+    .pipe(
+      map(() => {
+        return new LoginSuccess();
+      })
+    );
 
   @Effect()
   getUserInformation$ = this.actions$
@@ -175,22 +198,24 @@ export class UserEffects {
       })
     );
 
-    @Effect()
-    getUsers$ = this.actions$.ofType((
-      GET_USERS_INFORMATION
-    )).pipe(
-      switchMap(() => {
-        return this.userService.getUsersInformation();
-      }),
-      map((usersInfo) => {
-        return new GetUsersInformationSuccess(usersInfo);
-      })
-    );
+  @Effect()
+  getUsers$ = this.actions$.ofType((
+    GET_USERS_INFORMATION
+  )).pipe(
+    switchMap(() => {
+      return this.userService.getUsersInformation();
+    }),
+    map((usersInfo) => {
+      return new GetUsersInformationSuccess(usersInfo);
+    })
+  );
 
   constructor(
     private actions$: Actions,
     private userService: UserService,
     private zone: NgZone,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private store: Store<{}>
   ) { }
 }
