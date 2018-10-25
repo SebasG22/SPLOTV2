@@ -31,11 +31,9 @@ fdescribe('Check auth session', () => {
     });
 
     it('Should create the success action', () => {
-        const payload = true;
-        const action = new CheckAuthSessionSuccess(payload);
+        const action = new CheckAuthSessionSuccess();
         expect({ ...action }).toEqual({
-            type: CHECK_AUTH_SESSION_SUCCESS,
-            payload
+            type: CHECK_AUTH_SESSION_SUCCESS
         });
     });
 });
@@ -64,16 +62,9 @@ fdescribe('Login actions', () => {
     });
 
     it('should create an action for login success', () => {
-        const payload: UserProvider = {
-            id: '1',
-            name: 'Test User',
-            email: '123@123.com',
-            photo: ''
-        };
-        const action = new LoginSuccess(payload);
+        const action = new LoginSuccess();
         expect({ ...action }).toEqual({
-            type: LOGIN_SUCCESS,
-            payload
+            type: LOGIN_SUCCESS
         });
     });
 
@@ -105,7 +96,7 @@ fdescribe('Logout actions', () => {
         });
     });
 
-    it('should create and action for logout failed', () => {
+    it('should create an action for logout failed', () => {
         const payload = { message: 'The system is down' };
         const action = new LogoutFailed(payload);
         expect({ ...action }).toEqual(
@@ -116,3 +107,4 @@ fdescribe('Logout actions', () => {
         );
     });
 });
+

@@ -3,39 +3,62 @@ import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, defer } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import * as authActions from '../actions/auth.actions';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import * as userActions from '../../users/actions/users.actions';
 import * as appActions from '../../app.actions';
 import { ToastrService } from 'ngx-toastr';
+import { CheckUserRegistration } from '../../users/actions/users.actions';
+import {
+  CHECK_AUTH_SESSION,
+  LOGIN_WITH_GOOGLE,
+  LOGIN_WITH_EMAIL,
+  CheckAuthSession,
+  LoginFailed,
+  LOGIN_WITH_GITHUB,
+  CheckAuthSessionSuccess
+} from '../actions/auth.actions';
+import { OnGo } from 'src/app/shared/actions/router.actions';
+import { GetAppPermissions } from '../../app.actions';
 
 @Injectable()
 export class AuthEffects {
-  // TODO: Review if when the auth changes send to login page
-  @Effect({ dispatch: true })
-  verifyAuth$ = this.actions$.ofType(authActions.VERIFY_AUTH).pipe(
-    map((action: any) => action.payload),
-    switchMap(payload =>
-      this.authService.listenAuth().pipe(
-        map(user => {
-          if (user) {
-            return new authActions.LoginSuccess({
-              id: user.uid,
-              name: user.displayName,
-              email: user.email,
-              photo: user.photoURL
-            });
-          }
-          return new authActions.VerifyAuthSuccess();
-        })
-      )
+
+  @Effect()
+  public init$ = defer(() =>
+    of(
+      [
+        new CheckAuthSession,
+        new GetAppPermissions
+      ]
     )
   );
 
+  @Effect()
+  checkAuthSession$ = this.actions$.ofType(CHECK_AUTH_SESSION)
+    .pipe(
+      switchMap(() => {
+        return this.authService.listenAuth();
+      }),
+      map((userAuth) => {
+        if (userAuth) {
+          return [
+            new CheckUserRegistration(userAuth),
+            new CheckAuthSessionSuccess()
+          ];
+        } else {
+          return [
+            new OnGo({ path: ['/'] }),
+            new CheckAuthSessionSuccess()
+          ];
+        }
+      })
+    );
+
+
   @Effect({ dispatch: false })
-  loginWithEmail$ = this.actions$.ofType(authActions.LOGIN_WITH_EMAIL).pipe(
+  loginWithEmail$ = this.actions$.ofType(LOGIN_WITH_EMAIL).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
       this.authService.loginWithEmail(payload).pipe(
@@ -46,70 +69,37 @@ export class AuthEffects {
     )
   );
 
-  @Effect()
-  loginWithGoogle$ = this.actions$.ofType(authActions.LOGIN_WITH_GOOGLE).pipe(
+  @Effect({ dispatch: false })
+  loginWithGoogle$ = this.actions$.ofType(LOGIN_WITH_GOOGLE).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
-      this.authService.loginWithGoogle().pipe(
-        map(data => data.additionalUserInfo.profile),
-        switchMap(data => {
-          return this.authService.listenAuth().pipe(
-            map(auth => {
-              console.log(auth);
-              return new authActions.LoginSuccess({
-                id: auth.uid,
-                name: data.name,
-                email: data.email,
-                photo: data.picture
-              });
-            })
-          );
-        })
-      )
+      this.authService.loginWithGoogle(),
     ),
-    catchError(error => [new authActions.LoginFailed(error)])
+    tap(() => {
+      console.log('Logged using Google');
+    }),
+    catchError(error => [new LoginFailed(error)])
   );
 
   @Effect()
-  loginWithGithub$ = this.actions$.ofType(authActions.LOGIN_WITH_GITHUB).pipe(
+  loginWithGithub$ = this.actions$.ofType(LOGIN_WITH_GITHUB).pipe(
     map((action: any) => action.payload),
     switchMap(payload =>
-      this.authService.loginWithGithub().pipe(
-        tap(console.log),
-        map(data => data.user),
-        switchMap(user => {
-          return this.authService.listenAuth().pipe(
-            map(auth => {
-              console.log(auth);
-              return new authActions.LoginSuccess({
-                id: auth.uid,
-                name: user.displayName,
-                email: user.email,
-                photo: user.photoURL
-              });
-            })
-          );
-        })
-      )
+      this.authService.loginWithGithub(),
+      tap(() => {
+        console.log('Logged using Github');
+      })
     ),
-    catchError(error => [new authActions.LoginFailed(error)])
+    catchError(error => [new LoginFailed(error)])
   );
 
   @Effect()
-  loginSuccess$ = this.actions$.ofType(authActions.LOGIN_SUCCESS).pipe(
+  loginSuccess$ = this.actions$.ofType(LOGIN_SUCCESS).pipe(
     map((action: any) => action.payload),
     switchMap(userAuth => {
-      /* Doing this avoid instead of components on change view -> [ Angular Error]
-      * https://github.com/angular/angular/issues/20290
-      */
-      // this.zone.run(() => {
-      //   if (this.router.url === '/') {
-      //     this.router.navigate(['/home']);
-      //   }
-      // });
+
       return [
         new appActions.GetAppPermissions(),
-        new userActions.CheckUserRegistration(userAuth)
       ];
     })
   );
@@ -139,7 +129,7 @@ export class AuthEffects {
     })
   );
 
-  @Effect({ dispatch: false})
+  @Effect({ dispatch: false })
   logoutSuccess$ = this.actions$.ofType(
     authActions.LOGOUT_SUCCESS
   ).pipe(map(() => {
@@ -154,9 +144,6 @@ export class AuthEffects {
     private zone: NgZone
   ) { }
 
-  @Effect()
-  public init$: Observable<Action> = defer(() =>
-    of(new authActions.VerifyAuth())
-  );
+
 
 }

@@ -7,25 +7,31 @@ import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
-import { GET_USERS_INFORMATION, GetUsersInformationSuccess } from '../actions/users.actions';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
+import { User } from 'firebase';
 @Injectable()
 export class UserEffects {
   @Effect()
-  checkRegistrationUser$ = this.actions$
+  checkUserRegistration$ = this.actions$
     .ofType(usersActions.CHECK_USER_REGISTRATION)
     .pipe(
       map((action: any) => action.payload),
-      switchMap((payload: UserProvider) => {
-        return this.userService.getUserInformation(payload.id).pipe(
+      switchMap((payload: User) => {
+        return this.userService.getUserInformation(payload.uid).pipe(
           map((data: UserInformation) => {
             // Check user exists on firestore node
-            console.log('data', data);
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
             }
             // Must register user
-            return new usersActions.RegisterUser(payload);
+            return new usersActions.RegisterUser({
+              id: payload.uid,
+              name: payload.displayName,
+              email: payload.email,
+              photo: payload.photoURL
+            });
           })
         );
       })
