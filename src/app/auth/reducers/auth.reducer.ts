@@ -1,7 +1,11 @@
 import * as authActions from '../actions/auth.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { UserProvider } from '../models';
+
+import { get } from 'lodash';
+
 export type Actions = authActions.All;
+
 
 export interface AuthFeatureModel {
   auth: State;
@@ -9,30 +13,25 @@ export interface AuthFeatureModel {
 
 export interface State {
   wasSessionChecked: boolean;
-  userProvider: UserProvider;
   loggedIn: boolean;
 }
 
 export const initialState: State = {
   wasSessionChecked: null,
-  userProvider: null,
   loggedIn: false,
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
 
   switch (action.type) {
-    case authActions.VERIFY_AUTH_SUCCESS: {
-      return { ...state, verifyAuth: true };
+    case authActions.CHECK_AUTH_SESSION_SUCCESS: {
+      return { ...state, wasSessionChecked: true };
     }
     case authActions.LOGIN_SUCCESS: {
-      return { ...state, userProvider: action.payload };
-    }
-    case authActions.SET_VERIFY_AUTH: {
-      return { ...state, loggedIn: true, verifyAuth: 'Logged' };
+      return { ...state, loggedIn: true };
     }
     case authActions.LOGOUT_SUCCESS: {
-      return { ...state, loggedIn: false, verifyAuth: true };
+      return { ...state, loggedIn: false, wasSessionChecked: true };
     }
     default:
       return state;
@@ -47,7 +46,8 @@ export const reducers = {
 export const selectAuthState = createFeatureSelector<AuthFeatureModel>('AuthFeatureModel');
 export const selectAuthStatusState = createSelector(
   selectAuthState,
-  (state: AuthFeatureModel) => state.auth
+  (state: AuthFeatureModel) => get(state, 'auth', null)
 );
-export const getAuthVerifyState = createSelector(selectAuthStatusState, (state: State) => state.verifyAuth);
+export const getAuthWasSessionChecked = createSelector(selectAuthStatusState, (state: State) => get(state, 'wasSessionChecked ', null));
+export const getAuthUserIsLogged = createSelector(selectAuthStatusState, (state: State) => get(state, 'loggedIn', null));
 

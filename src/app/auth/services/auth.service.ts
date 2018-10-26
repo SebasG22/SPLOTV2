@@ -9,7 +9,7 @@ import { map, take } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
-    public constructor(private afAuth: AngularFireAuth, private store: Store<{}>) {}
+    public constructor(private afAuth: AngularFireAuth, private store: Store<{}>) { }
 
     // TODO: Review if we only need to listen once.
     public listenAuth() {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of, defer } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, defer, from } from 'rxjs';
+import { catchError, map, switchMap, tap, concat, take, skipUntil, skipWhile, filter } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
@@ -11,10 +11,9 @@ import * as appActions from '../../app.actions';
 import { ToastrService } from 'ngx-toastr';
 import { CheckUserRegistration } from '../../users/actions/users.actions';
 import {
-  CHECK_AUTH_SESSION,
+  CHECK_AUTH_SESSION_SPLOT,
   LOGIN_WITH_GOOGLE,
   LOGIN_WITH_EMAIL,
-  CheckAuthSession,
   LoginFailed,
   LOGIN_WITH_GITHUB,
   CheckAuthSessionSuccess,
@@ -23,7 +22,8 @@ import {
   LOGOUT,
   LogoutSuccess,
   LOGOUT_SUCCESS,
-  LoginSuccess
+  LoginSuccess,
+  CheckAuthSessionSplot
 } from '../actions/auth.actions';
 import { OnGo } from 'src/app/shared/actions/router.actions';
 import { GetAppPermissions } from '../../app.actions';
@@ -31,33 +31,33 @@ import { GetAppPermissions } from '../../app.actions';
 @Injectable()
 export class AuthEffects {
 
-  @Effect()
-  public init$ = defer(() =>
-    of(
-      [
-        new CheckAuthSession,
-        new GetAppPermissions
-      ]
-    )
-  );
+  private authPreviousValue: any = null;
 
   @Effect()
-  checkAuthSession$ = this.actions$.ofType(CHECK_AUTH_SESSION)
+  checkAuthSession$ = this.actions$.ofType(CHECK_AUTH_SESSION_SPLOT)
     .pipe(
       switchMap(() => {
         return this.authService.listenAuth();
       }),
-      map((userAuth) => {
+      filter(currentValue => {
+        console.warn('Values are equal', this.authPreviousValue === currentValue);
+        return this.authPreviousValue !== currentValue;
+      }),
+      tap(() => console.log('Este valor')),
+      switchMap((userAuth) => {
+        this.authPreviousValue = userAuth;
+        console.log('User auth', userAuth);
         if (userAuth) {
-          return [
+          console.warn('entrando');
+          return from([
             new CheckUserRegistration(userAuth),
             new CheckAuthSessionSuccess()
-          ];
+          ]);
         } else {
-          return [
+          return from([
             new OnGo({ path: ['/'] }),
             new CheckAuthSessionSuccess()
-          ];
+          ]);
         }
       })
     );
@@ -104,6 +104,9 @@ export class AuthEffects {
   loginSuccess$ = this.actions$.ofType(LOGIN_SUCCESS).pipe(
     map((action: any) => action.payload),
     switchMap(userAuth => {
+      // this.zone.run(() => {
+      //   this.router.navigate(['home']);
+      // });
       return [
         new appActions.GetAppPermissions(),
       ];
@@ -148,6 +151,14 @@ export class AuthEffects {
     private zone: NgZone
   ) { }
 
+  @Effect()
+  public init$ = defer(() => {
 
+    return from([new CheckAuthSessionSplot,
+    new GetAppPermissions]);
+    // of()
+
+  }
+  );
 
 }

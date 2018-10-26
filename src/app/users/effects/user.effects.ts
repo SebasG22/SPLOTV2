@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
 import { User } from 'firebase';
+import { from, of } from 'rxjs';
 @Injectable()
 export class UserEffects {
   @Effect()
@@ -44,13 +45,14 @@ export class UserEffects {
     .pipe(
       map(() => {
         if (this.router.url === '/') {
-          return [
+          return new OnGo({ path: ['/home'] });
+          return from([
             new OnGo({ path: ['/home'] }),
-            new SetAuthState('Logged')
-          ];
-          // this.store.dispatch(new OnGo({ path: ['/home'] }));
+            new LoginSuccess()
+          ]);
+        } else {
+          return new LoginSuccess();
         }
-        return new SetAuthState('Logged');
       })
     );
 
@@ -76,13 +78,13 @@ export class UserEffects {
     .pipe(
       map(() => {
         if (this.router.url === '/') {
-          return [
+          return from([
             new OnGo({ path: ['/home'] }),
             new LoginSuccess()
-          ];
+          ]);
           // this.store.dispatch(new OnGo({ path: ['/home'] }));
         }
-        return new SetAuthState('Logged');
+        return new LoginSuccess();
       })
     );
 

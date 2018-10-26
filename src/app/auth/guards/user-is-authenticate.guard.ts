@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { tap, skipWhile, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { VerifyAuthComponent } from '../components/verify-auth/verify-auth.component';
-import { getAuthVerifyState } from '../reducers/auth.reducer';
+import { getAuthWasSessionChecked } from '../reducers/auth.reducer';
 
 @Injectable()
 export class UserIsAuthenticate implements CanActivate, CanActivateChild {
@@ -34,7 +34,7 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select(getAuthVerifyState).pipe(
+    return this.store.select(getAuthWasSessionChecked).pipe(
       tap(stateData => {
         console.log('hey');
         if (this.dialogRef === undefined) {
@@ -44,19 +44,17 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
         }
         return stateData;
       }),
-      skipWhile(verifyState => verifyState === false),
-      map(verifyState => {
-        if (verifyState === 'Logged') {
+      skipWhile(sessionChecked => sessionChecked === null),
+      map(sessionChecked => {
+        if (sessionChecked) {
           console.error('Cerrando Modal de verificación');
 
-          this.dialogRef.close();
-          // this.router.navigate(['/home']);
+          return this.dialogRef.close();
           return true;
         }
         // TO FIX: AL PARECER SI SE RETORNA SOLO FALSE, LA PÁGINA QUEDA EN BLANCO
-        this.router.navigate(['/']);
-        this.dialogRef.close();
-        // return false;
+        return this.dialogRef.close();
+        return false;
       })
     );
   }
