@@ -7,6 +7,7 @@ import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
+import { GET_USERS_INFORMATION, GetUsersInformationSuccess } from '../actions/users.actions';
 @Injectable()
 export class UserEffects {
   @Effect()
@@ -171,6 +172,18 @@ export class UserEffects {
           this.toastr.error('An error occurred trying to get users information by ids', '¡Error!');
         });
         console.error(action.payload);
+      })
+    );
+
+    @Effect()
+    getUsers$ = this.actions$.ofType((
+      GET_USERS_INFORMATION
+    )).pipe(
+      switchMap(() => {
+        return this.userService.getUsersInformation();
+      }),
+      map((usersInfo) => {
+        return new GetUsersInformationSuccess(usersInfo);
       })
     );
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { UserProvider } from '../../auth/models';
-import { from, combineLatest, of } from 'rxjs';
+import { from, combineLatest, of, observable } from 'rxjs';
 import {
   UserInformation,
   AppPermissions,
@@ -12,9 +12,13 @@ import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { isEmpty, forEach, findIndex, get } from 'lodash';
 import * as appSelectors from '../../app.reducer';
 import { Store } from '@ngrx/store';
+import { FirebaseServiceAbstract } from 'src/app/shared/abstracts/firebase-service.abstract';
 @Injectable()
-export class UserService {
-  constructor(private afs: AngularFirestore, private store: Store<{}>) { }
+export class UserService extends FirebaseServiceAbstract {
+
+  constructor(private afs: AngularFirestore, private store: Store<{}>) {
+    super(afs);
+   }
 
   public getUserInformation(userId: string) {
     return this.afs
@@ -139,5 +143,12 @@ export class UserService {
 
   public filterUsers(query: { search: string, searchBy: string, page: number }) {
     return this.afs.collection('users', ref => ref.orderBy(`${query.searchBy}`).startAt(`${query.search}`)).valueChanges();
+  }
+
+  /**
+   * Get all the users
+   */
+  public getUsersInformation() {
+    return this.getCollectionById('users');
   }
 }

@@ -32,11 +32,14 @@ export function reducer(state: State = initialState, action: Actions): State {
     case userActions.FILTER_USERS:
     case userActions.FILTER_USERS_FAILED:
     case userActions.GET_USERS_INFORMATION_BY_IDS:
-    case userActions.GET_USERS_INFORMATION_BY_IDS_FAILED: {
+    case userActions.GET_USERS_INFORMATION_BY_IDS_FAILED:
+    case userActions.GET_USERS_INFORMATION:
+    case userActions.GET_USERS_INFORMATION_FAILED: {
       return { ...state, usersList: null, loading_data: true, };
     }
     case userActions.FILTER_USERS_SUCCESS:
-    case userActions.GET_USERS_INFORMATION_BY_IDS_SUCCESS: {
+    case userActions.GET_USERS_INFORMATION_BY_IDS_SUCCESS:
+    case userActions.GET_USERS_INFORMATION_SUCCESS: {
       return { ...state, usersList: action.payload, loading_data: false };
     }
     default:
