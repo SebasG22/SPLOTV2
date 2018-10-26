@@ -1,6 +1,6 @@
 import {
-    CheckAuthSession,
-    CHECK_AUTH_SESSION,
+    CheckAuthSessionSplot,
+    CHECK_AUTH_SESSION_SPLOT,
     CheckAuthSessionSuccess,
     CHECK_AUTH_SESSION_SUCCESS,
     LoginWithGoogle,
@@ -24,9 +24,9 @@ import { UserProvider } from '../models';
 
 fdescribe('Check auth session', () => {
     it('Should create the action', () => {
-        const action = new CheckAuthSession();
+        const action = new CheckAuthSessionSplot();
         expect({ ...action }).toEqual({
-            type: CHECK_AUTH_SESSION
+            type: CHECK_AUTH_SESSION_SPLOT
         });
     });
 

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
 import { User } from 'firebase';
+import { from, of } from 'rxjs';
 @Injectable()
 export class UserEffects {
   @Effect()

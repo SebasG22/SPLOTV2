@@ -15,9 +15,10 @@ export class RouterEffects {
         map((action: OnGo) => action.payload),
         map((payload) => {
             const { path, queryParams } = payload;
-            // this.zone.run(() => {
-            this.router.navigate(path, { queryParams });
-            // });
+            console.warn('hey router');
+            this.zone.run(() => {
+                this.router.navigate(path, { queryParams });
+            });
         }));
 
     constructor(

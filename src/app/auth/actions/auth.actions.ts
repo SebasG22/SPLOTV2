@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 
 import { AuthEmail, UserProvider } from '../models';
 
-export const CHECK_AUTH_SESSION = '[Auth] - Check Auth Session';
+export const CHECK_AUTH_SESSION_SPLOT = '[Auth] - Check Auth Session';
 export const CHECK_AUTH_SESSION_SUCCESS = '[Auth] - Check Auth Session';
 
 export const LOGIN_WITH_GOOGLE = '[ Auth ] - Login with google';
@@ -18,8 +18,9 @@ export const LOGOUT_FAILED = '[ Auth ] - Logout failed';
 
 export const SET_AUTH_STATE = '[ Auth ] - Set auth state';
 
-export class CheckAuthSession implements Action {
-  readonly type = CHECK_AUTH_SESSION;
+export class CheckAuthSessionSplot implements Action {
+  readonly type = CHECK_AUTH_SESSION_SPLOT;
+  constructor() { }
 }
 
 export class CheckAuthSessionSuccess implements Action {
@@ -66,6 +67,8 @@ export class LogoutFailed implements Action {
 }
 
 export type All =
+  | CheckAuthSessionSplot
+  | CheckAuthSessionSuccess
   | LoginWithEmail
   | LoginWithGithub
   | LoginWithGoogle
