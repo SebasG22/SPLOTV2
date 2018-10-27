@@ -8,20 +8,18 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { tap, skipWhile, map } from 'rxjs/operators';
+import { map, withLatestFrom, delay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { VerifyAuthComponent } from '../components/verify-auth/verify-auth.component';
-import { getAuthWasSessionChecked } from '../reducers/auth.reducer';
+import { getAuthWasSessionChecked, getAuthUserIsLogged } from '../reducers/auth.reducer';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Injectable()
 export class UserIsAuthenticate implements CanActivate, CanActivateChild {
   constructor(
     private store: Store<{}>,
-    private dialog: MatDialog,
-    private router: Router
+    private loaderService: LoaderService
   ) { }
 
-  private dialogRef;
 
   public canActivate(
     route: ActivatedRouteSnapshot,
@@ -34,28 +32,24 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select(getAuthWasSessionChecked).pipe(
-      tap(stateData => {
-        console.log('hey');
-        if (this.dialogRef === undefined) {
-          this.dialogRef = this.dialog.open(VerifyAuthComponent, {
-            width: '90%'
-          });
-        }
-        return stateData;
-      }),
-      skipWhile(sessionChecked => sessionChecked === null),
-      map(sessionChecked => {
-        if (sessionChecked) {
-          console.error('Cerrando Modal de verificación');
+    return this.store.select(getAuthWasSessionChecked)
+      .pipe(
+        map((authSessionWasChecked) => {
+          if (!this.loaderService.loader) {
+            this.loaderService.showLoader('Checking Session');
+          }
+        }),
+        withLatestFrom(this.store.select(getAuthUserIsLogged)),
+        delay(3000),
+        map(([authWasSessionChecked, authUserIsLogged]) => {
+          setTimeout(() => {
+            console.log('setTimeout');
+            // tslint:disable-next-line:no-unused-expression
+            this.loaderService.dismissLoader(2000);
+          }, 2000);
+          return authUserIsLogged;
+        }),
 
-          return this.dialogRef.close();
-          return true;
-        }
-        // TO FIX: AL PARECER SI SE RETORNA SOLO FALSE, LA PÁGINA QUEDA EN BLANCO
-        return this.dialogRef.close();
-        return false;
-      })
-    );
+      );
   }
 }

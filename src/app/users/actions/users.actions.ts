@@ -54,7 +54,7 @@ export class RegisterUserFailed implements Action {
 
 export class CheckUserRegistration implements Action {
   readonly type = CHECK_USER_REGISTRATION;
-  public constructor(public payload: User) { }
+  public constructor(public payload: any) { }
 }
 
 export class CheckUserRegistrationSuccess implements Action {

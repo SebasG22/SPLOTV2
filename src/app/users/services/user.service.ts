@@ -17,6 +17,7 @@ export class UserService {
   constructor(private afs: AngularFirestore, private store: Store<{}>) { }
 
   public getUserInformation(userId: string) {
+    console.warn('Get User Information', userId);
     return this.afs
       .collection('users')
       .doc(userId)

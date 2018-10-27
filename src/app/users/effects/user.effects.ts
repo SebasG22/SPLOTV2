@@ -1,13 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import * as usersActions from '../actions/users.actions';
-import { map, tap, switchMap, catchError, delay } from 'rxjs/operators';
+import { map, tap, switchMap, catchError, delay, mergeMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
-import { OnGo } from 'src/app/shared/actions/router.actions';
+import { OnGoToPageSplot } from 'src/app/shared/actions/router.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
@@ -15,14 +15,15 @@ import { User } from 'firebase';
 import { from, of } from 'rxjs';
 @Injectable()
 export class UserEffects {
-  @Effect()
-  checkUserRegistration$ = this.actions$
+  @Effect({ dispatch: true })
+  checkUserRegistrationSplot$ = this.actions$
     .ofType(usersActions.CHECK_USER_REGISTRATION)
     .pipe(
       map((action: any) => action.payload),
       switchMap((payload: User) => {
         return this.userService.getUserInformation(payload.uid).pipe(
           map((data: UserInformation) => {
+            console.warn('Check User Registration', data);
             // Check user exists on firestore node
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
@@ -43,16 +44,10 @@ export class UserEffects {
   checkUserRegistrationSuccess$ = this.actions$
     .ofType(usersActions.CHECK_USER_REGISTRATION_SUCCESS)
     .pipe(
-      map(() => {
-        if (this.router.url === '/') {
-          return new OnGo({ path: ['/home'] });
-          return from([
-            new OnGo({ path: ['/home'] }),
-            new LoginSuccess()
-          ]);
-        } else {
-          return new LoginSuccess();
-        }
+      mergeMap(() => {
+        return [
+          new LoginSuccess(),
+        ];
       })
     );
 
@@ -77,13 +72,6 @@ export class UserEffects {
     .ofType(usersActions.REGISTER_USER_SUCCESS)
     .pipe(
       map(() => {
-        if (this.router.url === '/') {
-          return from([
-            new OnGo({ path: ['/home'] }),
-            new LoginSuccess()
-          ]);
-          // this.store.dispatch(new OnGo({ path: ['/home'] }));
-        }
         return new LoginSuccess();
       })
     );

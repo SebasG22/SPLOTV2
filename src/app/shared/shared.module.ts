@@ -22,6 +22,8 @@ import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { EFFECTS } from './effects';
 import { StoreModule } from '@ngrx/store';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SERVICES } from './services';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -56,6 +58,11 @@ const MATERIAL_MODULES = [
     MATERIAL_MODULES,
     COMPONENTS
   ],
-  providers: []
+  entryComponents: [
+    LoaderComponent
+  ],
+  providers: [
+    SERVICES
+  ]
 })
 export class SharedModule { }

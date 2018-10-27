@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { AuthEmail, UserProvider } from '../models';
 
 export const CHECK_AUTH_SESSION_SPLOT = '[Auth] - Check Auth Session';
-export const CHECK_AUTH_SESSION_SUCCESS = '[Auth] - Check Auth Session';
+export const CHECK_AUTH_SESSION_SUCCESS = '[Auth] - Check Auth Session Success';
 
 export const LOGIN_WITH_GOOGLE = '[ Auth ] - Login with google';
 export const LOGIN_WITH_EMAIL = '[Auth] - Login with email';

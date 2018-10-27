@@ -48,6 +48,6 @@ export const selectAuthStatusState = createSelector(
   selectAuthState,
   (state: AuthFeatureModel) => get(state, 'auth', null)
 );
-export const getAuthWasSessionChecked = createSelector(selectAuthStatusState, (state: State) => get(state, 'wasSessionChecked ', null));
-export const getAuthUserIsLogged = createSelector(selectAuthStatusState, (state: State) => get(state, 'loggedIn', null));
+export const getAuthWasSessionChecked = createSelector(selectAuthStatusState, (state: State) => state.wasSessionChecked);
+export const getAuthUserIsLogged = createSelector(selectAuthStatusState, (state: State) => state.loggedIn);
 
