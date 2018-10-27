@@ -21,6 +21,7 @@ export class UserService extends FirebaseServiceAbstract {
    }
 
   public getUserInformation(userId: string) {
+    console.warn('Get User Information', userId);
     return this.afs
       .collection('users')
       .doc(userId)

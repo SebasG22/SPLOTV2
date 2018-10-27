@@ -7,6 +7,7 @@ import { UserInformation, UserPermissionsConfig } from '../models';
 import { UserProvider } from '../../auth/models';
 import { ToastrService } from 'ngx-toastr';
 import { isEmpty } from 'lodash';
+import { OnGoToPageSplot } from 'src/app/shared/actions/router.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
@@ -14,14 +15,15 @@ import { User } from 'firebase';
 import { from, of } from 'rxjs';
 @Injectable()
 export class UserEffects {
-  @Effect()
-  checkUserRegistration$ = this.actions$
+  @Effect({ dispatch: true })
+  checkUserRegistrationSplot$ = this.actions$
     .ofType(usersActions.CHECK_USER_REGISTRATION)
     .pipe(
       map((action: any) => action.payload),
       switchMap((payload: User) => {
         return this.userService.getUserInformation(payload.uid).pipe(
           map((data: UserInformation) => {
+            console.warn('Check User Registration', data);
             // Check user exists on firestore node
             if (!isEmpty(data)) {
               return new usersActions.CheckUserRegistrationSuccess(data);
