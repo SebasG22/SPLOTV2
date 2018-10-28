@@ -24,6 +24,7 @@ import { EFFECTS } from './effects';
 import { StoreModule } from '@ngrx/store';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SERVICES } from './services';
+import { ErrorSplotModule } from './error.module';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -51,6 +52,7 @@ const MATERIAL_MODULES = [
     CommonModule,
     MATERIAL_MODULES,
     RouterModule,
+    ErrorSplotModule,
     StoreModule.forFeature('SharedFeatureModel', {}),
     EffectsModule.forFeature(EFFECTS)
   ],
