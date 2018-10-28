@@ -4,10 +4,11 @@ import { ProjectMainPage } from './pages/project-main/project-main.page';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
 import { ProjectDetailPage } from './pages/project-detail/project-detail.page';
 import { ProjectCreatePage } from './pages/project-create/project-create.page';
+import { UserIsAuthenticate } from '../auth/guards/user-is-authenticate.guard';
 
 const routes: Routes = [
     {
-        path: '', children: [
+        path: '', canActivateChild: [], children: [
             { path: 'create', component: ProjectCreatePage },
             { path: 'list', component: ProjectMainPage },
             { path: ':id/detail', component: ProjectDetailPage }

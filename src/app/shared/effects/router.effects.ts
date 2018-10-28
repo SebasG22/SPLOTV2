@@ -20,15 +20,16 @@ export class RouterEffects {
             console.warn('Estoy navegando', has(onlyOnPath));
 
             if (onlyOnPath) {
-                if (this.router.url === onlyOnPath) {
-                    console.warn('Estoy navegando');
-                    this.zone.run(() => {
-                        this.router.navigate(path, { queryParams });
-                    });
-                }
+                return this.navigate(path, queryParams);
             }
+            return this.navigate(path, queryParams);
         }));
 
+    private navigate(path, queryParams) {
+        this.zone.run(() => {
+            this.router.navigate(path, { queryParams });
+        });
+    }
     constructor(
         private actions$: Actions,
         private router: Router,

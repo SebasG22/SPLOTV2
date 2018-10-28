@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoaderComponent } from '../components/loader/loader.component';
+import { Store } from '@ngrx/store';
+import { OnGoToPageSplot } from '../actions/router.actions';
 
 @Injectable()
 export class LoaderService {
@@ -8,7 +10,8 @@ export class LoaderService {
     private dialogRef;
 
     constructor(
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private store: Store<{}>
     ) { }
 
     public get loader() {
@@ -24,9 +27,12 @@ export class LoaderService {
         });
     }
 
-    public dismissLoader(miliseconds: number = 0) {
+    public dismissLoader(miliseconds: number = 0, page?: any) {
         setTimeout(() => {
             this.dialogRef.close();
+            if (page) {
+                this.store.dispatch(new OnGoToPageSplot({ path: page }));
+            }
         }, miliseconds);
     }
 }

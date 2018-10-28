@@ -12,6 +12,8 @@ import { map, withLatestFrom, delay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { getAuthWasSessionChecked, getAuthUserIsLogged } from '../reducers/auth.reducer';
 import { LoaderService } from 'src/app/shared/services/loader.service';
+import { OnGoToPageSplot } from 'src/app/shared/actions/router.actions';
+import { SetErrorSplot } from 'src/app/shared/actions/error.actions';
 
 @Injectable()
 export class UserIsAuthenticate implements CanActivate, CanActivateChild {
@@ -40,13 +42,15 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
           }
         }),
         withLatestFrom(this.store.select(getAuthUserIsLogged)),
-        delay(3000),
         map(([authWasSessionChecked, authUserIsLogged]) => {
           setTimeout(() => {
-            console.log('setTimeout');
             // tslint:disable-next-line:no-unused-expression
-            this.loaderService.dismissLoader(2000);
-          }, 2000);
+            if (!authUserIsLogged) {
+              this.store.dispatch(new SetErrorSplot({ title: 'User not authorized', message: ' User is not logged' }));
+            }
+            this.loaderService.dismissLoader(0);
+          }, 1000);
+
           return authUserIsLogged;
         }),
 
