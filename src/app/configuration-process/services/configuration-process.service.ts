@@ -12,4 +12,9 @@ export class ConfigurationProcessService extends FirebaseServiceAbstract {
     public getModels() {
         return this.getCollectionById('configuration-models').pipe(tap(console.warn));
     }
+
+    public getConfigurationChildrenByLevel(modelId: string , childrenLevel: number) {
+        return this.afs.collection('configuration-models').doc(modelId)
+        .collection('childrens', ref => ref.where('childrenLevel', '==', childrenLevel));
+}
 }
