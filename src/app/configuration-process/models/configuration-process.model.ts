@@ -21,3 +21,8 @@ export interface IConstraintsParsed {
     type: string;
     expression: string;
 }
+
+export interface IUserDecision {
+    childrenId: '';
+    created_at: any;
+}
