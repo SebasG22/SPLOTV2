@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IProject } from '../models';
+import { IProject, IConfigurationModel } from '../models';
 import * as projectsAction from '../actions/projects.action';
 import { IConfigurationModel } from 'src/app/configuration-process/models/configuration-process.model';
 
