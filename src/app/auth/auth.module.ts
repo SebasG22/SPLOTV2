@@ -10,13 +10,10 @@ import { EFFECTS } from './effects';
 import { StoreModule, ActionReducer } from '@ngrx/store';
 import { reducers } from './reducers/auth.reducer';
 import { CommonModule } from '@angular/common';
-import { storeLogger } from 'ngrx-store-logger';
 import { UsersModule } from '../users/users.module';
 import { VerifyAuthComponent } from './components/verify-auth/verify-auth.component';
 import { GUARDS } from './guards';
 import { ToastrModule, ToastNoAnimationModule, ToastNoAnimation } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToasterModule } from 'angular2-toaster';
 
 @NgModule({
   imports: [
@@ -31,10 +28,10 @@ import { ToasterModule } from 'angular2-toaster';
       // toastComponent: ToastNoAnimation
     }),
     UsersModule
-    ],
+  ],
   exports: [],
   declarations: [COMPONENTS, PAGES],
   entryComponents: [VerifyAuthComponent],
   providers: [SERVICES, GUARDS]
 })
-export class AuthModule {}
+export class AuthModule { }

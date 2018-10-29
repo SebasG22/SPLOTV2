@@ -17,7 +17,6 @@ export const LIST_PROJECTS = '[ Projects ] - List Projects';
 export const LIST_PROJECTS_SUCCESS = '[ Projects ] - List Projects Success';
 export const LIST_PROJECTS_FAILED = '[ Projects ] - List Projects Failed';
 
-
 export class CreateProject implements Action {
     readonly type = CREATE_PROJECT;
     constructor(public payload: IProject) { }
