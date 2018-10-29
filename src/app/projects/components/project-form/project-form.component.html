@@ -1,7 +1,6 @@
 <div class="panel-project-form">
   <div class="w-full">
     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="form" (ngSubmit)="onSubmitForm(form)">
-
       <div class="mb-4 float-right">
         <div class="form-switch inline-block align-middle">
           <input type="checkbox" name="1" id="1" class="form-switch-checkbox" formControlName="public" />
@@ -33,9 +32,41 @@
           formControlName="description"></textarea>
       </div>
 
+      <div class="w-full mb-6">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+          Model
+        </label>
+        <div class="relative">
+          <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
+            formControlName="modelId" id="grid-state">
+            <option value="min-decisions">Minimize decisions </option>
+          </select>
+          <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          </div>
+        </div>
+      </div>
 
+      <div class="w-full mb-6">
+        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+          Solution Type
+        </label>
+        <div class="relative">
+          <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
+            formControlName="solutionType" id="grid-state">
+            <option value="min-decisions">Minimize decisions </option>
+            <option value="max-decisions">Maximize decisions</option>
+            <option value="prior-decisions">Prioritize decisions</option>
+          </select>
+          <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          </div>
+        </div>
+      </div>
 
-      <div class="mb-4">
+      <div class="mb-4" *ngIf="!form.get('public').value">
         <label class="block text-grey-darker text-sm font-bold mb-2">
           Participants
         </label>
@@ -51,7 +82,6 @@
               [value]="getParticipantsName(participantsInformation)" type="text" [readonly]="true" (click)="openUsersSearchModal()">
           </ng-container>
           <ng-template #notParticipants>
-            Not participants
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
               type="text" [readOnly]="true" (click)="openUsersSearchModal()">
           </ng-template>
@@ -62,16 +92,25 @@
         </ul> -->
       </div>
 
-      <div class="mb-4">
-        <label class="block text-grey-darker text-sm font-bold mb-2">
-          Files
-        </label>
-        <ul class="text-grey-darker">
-          <li>
-            <a> FileProject.zip</a>
-          </li>
-        </ul>
-      </div>
+      <ng-container *ngIf="form.get('solutionType').value === 'prior-decisions'">
+        <div class="mb-4">
+          <label class="block text-blue-darker text-sm font-bold mb-2">
+            Ponderation
+          </label>
+          <ng-container *ngIf="(participantsInformation$ | async) as participantsInformation; else notParticipantsPonderation">
+            <ul class="text-grey-darker" *ngFor="let participant of participantsInformation">
+              <li>
+                <a> {{ participant }} - 1</a>
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #notParticipantsPonderation>
+            <p class="text-blue-darker">
+              Not participants
+            </p>
+          </ng-template>
+        </div>
+      </ng-container>
 
       <div class="flex items-center justify-between">
 
