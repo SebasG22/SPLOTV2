@@ -14,7 +14,9 @@ export class ConfigurationProcessService extends FirebaseServiceAbstract {
     }
 
     public getConfigurationChildrenByLevel(modelId: string , childrenLevel: number) {
+        // Crear llamado al backend
         return this.afs.collection('configuration-models').doc(modelId)
         .collection('childrens', ref => ref.where('childrenLevel', '==', childrenLevel));
+
 }
 }
