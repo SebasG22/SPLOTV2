@@ -34,6 +34,7 @@ export class ProjectFormComponent implements OnInit {
 
     ngOnInit() {
         this.buildForm();
+        this.listenFormChanges();
         this.listenUserList();
     }
 
@@ -42,12 +43,36 @@ export class ProjectFormComponent implements OnInit {
             'id': [''],
             'name': ['', Validators.required],
             'description': ['', Validators.required],
-            'state': [''],
             'public': [true],
+            'modelId': ['', Validators.required],
+            'solutionType': ['min-decisions', Validators.required],
             'participantsIds': ['', Validators.required],
-            'files': ['']
+            'pondetarionIds': ['']
         });
         this.form.get('id').disable({ onlySelf: true });
+    }
+
+    public listenFormChanges() {
+        // Public
+        this.form.get('public').valueChanges.subscribe((value) => {
+            if (value) {
+                this.form.get('solutionType').setValue('min-decisions');
+                this.form.get('solutionType').updateValueAndValidity();
+                this.form.get('participantsIds').setValidators(Validators.required);
+            } else {
+                this.form.get('participantsIds').setValidators(Validators.nullValidator);
+            }
+            this.form.get('participantsIds').updateValueAndValidity();
+        });
+
+        // Solution Type
+        this.form.get('solutionType').valueChanges.subscribe((value) => {
+            console.log('value', value);
+            if (value === 'prior-decisions') {
+                this.form.get('public').setValue(false);
+                this.form.get('public').updateValueAndValidity();
+            }
+        });
     }
 
     public openUsersSearchModal() {
@@ -98,7 +123,6 @@ export class ProjectFormComponent implements OnInit {
     }
 
     public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
-        console.log({ valid, value });
         if (valid) {
             switch (this.mode) {
                 case 'create':
