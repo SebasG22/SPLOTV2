@@ -14,7 +14,8 @@ import {
   MatSelectModule,
   MatCheckboxModule,
   MatRadioModule,
-  MatTableModule
+  MatTableModule,
+  MatStepperModule
 } from '@angular/material';
 import { COMPONENTS } from './components';
 import { RouterModule } from '@angular/router';
@@ -42,7 +43,8 @@ const MATERIAL_MODULES = [
   MatCheckboxModule,
   MatRadioModule,
   MatCheckboxModule,
-  MatTableModule
+  MatTableModule,
+  MatStepperModule
 ];
 @NgModule({
   declarations: [
