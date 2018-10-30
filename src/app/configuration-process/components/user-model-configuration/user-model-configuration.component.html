@@ -1,0 +1,14 @@
+<mat-step [stepControl]="firstFormGroup">
+  <form [formGroup]="firstFormGroup">
+    <ng-template matStepLabel>{{ featureName }}</ng-template>
+    <mat-radio-group formControlName="decisionId">
+      <mat-radio-button *ngFor="let children of childrenItems" [value]="children.id">
+        {{ children.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+    <div>
+      <button *ngIf="!itsLastFeature" mat-button matStepperNext>Next</button>
+      <button *ngIf="itsLastFeature" mat-button type="submit">Finish</button>
+    </div>
+  </form>
+</mat-step>
