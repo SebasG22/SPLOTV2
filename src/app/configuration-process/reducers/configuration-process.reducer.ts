@@ -1,6 +1,6 @@
 import * as configurationProcessActions from '../actions/configuration-process.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IConfigurationModel } from 'src/app/projects/models';
+import { IConfigurationModel } from '../models/configuration-process.model';
 export type Actions = configurationProcessActions.All;
 
 export interface ConfigurationProcessFeatureModel {
@@ -34,7 +34,10 @@ export const reducers = {
 export const selectConfigurationProcessState = createFeatureSelector<ConfigurationProcessFeatureModel>('ConfigurationProcessFeatureModel');
 export const selectConfigurationProcessStatusState = createSelector(
     selectConfigurationProcessState,
-    (state: ConfigurationProcessFeatureModel) => state.cfgProcess
+    (state: ConfigurationProcessFeatureModel) => {
+        console.log(state);
+        return state.cfgProcess;
+    }
 );
 export const getConfigurationModelsInformation =
     createSelector(selectConfigurationProcessStatusState, (state: State) => state.configurationsModels);

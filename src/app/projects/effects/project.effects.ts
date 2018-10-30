@@ -12,7 +12,8 @@ import {
     GET_PROJECT,
     GetProjectSuccess,
     GetProjectFailed,
-    GET_PROJECT_FAILED
+    GET_PROJECT_FAILED,
+    CREATE_PROJECT_SUCCESS
 } from '../actions/projects.action';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { ProjectService } from '../services/project.service';
@@ -32,6 +33,13 @@ export class ProjectEffects {
             map((response) => new CreateProjectSuccess(response)),
             catchError((error) => [new CreateProjectFailed(error)])
         );
+
+    // @Effect()
+    // createProjectSuccess$ = this.actions$
+    //     .ofType(CREATE_PROJECT_SUCCESS)
+    //     .pipe(
+    //         map(() => new OngOtO),
+    //     );
 
     @Effect({ dispatch: false })
     createProjectFailed$ = this.actions$
