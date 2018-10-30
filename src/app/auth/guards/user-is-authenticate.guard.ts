@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map, withLatestFrom, delay } from 'rxjs/operators';
+import { map, withLatestFrom, delay, filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { getAuthWasSessionChecked, getAuthUserIsLogged } from '../reducers/auth.reducer';
 import { LoaderService } from 'src/app/shared/services/loader.service';
@@ -40,9 +40,12 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
           if (!this.loaderService.loader) {
             this.loaderService.showLoader('Checking Session');
           }
+          return authSessionWasChecked;
         }),
+        filter((item) => item === true),
         withLatestFrom(this.store.select(getAuthUserIsLogged)),
         map(([authWasSessionChecked, authUserIsLogged]) => {
+          console.log('authUserIsLogged', authUserIsLogged);
           setTimeout(() => {
             // tslint:disable-next-line:no-unused-expression
             if (!authUserIsLogged) {
