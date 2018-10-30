@@ -10,6 +10,7 @@ import { UserInformation } from '../../../users/models';
 import { Observable } from 'rxjs';
 import { getUsersList, getUsersLoadingData } from '../../../users/reducers/users.reducer';
 import { Location } from '@angular/common';
+import { IConfigurationModel } from '../../../configuration-process/models/configuration-process.model';
 
 @Component({
     selector: 'app-project-form',
@@ -17,6 +18,8 @@ import { Location } from '@angular/common';
     styleUrls: ['./project-form.component.scss']
 })
 export class ProjectFormComponent implements OnInit {
+
+    @Input() public models: IConfigurationModel[];
 
     public form: FormGroup;
 
