@@ -12,11 +12,8 @@ import { GetConfigurationModels } from 'src/app/configuration-process/actions/co
 })
 export class ProjectCreatePage implements OnInit {
 
-<<<<<<< HEAD
   public configurationsModels$: Observable<IConfigurationModel[]>;
-=======
-  private configurationsModels$: Observable<IConfigurationModel[]>;
->>>>>>> [ Projects ] - WIP adding configuration module
+
   constructor(
     private store: Store<{}>
   ) { }
