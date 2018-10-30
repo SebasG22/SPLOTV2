@@ -18,6 +18,7 @@ import {
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { ProjectService } from '../services/project.service';
 import { IProject } from '../models';
+import { OnGoToPageSplot } from 'src/app/shared/actions/router.actions';
 
 @Injectable()
 export class ProjectEffects {
@@ -34,12 +35,12 @@ export class ProjectEffects {
             catchError((error) => [new CreateProjectFailed(error)])
         );
 
-    // @Effect()
-    // createProjectSuccess$ = this.actions$
-    //     .ofType(CREATE_PROJECT_SUCCESS)
-    //     .pipe(
-    //         map(() => new OngOtO),
-    //     );
+    @Effect()
+    createProjectSuccess$ = this.actions$
+        .ofType(CREATE_PROJECT_SUCCESS)
+        .pipe(
+            map(() => new OnGoToPageSplot({ path: '/projects' })),
+        );
 
     @Effect({ dispatch: false })
     createProjectFailed$ = this.actions$

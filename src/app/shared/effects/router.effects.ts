@@ -20,9 +20,12 @@ export class RouterEffects {
             console.warn('Estoy navegando', has(onlyOnPath));
 
             if (onlyOnPath) {
+                if (onlyOnPath === this.router.url) {
+                    return this.navigate(path, queryParams);
+                }
+            } else {
                 return this.navigate(path, queryParams);
             }
-            return this.navigate(path, queryParams);
         }));
 
     private navigate(path, queryParams) {

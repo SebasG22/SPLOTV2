@@ -17,7 +17,7 @@ export class ProjectService extends FirebaseServiceAbstract {
     public createProject(project: IProject): Observable<any> {
         const id = this.afStore.createId();
         return from(this.afStore.collection('projects').doc(id).set(
-            { ...project, id: id, state: 'C', }))
+            { ...project, id: id, }))
             .pipe(
                 switchMap(() => {
                     const obs = [];

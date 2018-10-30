@@ -49,8 +49,8 @@ export class ProjectFormComponent implements OnInit {
             'public': [true],
             'modelId': ['', Validators.required],
             'solutionType': ['min-decisions', Validators.required],
-            'participantsIds': ['', Validators.required],
-            'pondetarionIds': ['']
+            'participantsIds': [null, Validators.required],
+            'pondetarionIds': [null]
         });
         this.form.get('id').disable({ onlySelf: true });
     }
@@ -58,6 +58,7 @@ export class ProjectFormComponent implements OnInit {
     public listenFormChanges() {
         // Public
         this.form.get('public').valueChanges.subscribe((value) => {
+            console.log('Cambio el valor');
             if (value) {
                 this.form.get('solutionType').setValue('min-decisions');
                 this.form.get('solutionType').updateValueAndValidity();
@@ -66,6 +67,7 @@ export class ProjectFormComponent implements OnInit {
                 this.form.get('participantsIds').setValidators(Validators.nullValidator);
             }
             this.form.get('participantsIds').updateValueAndValidity();
+            this.form.updateValueAndValidity();
         });
 
         // Solution Type
@@ -126,6 +128,7 @@ export class ProjectFormComponent implements OnInit {
     }
 
     public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
+        console.log(this.form.errors, value);
         if (valid) {
             switch (this.mode) {
                 case 'create':
