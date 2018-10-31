@@ -1,5 +1,5 @@
-<mat-step [stepControl]="firstFormGroup">
-  <form [formGroup]="firstFormGroup">
+<mat-step [stepControl]="configurationForm">
+  <form [formGroup]="configurationForm">
     <ng-template matStepLabel>{{ featureName }}</ng-template>
     <mat-radio-group formControlName="decisionId">
       <mat-radio-button *ngFor="let children of childrenItems" [value]="children.id">
