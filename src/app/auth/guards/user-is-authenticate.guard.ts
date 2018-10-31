@@ -42,6 +42,7 @@ export class UserIsAuthenticate implements CanActivate, CanActivateChild {
           }
           return authSessionWasChecked;
         }),
+        delay(3000),
         filter((item) => item === true),
         withLatestFrom(this.store.select(getAuthUserIsLogged)),
         map(([authWasSessionChecked, authUserIsLogged]) => {
