@@ -3,7 +3,7 @@
   <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
     <div class=" px-6 py-4">
       <p class="text-blue text-lg text-center">{{ project.name }}</p>
-      <div class="text-center sm:text-left sm:flex-grow">
+      <div class="text-left sm:flex-grow">
         <div class="mt-4 mb-4">
           <p class="text-sm leading-tight text-grey-dark"> <strong class="text-blue-darker text-sm db-"> Description:
             </strong>
@@ -15,7 +15,7 @@
             {{ project.public }} </p>
         </div>
         <div class="mt-4 mb-4">
-          <strong class="text-blue-darker text-sm db-"> Participants:</strong>
+          <strong class="text-blue-darker text-sm db-" *ngIf="!project.public"> Participants:</strong>
           <section *ngFor="let participant of project.participants">
             <div class="flex items-center">
               <img class="w-10 h-10 rounded-full mr-4" [src]="participant.user.photo" [alt]="'Avatar of ' + participant.user.name">

@@ -21,10 +21,13 @@ export class ProjectService extends FirebaseServiceAbstract {
             .pipe(
                 switchMap(() => {
                     const obs = [];
-                    for (const participant of project.participantsIds.split(',')) {
-                        obs.push(this.addParticipantToProject(id, get(participant, 'id', participant)));
+                    if (project.participantsIds) {
+                        for (const participant of project.participantsIds.split(',')) {
+                            obs.push(this.addParticipantToProject(id, get(participant, 'id', participant)));
+                        }
                     }
-                    return combineLatest(obs);
+
+                    return (obs.length === 0) ? of([]) : combineLatest(obs);
                 })
             );
     }
@@ -64,7 +67,7 @@ export class ProjectService extends FirebaseServiceAbstract {
                 forEach(response.participants, (participant) => {
                     obs.push(this.getDocumentByCollectionId('users', participant.id, 'user'));
                 });
-                return (obs.length === 0) ? of([]) : combineLatest(obs)
+                return (obs.length === 0) ? of(response) : combineLatest(obs)
                     .pipe(
                         map((data) => {
                             forEach(response.participants, (participant) => {

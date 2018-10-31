@@ -49,7 +49,7 @@ export class ProjectFormComponent implements OnInit {
             'public': [true],
             'modelId': ['', Validators.required],
             'solutionType': ['min-decisions', Validators.required],
-            'participantsIds': [null, Validators.required],
+            'participantsIds': [null],
             'pondetarionIds': [null]
         });
         this.form.get('id').disable({ onlySelf: true });
@@ -62,9 +62,9 @@ export class ProjectFormComponent implements OnInit {
             if (value) {
                 this.form.get('solutionType').setValue('min-decisions');
                 this.form.get('solutionType').updateValueAndValidity();
-                this.form.get('participantsIds').setValidators(Validators.required);
-            } else {
                 this.form.get('participantsIds').setValidators(Validators.nullValidator);
+            } else {
+                this.form.get('participantsIds').setValidators(Validators.required);
             }
             this.form.get('participantsIds').updateValueAndValidity();
             this.form.updateValueAndValidity();
