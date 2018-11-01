@@ -9,7 +9,7 @@ import {
 } from '../models';
 import * as firebase from 'firebase';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
-import { isEmpty, forEach, findIndex, get } from 'lodash';
+import { isEmpty, forEach, findIndex, filter } from 'lodash';
 import * as appSelectors from '../../app.reducer';
 import { Store } from '@ngrx/store';
 @Injectable()
@@ -139,6 +139,13 @@ export class UserService {
   }
 
   public filterUsers(query: { search: string, searchBy: string, page: number }) {
-    return this.afs.collection('users', ref => ref.orderBy(`${query.searchBy}`).startAt(`${query.search}`)).valueChanges();
+    return this.afs.collection('users').valueChanges().pipe(
+      map((data) => {
+        console.log('data', data);
+        return filter(data, item => {
+          return item[`${query.searchBy}`].toLowerCase().includes(query.search.toLowerCase());
+        });
+      })
+    );
   }
 }

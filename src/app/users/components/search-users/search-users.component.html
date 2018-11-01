@@ -15,12 +15,12 @@
   <ng-container *ngIf="(loadingData$ | async ) as loadingData; else notLoadingData">
     <mat-progress-bar *ngIf="loadingData" [mode]="'indeterminate'">
     </mat-progress-bar>
-  </ng-container>h
+  </ng-container>
 
   <ng-template #notLoadingData>
 
     <ng-container *ngIf="usersSelected.length > 0">
-      <p class="text-xl leading-tight">Usuarios Seleccionados</p>
+      <p class="text-md leading-tight font-bold">Participants Selected</p>
       <section *ngFor="let user of usersSelected">
         <div class="flex items-center">
           <mat-checkbox (change)="toggleUser(user, $event)" [checked]="true"></mat-checkbox>
@@ -34,10 +34,10 @@
     </ng-container>
 
     <ng-container *ngIf="usersList.length > 0; else notResults">
-      <p class="text-xl leading-tight">Resultados de Búsqueda</p>
+      <p class="text-md leading-tight font-bold">Search Results</p>
       <section *ngFor="let user of usersList">
         <div class="flex items-center" *ngIf="!isUserSelected(user)">
-          <mat-checkbox (change)="toggleUser(user, $event)"> - </mat-checkbox>
+          <mat-checkbox (change)="toggleUser(user, $event)"></mat-checkbox>
           <img class="w-10 h-10 rounded-full mr-4" [src]="user.photo" [alt]="'Avatar of ' + user.name">
           <div class="text-sm">
             <p class="text-black leading-none">{{ user.name }}</p>
@@ -48,7 +48,7 @@
     </ng-container>
 
     <ng-template #notResults>
-      <p> No se han encontrado resultados </p>
+      <p> There's no users </p>
     </ng-template>
 
   </ng-template>
