@@ -9,7 +9,7 @@ import { get } from 'lodash';
 })
 export class LoaderComponent implements OnInit {
 
-  private message: string;
+  public message: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data
   ) { }
