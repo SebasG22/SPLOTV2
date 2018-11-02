@@ -13,7 +13,6 @@ import { GetConfigurationModels } from 'src/app/configuration-process/actions/co
 export class ProjectCreatePage implements OnInit {
 
   public configurationsModels$: Observable<IConfigurationModel[]>;
-
   constructor(
     private store: Store<{}>
   ) { }

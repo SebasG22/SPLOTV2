@@ -18,7 +18,7 @@ export class UserService extends FirebaseServiceAbstract {
 
   constructor(private afs: AngularFirestore, private store: Store<{}>) {
     super(afs);
-   }
+  }
 
   public getUserInformation(userId: string) {
     console.warn('Get User Information', userId);
