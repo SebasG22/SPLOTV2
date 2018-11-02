@@ -39,7 +39,7 @@ export class ProjectEffects {
     createProjectSuccess$ = this.actions$
         .ofType(CREATE_PROJECT_SUCCESS)
         .pipe(
-            map(() => new OnGoToPageSplot({ path: ['/project'] })),
+            map(() => new OnGoToPageSplot({ path: ['/project/list'] })),
         );
 
     @Effect({ dispatch: false })

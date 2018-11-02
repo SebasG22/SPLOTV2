@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterState, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-configuration-information',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationInformationPage implements OnInit {
 
-  constructor() { }
+  public projectId: string;
+  constructor(
+    private activateRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.listenParams();
+  }
+
+  public listenParams() {
+    this.activateRoute.params.subscribe((params: Params) => {
+      this.projectId = params['id'];
+    });
   }
 
 }

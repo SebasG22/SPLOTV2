@@ -13,7 +13,7 @@
               Details
             </button>
             <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              (click)="goBack()">
+              [routerLink]="['/configuration-process', project.id ,'information']">
               Configure
             </button>
           </div>
