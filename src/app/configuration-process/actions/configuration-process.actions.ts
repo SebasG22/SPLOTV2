@@ -29,7 +29,7 @@ export class GetConfigurationModelsFailed implements Action {
 
 export class GetChildrenByLevel implements Action {
     readonly type = GET_CHILDREN_CONFIGURATION_BY_LEVEL;
-    public constructor(public payload: number) { }
+    public constructor(public payload: { projectId: string, stepIndex: number }) { }
 }
 
 export class GetChildrenByLevelSuccess implements Action {

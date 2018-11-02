@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserModelConfigurationPage } from './pages/user-model-configuration/user-model-configuration.page';
 import { ConfigurationInformationPage } from './pages/configuration-information/configuration-information.page';
+import { UserIsAuthenticate } from '../auth/guards/user-is-authenticate.guard';
 
 const routes: Routes = [
     {
-        path: 'configuration-process', children: [
-            { path: ':id/information', component: ConfigurationInformationPage }
+        path: 'configuration-process', canActivate: [UserIsAuthenticate], children: [
+            { path: ':id/information', component: ConfigurationInformationPage },
             { path: ':id/configuration', component: UserModelConfigurationPage }
 
         ]

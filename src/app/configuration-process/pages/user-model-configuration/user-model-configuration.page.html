@@ -1,6 +1,8 @@
 <mat-vertical-stepper #stepper>
-  <ng-container>
-    <app-user-model-configuration>
-    </app-user-model-configuration>
+  <ng-container *ngIf="userConfiguration$ | async as userConfiguration">
+    <ng-container *ngFor="let stepInfo of userConfiguration.solitaireFeature">
+      <app-user-model-configuration [featureId]="stepInfo.id" [featureName]="stepInfo.name" [childrenItems]="userConfiguration.children">
+      </app-user-model-configuration>
+    </ng-container>
   </ng-container>
 </mat-vertical-stepper>

@@ -6,9 +6,11 @@ import {
     GET_CHILDREN_CONFIGURATION_BY_LEVEL,
     GetChildrenByLevelSuccess
 } from '../actions/configuration-process.actions';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 import { ConfigurationProcessService } from '../services/configuration-process.service';
 import { IConfigurationModel, IUserConfiguration } from '../models/configuration-process.model';
+import { getCurrentUserInformation } from 'src/app/users/reducers/users.reducer';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ConfigurationProcessEffects {
@@ -28,9 +30,10 @@ export class ConfigurationProcessEffects {
     getChildrenByLevel$ = this.actions$.ofType(GET_CHILDREN_CONFIGURATION_BY_LEVEL)
         .pipe(
             map((event: any) => event.payload),
-            switchMap((payload) => {
+            withLatestFrom(this.store.select(getCurrentUserInformation)),
+            switchMap(([payload, currentUser]) => {
                 return this.configurationProcessService.
-                    getConfigurationChildrenByLevel(payload.projectId, payload.userId, payload.stepIndex);
+                    getConfigurationChildrenByLevel(payload.projectId, currentUser.id, payload.stepIndex);
             }),
             map((userModel: IUserConfiguration) => {
                 return new GetChildrenByLevelSuccess(userModel);
@@ -41,7 +44,8 @@ export class ConfigurationProcessEffects {
 
     constructor(
         private actions$: Actions,
-        private configurationProcessService: ConfigurationProcessService
+        private configurationProcessService: ConfigurationProcessService,
+        private store: Store<{}>
     ) { }
 
 

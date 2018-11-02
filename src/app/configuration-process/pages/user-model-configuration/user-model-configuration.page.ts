@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IUserConfiguration } from '../../models/configuration-process.model';
 import { Store } from '@ngrx/store';
 import { getUserConfiguration, getLoader } from '../../reducers/configuration-process.reducer';
+import { GetChildrenByLevel } from '../../actions/configuration-process.actions';
 
 @Component({
   selector: 'page-user-model-configuration',
@@ -14,8 +15,8 @@ export class UserModelConfigurationPage implements OnInit {
 
   private projectId: string;
   private stepIndex: number;
-  private userConfiguration$: Observable<IUserConfiguration>;
-  private loadingData$: Observable<boolean>;
+  public userConfiguration$: Observable<IUserConfiguration>;
+  public loadingData$: Observable<boolean>;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -25,14 +26,15 @@ export class UserModelConfigurationPage implements OnInit {
   ngOnInit() {
     this.listenParams();
     this.listenConfiguration();
+    this.getUserConfiguration();
   }
 
   private listenParams() {
     this.activateRoute.params.subscribe((params) => {
-      this.projectId = params[this.projectId];
+      this.projectId = params['id'];
     });
     this.activateRoute.queryParams.subscribe((queryParams) => {
-      this.stepIndex = +queryParams['step'];
+      this.stepIndex = +queryParams['step'] || 0;
     });
   }
 
@@ -42,7 +44,7 @@ export class UserModelConfigurationPage implements OnInit {
   }
 
   private getUserConfiguration() {
-
+    this.store.dispatch(new GetChildrenByLevel({ projectId: this.projectId, stepIndex: this.stepIndex }));
   }
 
 }

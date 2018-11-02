@@ -17,15 +17,15 @@ export class ConfigurationProcessService extends FirebaseServiceAbstract {
 
     public getConfigurationChildrenByLevel(projectId: string, userId: string, stepIndex: number) {
         // Crear llamado al backend
-        return this.http.post(environment.splotBack, {
+        return this.http.post(`${environment.splotBack}/configuration/getModel`, {
             projectId: projectId,
             userId: userId
         }).pipe(
             map((data: { meta: { id: string, name: string }, model: any[] }) => {
                 const solitaireFeature = data.model.filter((item) => item.type === 'SolitaireFeature');
                 const step = solitaireFeature.filter((item) => item.order === stepIndex)[0];
-                const featureGroup = data.model.filter((item) => item.fullId === `${step.fullId[0]}/${step.id}`)[0];
-                const childrens = data.model.filter((item) => item.fullId === `${step.fullId[0]}/${step.id}/${featureGroup.id}`);
+                const featureGroup = data.model.filter((item) => item.fullId === `${step.fullId}/${step.id}`)[0];
+                const childrens = data.model.filter((item) => item.fullId === `${step.fullId}/${step.id}/${featureGroup.id}`);
                 return {
                     solitaireFeature: solitaireFeature,
                     step: step,

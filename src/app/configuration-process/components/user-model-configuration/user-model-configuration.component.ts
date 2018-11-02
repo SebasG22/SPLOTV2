@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IConfigurationChildrenParsed } from '../../models/configuration-process.model';
+import { IConfigurationChildrenParsed, IUserConfiguration } from '../../models/configuration-process.model';
 
 @Component({
   selector: 'app-user-model-configuration',
@@ -15,6 +15,8 @@ export class UserModelConfigurationComponent implements OnInit {
   @Input() public itsLastFeature: boolean;
 
   public configurationForm: FormGroup;
+
+  @Input() public stepIndex: number;
 
   constructor(
     private fb: FormBuilder
@@ -32,7 +34,7 @@ export class UserModelConfigurationComponent implements OnInit {
     });
   }
 
-  public onSubmitForm({valid, value}: { valid: boolean, value: any}) {
+  public onSubmitForm({ valid, value }: { valid: boolean, value: any }) {
 
   }
 
