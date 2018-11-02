@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IConfigurationModel, IConfigurationChildrenParsed, IUserDecision } from '../models/configuration-process.model';
+import { IConfigurationModel, IConfigurationChildrenParsed, IUserDecision, IUserConfiguration } from '../models/configuration-process.model';
 
 export const GET_CONFIGURATION_MODELS = '[ Configuration ] - Get configuration models';
 export const GET_CONFIGURATION_MODELS_SUCCESS = '[ Configuration ] - Get configuration models success';
@@ -29,32 +29,32 @@ export class GetConfigurationModelsFailed implements Action {
 
 export class GetChildrenByLevel implements Action {
     readonly type = GET_CHILDREN_CONFIGURATION_BY_LEVEL;
-    public constructor(public payload: number) {}
+    public constructor(public payload: number) { }
 }
 
 export class GetChildrenByLevelSuccess implements Action {
     readonly type = GET_CHILDREN_CONFIGURATION_BY_LEVEL_SUCCESS;
-    public constructor(public payload: IConfigurationChildrenParsed) {}
+    public constructor(public payload: IUserConfiguration) { }
 }
 
 export class GetChildrenByLevelFailed implements Action {
     readonly type = GET_CHILDREN_CONFIGURATION_BY_LEVEL_FAILED;
-    public constructor(public payload: IConfigurationChildrenParsed) {}
+    public constructor(public payload: IConfigurationChildrenParsed) { }
 }
 
 export class SaveUserConfigurationDecision implements Action {
     readonly type = SAVE_USER_CONFIGURATION_DECISION;
-    public constructor(public payload: IUserDecision) {}
+    public constructor(public payload: IUserDecision) { }
 }
 
 export class SaveUserConfigurationDecisionSuccess implements Action {
     readonly type = SAVE_USER_CONFIGURATION_DECISION_SUCCESS;
-    public constructor() {}
+    public constructor() { }
 }
 
 export class SaveUserConfigurationDecisionFailed implements Action {
     readonly type = SAVE_USER_CONFIGURATION_DECISION_FAILED;
-    public constructor() {}
+    public constructor() { }
 }
 
 export type All = GetConfigurationModels |

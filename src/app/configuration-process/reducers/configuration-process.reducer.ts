@@ -1,6 +1,6 @@
 import * as configurationProcessActions from '../actions/configuration-process.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IConfigurationModel } from '../models/configuration-process.model';
+import { IConfigurationModel, IUserConfiguration } from '../models/configuration-process.model';
 export type Actions = configurationProcessActions.All;
 
 export interface ConfigurationProcessFeatureModel {
@@ -9,10 +9,14 @@ export interface ConfigurationProcessFeatureModel {
 
 export interface State {
     configurationsModels: IConfigurationModel[];
+    userConfiguration: IUserConfiguration;
+    loading: boolean;
 }
 
 export const initialState: State = {
-    configurationsModels: null
+    loading: false,
+    configurationsModels: null,
+    userConfiguration: null
 };
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -21,6 +25,13 @@ export function reducer(state: State = initialState, action: Actions): State {
         case configurationProcessActions.GET_CONFIGURATION_MODELS_SUCCESS: {
             return { ...state, configurationsModels: action.payload };
         }
+        case configurationProcessActions.GET_CHILDREN_CONFIGURATION_BY_LEVEL: {
+            return { ...state, loading: true };
+        }
+        case configurationProcessActions.GET_CHILDREN_CONFIGURATION_BY_LEVEL_SUCCESS: {
+            return { ...state, userConfiguration: action.payload };
+        }
+
         default:
             return state;
     }
@@ -42,3 +53,6 @@ export const selectConfigurationProcessStatusState = createSelector(
 export const getConfigurationModelsInformation =
     createSelector(selectConfigurationProcessStatusState, (state: State) => state.configurationsModels);
 
+export const getLoader = createSelector(selectConfigurationProcessStatusState, (state: State) => state.loading);
+
+export const getUserConfiguration = createSelector(selectConfigurationProcessStatusState, (state: State) => state.userConfiguration);
