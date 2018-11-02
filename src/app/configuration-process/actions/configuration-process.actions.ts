@@ -8,22 +8,14 @@ export const GET_CONFIGURATION_MODELS_FAILED = '[ Configuration ] - Get configur
 export const GET_CHILDREN_CONFIGURATION_BY_LEVEL = '[ Configuration ] - Get children by level';
 export const GET_CHILDREN_CONFIGURATION_BY_LEVEL_SUCCESS = '[ Configuration ] - Get children by level success';
 export const GET_CHILDREN_CONFIGURATION_BY_LEVEL_FAILED = '[ Configuration ] - Get children by level failed';
-<<<<<<< HEAD
-=======
-
->>>>>>> 100bbcd5fc6bad34edbeb16efa8f72b4f07d028f
 export const SAVE_USER_CONFIGURATION_DECISION = '[ Configuration ] - Save user configuration decision';
 export const SAVE_USER_CONFIGURATION_DECISION_SUCCESS = '[ Configuration ] - Save user configuration decision success';
 export const SAVE_USER_CONFIGURATION_DECISION_FAILED = '[ Configuration ] - Save user configuration decision failed';
 export class GetConfigurationModels implements Action {
     readonly type = GET_CONFIGURATION_MODELS;
-<<<<<<< HEAD
-}
-=======
     public constructor() { }
 }
 
->>>>>>> 100bbcd5fc6bad34edbeb16efa8f72b4f07d028f
 export class GetConfigurationModelsSuccess implements Action {
     readonly type = GET_CONFIGURATION_MODELS_SUCCESS;
     public constructor(public payload: IConfigurationModel[]) { }

@@ -23,4 +23,8 @@ export class ConfigurationInformationPage implements OnInit {
     });
   }
 
+  public goBack() {
+
+  }
+
 }
