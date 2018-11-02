@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UpdateProject, CreateProject } from '../../actions/projects.action';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSelectChange } from '@angular/material';
 import { SearchUsersComponent } from '../../../users/components/search-users/search-users.component';
 import { get, forEach } from 'lodash';
 import { GetUsersInformationByIds } from '../../../users/actions/users.actions';
@@ -78,6 +78,12 @@ export class ProjectFormComponent implements OnInit {
                 this.form.get('public').updateValueAndValidity();
             }
         });
+    }
+
+    public setModelId(event: any) {
+        console.log('set');
+        this.form.get('modelId').setValue(event.target.value);
+        this.form.get('modelId').updateValueAndValidity();
     }
 
     public openUsersSearchModal() {

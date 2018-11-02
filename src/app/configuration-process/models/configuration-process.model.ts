@@ -26,3 +26,10 @@ export interface IUserDecision {
     childrenId: '';
     created_at: any;
 }
+
+export interface IUserConfiguration {
+    solitaireFeature: any;
+    step: any;
+    featureGroup: any;
+    childrens: any;
+}

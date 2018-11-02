@@ -1,3 +1,80 @@
-<p>
-  configuration-information works!
-</p>
+<app-menu></app-menu>
+<h1 class="text-black px-10"> General Instructions</h1>
+<div class="w-5/6 lg:w- mx-auto pt-5">
+  <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+    <div class=" px-6 py-4">
+      <p class="text-blue text-lg text-center"> What are decisions ?</p>
+      <div class="text-center sm:text-left sm:flex-grow">
+        <div class="mb-4">
+          <p class="text-sm  text-center leading-tight text-grey-dark"> There are selections that MULTISPLOT will seek
+            to meet in first grade.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-5/6 lg:w- mx-auto pt-5">
+  <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+    <div class=" px-6 py-4">
+      <p class="text-blue text-lg text-center"> What are preferences ?</p>
+      <div class="text-center sm:text-left sm:flex-grow">
+        <div class="mb-4">
+          <p class="text-sm  text-center leading-tight text-grey-dark"> Unlike decisions, MULTISPLOT gives you the
+            opportunity to select a preference to seek to fulfill the decisions below.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-5/6 lg:w- mx-auto pt-5">
+  <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+    <div class=" px-6 py-4">
+      <p class="text-blue text-lg text-center"> How works ?</p>
+      <div class="text-center sm:text-left sm:flex-grow">
+        <div class="mb-4">
+          <p class="text-sm  text-center leading-tight text-grey-dark"> Through the use of specialized software (Linear
+            Optimization) it will be sought to find the solution to the
+            configuration proposed by all users.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-5/6 lg:w- mx-auto pt-5">
+  <div class="bg-white mx-auto min-w-full shadow-lg rounded-lg overflow-hidden ">
+    <div class=" px-6 py-4">
+      <p class="text-blue text-lg text-center"> Notes</p>
+      <div class="text-center sm:text-left sm:flex-grow">
+        <div class="mb-4">
+          <ul class="text-sm  text-center leading-tight text-grey-dark">
+            <li>
+              The system will use the combination of decisions and preferences to offer a solution to the project.
+            </li>
+            <li>
+              A decision has a higher degree of hierarchy than a preference.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-between px-8 pt-6 pb-8 mb-4">
+
+  <button class="bg-white hover:bg-blue-darker hover:text-white text-blue-darker font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    (click)="goBack()">
+    Go Back
+  </button>
+  <button class="bg-blue-darker hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    type="button" [routerLink]="['/configuration-process', projectId ,'information']">
+    Configure
+  </button>
+
+</div>

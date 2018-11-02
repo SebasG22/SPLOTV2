@@ -89,7 +89,7 @@ export class ProjectService extends FirebaseServiceAbstract {
                             obs.push(this.getDocumentByCollectionId('users', participant.id, 'user'));
                         });
                     });
-                    return (obs.length === 0) ? of([]) : combineLatest(obs)
+                    return (obs.length === 0) ? of(response) : combineLatest(obs)
                         .pipe(
                             map((data) => {
                                 forEach(response, (responseItem) => {

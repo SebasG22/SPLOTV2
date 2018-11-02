@@ -8,5 +8,6 @@ export const environment = {
     projectId: 'beta-splotv2',
     storageBucket: 'beta-splotv2.appspot.com',
     messagingSenderId: '1099388656043'
-  }
+  },
+  splotBack: 'http://splotv2-back.herokuapp.com'
 };

@@ -38,7 +38,8 @@
         </label>
         <div class="relative">
           <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey"
-            formControlName="modelId" id="grid-state">
+            (change)="setModelId($event)">
+            <option></option>
             <ng-container *ngFor="let model of models">
               <option [value]="model.id"> {{ model.name }} </option>
             </ng-container>

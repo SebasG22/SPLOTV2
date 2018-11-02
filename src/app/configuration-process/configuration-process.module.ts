@@ -9,6 +9,9 @@ import { PAGES } from './pages';
 import { COMPONENTS } from './components';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { ConfigurationProcessRoutingModule } from './configuration-process.router';
 
 @NgModule({
     declarations: [
@@ -20,7 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
         StoreModule.forFeature('ConfigurationProcessFeatureModel', reducers),
         EffectsModule.forFeature(EFFECTS),
         SharedModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterModule,
+        ConfigurationProcessRoutingModule
     ],
     exports: [],
     providers: [
