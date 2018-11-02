@@ -7,7 +7,7 @@ import { ConfigurationInformationPage } from './pages/configuration-information/
 const routes: Routes = [
     {
         path: 'configuration-process', children: [
-            { path: ':id/information', component: ConfigurationInformationPage }
+            { path: ':id/information', component: ConfigurationInformationPage },
             { path: ':id/configuration', component: UserModelConfigurationPage }
 
         ]

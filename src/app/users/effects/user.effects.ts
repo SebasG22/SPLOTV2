@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { LoginSuccess } from 'src/app/auth/actions/auth.actions';
 import { User } from 'firebase';
 import { from, of } from 'rxjs';
+import { GET_USERS_INFORMATION, GetUsersInformationSuccess } from '../actions/users.actions';
 @Injectable()
 export class UserEffects {
   @Effect({ dispatch: true })
